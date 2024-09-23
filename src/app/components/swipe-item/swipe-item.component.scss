@@ -1,0 +1,18 @@
+.wrapper {
+  width: 100%;
+  position: absolute;
+}
+
+.itemWrapper {
+  width: 100%;
+  background-color: var(--whiteColor);
+  margin: 0px 5px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.divider{
+  background-color: var(--lightGrayColor);
+  height: 1px;
+  margin-top: 20px;
+}

@@ -1,0 +1,48 @@
+.changePicIconWrapper {
+  position: absolute;
+  bottom: -10px;
+  right: 5px;
+  width: 33px;
+  height: 33px;
+  border-radius: 16.5px;
+  background-color: var(--primaryColor);
+  border: 3px solid var(--whiteColor);
+}
+
+.sheetDivider{
+  background-color: var(--lightGrayColor);
+  height: 1px;
+  margin: 15px 0;
+}
+
+ion-segment {
+  --background: #f1f1f1;
+}
+
+ion-datetime {
+  --background: #f1f1f1;
+  --background-rgb: 245, 235, 247;
+  --wheel-highlight-background: rgb(110, 189, 254);
+  --wheel-highlight-border-radius: 10px;
+  --wheel-fade-background-rgb: 245, 235, 247;
+  height: 90px;
+  display: flex; /* Utiliza flexbox */
+  justify-content: center; /* Centra horizontalmente */
+}
+
+ion-datetime::part(wheel-item) {
+  color: rgb(0, 0, 0);
+}
+
+ion-datetime::part(wheel-item active) {
+  color: rgb(2, 128, 38);
+}
+
+.custom-select .select-interface-option {
+  max-height: 200px; /* Ajusta la altura máxima para permitir el desplazamiento */
+  overflow-y: auto;
+}
+
+.invalidDate {
+  color: red;
+}

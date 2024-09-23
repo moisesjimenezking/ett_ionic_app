@@ -1,0 +1,59 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Trabajos guardados
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <ion-list *ngIf="savedList.length>0" lines="none" style="background-color: var(--whiteColor)">
+      <ion-item-sliding *ngFor="let item of savedList; let i = index" #slidingBooking class="ion-no-padding">
+        <ion-item lines="none" color="whiteColor">
+          <div class="row jobCard" style="width: 100%; margin: 0 5px; margin-bottom: 20px">
+            <div (click)="goTo('job-detail')" class="rowAlignCenter" style="flex: 1">
+              <ion-img [src]="item.sourceLogo" class="imageOverflow"
+                style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+              <div class="column" style="flex: 1; margin-left: 15px">
+                <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+                  {{item.jobType}}
+                </ion-text>
+                <ion-text class="blackColor15Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 7px">
+                  {{item.sourceName}}
+                </ion-text>
+                <ion-text class="grayColor13Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 2px">
+                  {{item.city}} • {{item.jobTime}}
+                </ion-text>
+              </div>
+            </div>
+            <ion-text class="primaryColor16SemiBold">
+              ${{item.amountPerMonth}}/Mo
+            </ion-text>
+          </div>
+        </ion-item>
+        <ion-item-options class="ion-no-padding" style="background-color: var(--whiteColor)">
+          <ion-item-option side="end" color="whiteColor" style="margin-bottom: 20px; width: 80px" class="center">
+            <div (click)="onDelete(item.id, slidingBooking)" class="center circle60">
+              <ion-icon name="trash" color="whiteColor" style="font-size: 24px"></ion-icon>
+            </div>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <div *ngIf="savedList.length===0" class="center column" style="padding-bottom: 20px; height: 100%">
+      <ion-icon name="bookmark-outline" color="grayColor" style="font-size: 40px; margin-bottom: 10px">
+      </ion-icon>
+      <ion-text class="grayColor19SemiBold"> No Saved Jobs! </ion-text>
+    </div>
+
+    <ion-toast mode="ios" [isOpen]="isToastOpen" message="Removed From Saved" class="whiteColor14Medium"
+      [duration]="1000" (didDismiss)="isToastOpen=false"></ion-toast>
+  </div>
+</ion-content>

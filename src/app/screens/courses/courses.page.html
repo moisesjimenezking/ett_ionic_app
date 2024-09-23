@@ -1,0 +1,89 @@
+<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="sidebarMenuCourses" contentId="main-content" type="overlay" swipeGesture="true">
+  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
+    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%;">
+      <span class="icon-container" style="text-align: center;">
+        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
+      </span>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item id="openLogoutDialogCourses">
+        <span class="material-icons side-icon">
+          logout
+        </span>  
+        <div class="side-text">Cerrar sesión</div>
+      </ion-item>
+    </ion-list>
+
+    <ion-modal mode="md" #logoutDialogCourses trigger="openLogoutDialogCourses" style="--border-radius: 10px">
+      <ng-template>
+        <div class="column">
+          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+            ¿Está seguro de que desea cerrar sesión?
+          </ion-text>
+          <div class="row">
+            <div (click)="logoutDialogCourses.dismiss()" class="center dialogButton" style="margin-right: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+            </div>
+            <div (click)="logoutDialogCourses.dismiss();goTo('auth/login');logout()" class="center dialogButton"
+              style="margin-left: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </ion-content>
+  <ion-footer>
+    <div>
+      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
+    </div>
+  </ion-footer>
+</ion-menu>
+
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Cursos en linea
+      </ion-text>
+      <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
+        <ion-menu-button menu="sidebarMenuCourses" class="menu-button-custom" color="whiteColor" style="font-size: 30px"></ion-menu-button>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div *ngFor="let item of jobList;let i=index;" style="margin-top: 10px;">
+      <div class="row jobCard" style="margin-top: 0">
+        <div (click)="goTo('courses-detail')" class="rowAlignCenter" style="flex: 1">
+          <ion-img [src]="item.sourceLogo" class="imageOverflow"
+            style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+          <div class="column" style="flex: 1; margin-left: 15px">
+            <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+              {{item.jobType}}
+            </ion-text>
+            <ion-text class="blackColor15Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 7px">
+              {{item.sourceName}}
+            </ion-text>
+          </div>
+        </div>
+        <div class="column" style="align-items: flex-end; justify-content: space-between">
+          <ion-text class="primaryColor16SemiBold">
+            ${{item.amount}}
+          </ion-text>
+        </div>
+      </div>
+    </div>
+
+    <ion-toast #toast [isOpen]="showToast" mode="ios" [message]="toastMsg" [duration]="1000"
+      (didDismiss)="showToast=false; toast.dismiss;" class="whiteColor14Medium"></ion-toast>
+  </div>
+</ion-content>

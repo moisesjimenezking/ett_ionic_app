@@ -1,0 +1,26 @@
+.square34 {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.dialogButton {
+  flex: 1;
+  background-color: var(--primaryColor);
+  padding: 12px;
+}
+
+.custom-background {
+  --background: #2758BF; /* Nuevo color de fondo */
+}
+
+/* Add styles for other classes accordingly */
+.rounded-top-corners {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  background-color: #2758BF;
+}
+
+// <ion-content [fullscreen]="true" class="custom-background">
+//   <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">

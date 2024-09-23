@@ -1,0 +1,67 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20" style="justify-content: space-between">
+      <span (click)="goBack()" class="material-icons" style="color: #FFF; font-size: 28px">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Detalles del Curso
+      </ion-text>
+      <span class="material-icons" style="color: #2758BF;font-size: 22px"> share </span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="row jobCard" style="margin-top: 0">
+    <div class="rowAlignCenter">
+      <ion-img src="../../../assets/images/courses/python.png" class="imageOverflow"
+        style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+      <div class="column" style="flex: 1; margin-left: 15px">
+        <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+          Aprende Python desde cero
+        </ion-text>
+        <ion-text class="grayColor15Medium ellipseText" style="-webkit-line-clamp: 1; margin-top: 3px">
+          Platzi
+        </ion-text>
+      </div>
+    </div>
+  </div>
+  <div class="rowAlignCenter" style="justify-content: space-between; margin: 0 20px">
+    <ion-text class="grayColor16Regular ellipseText" style="flex: 1; -webkit-line-clamp: 1">
+      Costo del curso
+    </ion-text>
+    <ion-text class="primaryColor16Medium"> $30 </ion-text>
+  </div>
+  <div class="rowAlignCenter" style="justify-content: space-between; margin: 0 20px">
+    <ion-text class="grayColor16Regular ellipseText" style="flex: 1; -webkit-line-clamp: 1">
+      Instructor
+    </ion-text>
+    <ion-text class="primaryColor16Medium"> Pedro Sanchez </ion-text>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="column" style="margin: 0 20px">
+    <ion-text class="blackColor19SemiBold"> Descripción del curso </ion-text>
+    <ion-text class="grayColor16Regular" style="margin-top: 10px; text-align: justify">
+      {{ description }}
+    </ion-text>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="blackColor19SemiBold"> Requisitos o recomendaciones </ion-text>
+    <div *ngFor="let item of requirementsList" class="row" style="margin-top: 10px">
+      <div class="bullet"></div>
+      <ion-text class="grayColor16Regular" style="flex: 1; margin-left: 10px">
+        {{item}}
+      </ion-text>
+    </div>
+  </div>
+</ion-content>
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div class="center button" style="background-color: #2758BF;" (click)="openLink()">
+    <ion-text class="whiteColor18SemiBold"> Comprar Ahora </ion-text>
+  </div>
+</ion-footer>

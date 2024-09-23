@@ -1,0 +1,13 @@
+::ng-deep .each_input:focus {
+  outline-style: solid;
+  outline-color: var(--primaryColor);
+  outline-width: 2px;
+  caret-color: var(--primaryColor);
+}
+
+::ng-deep .each_input {
+  outline-style: solid;
+  outline-color: var(--extraLightGrayColor);
+  outline-width: 1.5px;
+  margin: 10px;
+}

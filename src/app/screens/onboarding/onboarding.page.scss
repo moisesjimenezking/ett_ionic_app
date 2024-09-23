@@ -1,0 +1,41 @@
+.bgImage {
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  object-fit: fill;
+}
+
+.imageWrapper {
+  height: 40%;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.swiperPosition {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.onboarding-description {
+  padding: 10px 20px; // Añade un poco de espacio alrededor del texto
+  font-size: 16px; // Ajusta esto según tus necesidades
+  line-height: 1.5; // Mejora la legibilidad
+  overflow-wrap: break-word; // Asegura que las palabras se rompan correctamente al final de la línea
+  word-wrap: break-word; // Alternativa a overflow-wrap para navegadores más antiguos
+  hyphens: auto; // Permite la división de palabras al final de la línea en navegadores que lo soporten
+}
+
+.textWrapper {
+  width: 100%; // Ocupa todo el ancho disponible
+  padding: 20px; // Añade espacio alrededor del texto
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // Centra el contenido verticalmente
+}

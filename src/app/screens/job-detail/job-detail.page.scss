@@ -1,0 +1,52 @@
+.divider {
+  background-color: var(--lightGrayColor);
+  height: 1px;
+  margin: 20px;
+}
+
+.bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: var(--grayColor);
+  margin-top: 8px;
+}
+
+.smallButton {
+  background-color: var(--primaryColor);
+  border-radius: 20px;
+  padding: 8px 18px;
+  box-shadow: 0 2px 6px var(--primaryColor);
+  margin-top: 8px;
+}
+
+.dashedBorderBox {
+  background-color: var(--lightPrimaryColor);
+  border: 1.5px dashed var(--primaryColor);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px 20px;
+}
+.dialogButton {
+  flex: 1;
+  background-color: #2758BF;
+  padding: 12px;
+}
+.dialogHeader {
+  display: flex;
+  justify-content: center;
+  margin: 0 20px;
+  margin-top: 20px;
+}
+
+.custom-background {
+  --background: #2758BF; /* Nuevo color de fondo */
+}
+
+/* Add styles for other classes accordingly */
+.rounded-top-corners {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  background-color: #2758BF;
+}

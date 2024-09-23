@@ -1,0 +1,117 @@
+<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="first" contentId="main-content" type="overlay" swipeGesture="true">
+  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
+    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%">
+      <span class="icon-container">
+        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
+      </span>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item id="openLogoutDialogHome">
+        <span class="material-icons side-icon">
+          logout
+        </span>  
+        <div class="side-text">Cerrar sesión</div>
+      </ion-item>
+    </ion-list>
+
+    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialogHome" style="--border-radius: 10px">
+      <ng-template>
+        <div class="column">
+          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+            ¿Está seguro de que desea cerrar sesión?
+          </ion-text>
+          <div class="row">
+            <div (click)="logoutDialog.dismiss()" class="center dialogButton" style="margin-right: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+            </div>
+            <div (click)="logoutDialog.dismiss();goTo('auth/login');logout()" class="center dialogButton"
+              style="margin-left: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </ion-content>
+  <ion-footer>
+    <div>
+      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
+    </div>
+  </ion-footer>
+</ion-menu>
+
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758bf;">
+    <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
+      <ion-img [src]="icon" class="imageOverflow" style="width: 48px; height: 48px; border-radius: 28px"></ion-img>
+      <div style="display: flex; flex-direction: column; justify-content: center; margin-left: 10px;">
+        <ion-label>Balance disponible</ion-label>
+        <ion-label style="font-weight: bold; color: green; font-size: 18px;">Bs. {{ balanceAvailable }}</ion-label>
+        <ion-label>Balance bloqueado</ion-label>
+        <ion-label style="font-weight: bold; color: red; font-size: 18px;">Bs. {{ balanceAvailable }}</ion-label>
+      </div>
+      <div style="display: flex; align-items: center; margin-left: auto;"> <!-- Mover la nueva imagen al borde derecho -->
+        <ion-img src="../../../../assets/images/appIcon.png" class="imageOverflow" style="width: 28px; height: 28px; border-radius: 28px"></ion-img>
+      </div>   
+    </ion-chip>
+    <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
+      <ion-tab-button>
+        <span class="material-icons" style="font-size: 26px">savings</span>
+        <ion-label>Depositar</ion-label>
+      </ion-tab-button>
+      <ion-tab-button>
+        <span class="material-icons" style="font-size: 26px">undo</span>
+        <ion-label>Retirar</ion-label>
+      </ion-tab-button>
+      <ion-tab-button>
+        <span class="material-icons" style="font-size: 26px">swap_horiz</span>
+        <ion-label>Transferir</ion-label>
+      </ion-tab-button>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%">
+    <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%; display: flex; justify-content: center; align-items: center;">
+      <ion-list *ngIf="listTransaction && listTransaction.length > 0">
+          <div *ngFor="let item of listTransaction; let i=index;">
+              Contenido del bucle ngFor 
+          </div>
+      </ion-list>
+      <ion-label *ngIf="!listTransaction || listTransaction.length === 0" style="font-weight: bold; color: black;">Sin transacciones</ion-label>
+    </div>
+      <!-- <ion-list>
+        <ion-item>
+          <ion-label style="font-size: 12px">Retiro</ion-label>
+          <ion-label style="font-size: 12px">#89657128</ion-label>
+          <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
+          <ion-label style="font-size: 12px">0.00</ion-label>
+          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 12px">Transferencia</ion-label>
+          <ion-label style="font-size: 12px">#89657127</ion-label>
+          <ion-label style="font-size: 12px; color: green">+ 500.00</ion-label>
+          <ion-label style="font-size: 12px">1,000.00</ion-label>
+          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 12px">Transferencia</ion-label>
+          <ion-label style="font-size: 12px">#89657126</ion-label>
+          <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
+          <ion-label style="font-size: 12px">500.00</ion-label>
+          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 12px">Deposito</ion-label>
+          <ion-label style="font-size: 12px">#89657125</ion-label>
+          <ion-label style="font-size: 12px; color: green">+ 1,000.00</ion-label>
+          <ion-label style="font-size: 12px">1,500.00</ion-label>
+          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
+        </ion-item>
+      </ion-list> -->
+  </div>
+</ion-content>

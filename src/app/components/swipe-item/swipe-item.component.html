@@ -1,0 +1,39 @@
+<div class="wrapper" #wrapper></div>
+<ion-item mode="ios" lines="none" color="whiteColor">
+  <div class="itemWrapper">
+    <div class="rowAlignCenter">
+      <div
+        class="center"
+        style="
+          width: 60px;
+          height: 60px;
+          border-radius: 30px;
+          background-color: var(--lightPrimaryColor);
+        "
+      >
+        <span
+          class="material-icons"
+          style="font-size: 26px; color: var(--primaryColor)"
+        >
+          notificaciones
+        </span>
+      </div>
+      <div class="column" style="flex: 1; margin-left: 15px">
+        <ion-text
+          class="blackColor18Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+          {{ noti.title }}
+        </ion-text>
+        <ion-text
+          class="grayColor15Regular ellipseText"
+          style="margin-top: 3px; -webkit-line-clamp: 2"
+        >
+          {{ noti.description }}
+        </ion-text>
+      </div>
+    </div>
+    <div class="divider">
+    </div>
+  </div>
+</ion-item>

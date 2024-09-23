@@ -1,0 +1,87 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor" style="height: 0"></ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="center column" style="margin: 25px">
+    <ion-img src="../../../../assets/images/appIcon.png" style="width: 122px; height: 130px; object-fit: contain">
+    </ion-img>
+  </div>
+
+  <ion-text class="blackColor20Bold" style="justify-content: center; display: flex; margin: 0 28px">
+    Regístrate
+  </ion-text>
+
+  <div class="margin20" style="margin-top: 10px">
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Nombre" class="textField lightColor16Medium"
+        style="min-height: 20px" [(ngModel)]="name">
+      </ion-input>
+    </div>
+    <ion-text color="danger" *ngIf="!name && showErrorMessage">Este campo es obligatorio</ion-text>
+  </div>
+
+  <div style="margin: 0 20px">
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Correo electrónico"
+        class="textField lightColor16Medium" style="min-height: 20px" [(ngModel)]="email" inputmode="email" required (ionChange)="validateEmail()">
+      </ion-input>
+    </div>
+    <ion-text color="danger" *ngIf="!email && showErrorMessage">Este campo es obligatorio</ion-text>
+    <ion-text color="danger">{{ alertMessageEmail }}</ion-text>
+  </div>
+
+  <div class="margin20">
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Número de teléfono" class="textField lightColor16Medium"
+        style="min-height: 20px" [(ngModel)]="mobileNo" inputmode="numeric">
+      </ion-input>
+    </div>
+    <ion-text color="danger" *ngIf="!mobileNo && showErrorMessage">Este campo es obligatorio</ion-text>
+  </div>
+
+  <div style="margin: 0 20px">
+    <div class="textFieldWrapper rowAlignCenter">
+      <ion-input mode="ios" placeholder="Contraseña" class="textField lightColor16Medium"
+        style="min-height: 20px; flex: 1"
+        [style.font-size]="password&&securePassword? platform.is('ios')?'9px':'16px':'16px'" [(ngModel)]="password"
+        [type]="securePassword?'password':'text'">
+      </ion-input>
+      <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="lightGrayColor" style="font-size: 18px"
+        (click)="securePassword=!securePassword">
+      </ion-icon>
+    </div>
+    <ion-text color="danger" *ngIf="!password && showErrorMessage">Este campo es obligatorio</ion-text>
+  </div>
+
+  <div style="margin: 0 20px">
+    <div class="textFieldWrapperNew rowAlignCenter">
+      <ion-segment value="PERSON" mode="ios" (ionChange)="seleccionarTipoCuenta($event)">
+        <ion-segment-button value="PERSON" style="border-radius: 20px;">
+          <ion-icon slot="icon-only" name="person"></ion-icon>
+          <ion-label><ion-icon name="person"></ion-icon> Personal</ion-label>
+        </ion-segment-button>
+      
+        <ion-segment-button value="COMPANY" style="border-radius: 20px;">
+          <ion-icon slot="icon-only" name="business"></ion-icon>
+          <ion-label><ion-icon name="business"></ion-icon> Empresarial</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </div>
+
+  <div (click)="crearCuenta()" class="button center margin20" style="margin-top: 30px; background-color: #2758BF; color: #ffffff;">
+    <ion-text class="whiteColor18Bold">Crear cuenta</ion-text>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div class="footer" style="display: flex; justify-content: space-between;">
+    <ion-text class="grayColor16Medium">
+      Ya tienes cuenta?
+    </ion-text>
+    <ion-text class="primaryColor16Medium" (click)="goTo('auth/login')">
+      Inicia sesión
+    </ion-text>
+  </div>
+</ion-footer>

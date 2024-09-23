@@ -1,0 +1,78 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Acerca de mí
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div class="margin20" style="margin-top: 20px">
+      <ion-text class="grayColor16Regular"> Resumen </ion-text>
+      <div class="textFieldWrapper" style="padding: 5px 15px">
+        <ion-textarea mode="ios" [(ngModel)]="about" inputmode="text"
+          placeholder="*Puedes escribir sobre tu trabajo, experiencia o habilidades. La gente también habla de sus logros."
+          autoGrow="true" class="blackColor14Regular" style="
+            --placeholder-color: var(--grayColor);
+            --placeholder-opacity: 0.7;">
+        </ion-textarea>
+      </div>
+    </div>
+
+    <div class="margin20">
+      <ion-text class="grayColor16Regular"> Experience </ion-text>
+      <div id="yearsSheet" class="textFieldWrapper rowAlignCenter" style="justify-content: space-between">
+        <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1">
+          {{experienceYear}} Years
+        </ion-text>
+        <span class="material-icons" style="color: var(--blackColor); font-size: 24px">
+          arrow_drop_down
+        </span>
+      </div>
+    </div>
+
+    <div class="margin20">
+      <ion-text class="grayColor16Regular"> Ubicación </ion-text>
+      <div id="locationSheet" class="textFieldWrapper rowAlignCenter" style="justify-content: space-between">
+        <ion-input mode="ios" placeholder="Donde te ubicas"
+          class="textField blackColor16Medium" style="min-height: 20px" [(ngModel)]="location" inputmode="text">
+        </ion-input>
+      </div>
+    </div>
+
+    <ion-modal mode="md" [initialBreakpoint]="1" [breakpoints]="[0,0.7,1]"
+      style="--height: auto; --width: 100%; --border-radius: 0px" handle="false" trigger="yearsSheet" #yearsModal>
+      <ng-template>
+        <div style="background-color: var(--whiteColor); margin-bottom: 10px">
+          <ion-text class="blackColor20Bold" style="display: flex; justify-content: center; margin: 20px">
+            Experience
+          </ion-text>
+          <div *ngFor="let item of yearsList">
+            <div (click)="experienceYear=item;yearsModal.dismiss()" class="rowAlignCenter"
+              style="justify-content: space-between; margin: 10px 20px">
+              <ion-text [class]="experienceYear===item?'primaryColor16Medium': 'grayColor16Regular'"
+                class="ellipseText" style="-webkit-line-clamp: 1; flex: 1">
+                {{item}} &nbsp; Years
+              </ion-text>
+              <span *ngIf="experienceYear===item" class="material-icons"
+                style="color: var(--primaryColor); font-size: 22px">
+                check
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </div>
+</ion-content>
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div (click)="updateUser()" class="button center" style="margin-top: 30px; background-color: #2758BF;">
+    <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+  </div>
+</ion-footer>

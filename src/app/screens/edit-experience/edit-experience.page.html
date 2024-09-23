@@ -1,0 +1,264 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20" style="justify-content: space-between">
+      <span
+        (click)="goBack()"
+        class="material-icons"
+        style="color: var(--blackColor); font-size: 28px"
+      >
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Editar experiencia
+      </ion-text>
+      <div class="center square20">
+        <span
+          class="material-icons"
+          style="color: var(--blackColor); font-size: 19px"
+        >
+          add
+        </span>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="margin: 0 20px">
+    <ion-text class="blackColor19SemiBold"> Presente </ion-text>
+
+    <div style="margin: 20px 0">
+      <ion-text class="grayColor16Regular"> Título </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input
+          mode="ios"
+          placeholder="Ingrese el título"
+          class="textField blackColor16Medium"
+          style="min-height: 20px"
+          [(ngModel)]="presentTitle"
+        >
+        </ion-input>
+      </div>
+    </div>
+
+    <div>
+      <ion-text class="grayColor16Regular"> Nombre de la empresa</ion-text>
+      <div class="textFieldWrapper">
+        <ion-input
+          mode="ios"
+          placeholder="Introduzca el nombre de la empresa"
+          class="textField blackColor16Medium"
+          style="min-height: 20px"
+          [(ngModel)]="presentCompanyName"
+        >
+        </ion-input>
+      </div>
+    </div>
+
+    <div class="row" style="margin: 20px 0">
+      <div class="column" style="flex: 1; margin-right: 10px">
+        <ion-text class="grayColor16Regular"> Fecha de inicio </ion-text>
+        <div
+          (click)="dateSelectionFor='present';showStartDateDialog=true"
+          class="rowAlignCenter textFieldWrapper"
+        >
+          <ion-text
+            class="blackColor16Medium ellipseText"
+            style="flex: 1; -webkit-line-clamp: 1"
+          >
+            {{presentStartDate?presentStartDate:'Feb 2023'}}
+          </ion-text>
+          <ion-icon
+            name="calendar-outline"
+            color="primaryColor"
+            style="font-size: 18px"
+          ></ion-icon>
+        </div>
+      </div>
+      <div class="column" style="flex: 1; margin-left: 10px">
+        <ion-text class="grayColor16Regular"> Fecha final </ion-text>
+        <div
+          (click)="dateSelectionFor='present';showEndDateDialog=true"
+          class="rowAlignCenter textFieldWrapper"
+        >
+          <ion-text
+            class="blackColor16Medium ellipseText"
+            style="flex: 1; -webkit-line-clamp: 1"
+          >
+            {{presentEndDate?presentEndDate:'Present'}}
+          </ion-text>
+          <ion-icon
+            *ngIf="presentEndDate"
+            name="calendar-outline"
+            color="primaryColor"
+            style="font-size: 18px"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="margin20" style="margin-top: 30px">
+    <ion-text class="blackColor19SemiBold"> Anterior </ion-text>
+
+    <div style="margin: 20px 0">
+      <ion-text class="grayColor16Regular"> Título </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input
+          mode="ios"
+          placeholder="Ingrese el título"
+          class="textField blackColor16Medium"
+          style="min-height: 20px"
+          [(ngModel)]="pastTitle"
+        >
+        </ion-input>
+      </div>
+    </div>
+
+    <div>
+      <ion-text class="grayColor16Regular"> Nombre de la empresa </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input
+          mode="ios"
+          placeholder="Introduzca el nombre de la empresa"
+          class="textField blackColor16Medium"
+          style="min-height: 20px"
+          [(ngModel)]="pastCompanyName"
+        >
+        </ion-input>
+      </div>
+    </div>
+
+    <div class="row" style="margin: 20px 0">
+      <div class="column" style="flex: 1; margin-right: 10px">
+        <ion-text class="grayColor16Regular"> Fecha de inicio </ion-text>
+        <div
+          (click)="dateSelectionFor='past';showStartDateDialog=true"
+          class="rowAlignCenter textFieldWrapper"
+        >
+          <ion-text
+            class="blackColor16Medium ellipseText"
+            style="flex: 1; -webkit-line-clamp: 1"
+          >
+            {{pastStartDate?pastStartDate:'Dec 2021'}}
+          </ion-text>
+          <ion-icon
+            name="calendar-outline"
+            color="primaryColor"
+            style="font-size: 18px"
+          ></ion-icon>
+        </div>
+      </div>
+
+      <div class="column" style="flex: 1; margin-left: 10px">
+        <ion-text class="grayColor16Regular"> Fecha final </ion-text>
+        <div
+          (click)="dateSelectionFor='past';showEndDateDialog=true"
+          class="rowAlignCenter textFieldWrapper"
+        >
+          <ion-text
+            class="blackColor16Medium ellipseText"
+            style="flex: 1; -webkit-line-clamp: 1"
+          >
+            {{pastEndDate?pastEndDate:'Feb 2023'}}
+          </ion-text>
+          <ion-icon
+            name="calendar-outline"
+            color="primaryColor"
+            style="font-size: 18px"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-modal
+    mode="md"
+    [isOpen]="showStartDateDialog"
+    (didDismiss)="showStartDateDialog=false"
+    style="--border-radius: 10px"
+  >
+    <ng-template>
+      <div class="column" style="margin-bottom: 20px">
+        <div class="center">
+          <ion-datetime
+            mode="ios"
+            presentation="month-year"
+            [preferWheel]="true"
+            class="datePicker"
+            [(ngModel)]="startDate"
+            [max]="todayDate"
+          ></ion-datetime>
+        </div>
+        <div
+          class="rowAlignCenter"
+          style="margin: 0 20px; justify-content: flex-end"
+        >
+          <ion-text
+            (click)="showStartDateDialog=false;"
+            class="grayColor18Medium"
+          >
+            Cancel
+          </ion-text>
+          <ion-text
+            (click)="changeStartDate();showStartDateDialog=false;"
+            class="primaryColor18SemiBold"
+            style="margin-left: 20px"
+          >
+            Set
+          </ion-text>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
+    mode="md"
+    #endDateModal
+    [isOpen]="showEndDateDialog"
+    (didDismiss)="showEndDateDialog=false"
+    style="--border-radius: 10px"
+  >
+    <ng-template>
+      <div class="column" style="margin-bottom: 20px">
+        <div class="center">
+          <ion-datetime
+            mode="ios"
+            presentation="month-year"
+            [preferWheel]="true"
+            class="datePicker"
+            [(ngModel)]="endDate"
+            [max]="dateSelectionFor === 'present' ? '2050-12-19' : todayDate"
+          ></ion-datetime>
+        </div>
+        <div
+          class="rowAlignCenter"
+          style="margin: 0 20px; justify-content: flex-end"
+        >
+          <ion-text
+            (click)="showEndDateDialog=false;"
+            class="grayColor18Medium"
+          >
+            Cancel
+          </ion-text>
+          <ion-text
+            (click)="changeEndDate();showEndDateDialog=false;"
+            class="primaryColor18SemiBold"
+            style="margin-left: 20px"
+          >
+            Set
+          </ion-text>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div (click)="goBack()" class="center button">
+    <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+  </div>
+</ion-footer>

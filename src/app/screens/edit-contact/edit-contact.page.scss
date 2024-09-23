@@ -1,0 +1,72 @@
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    z-index: 1000;
+  }
+
+  .dialogButton {
+    flex: 1;
+    background-color: #2758BF;
+    padding: 12px;
+  }
+  
+  .custom-background {
+    --background: #2758BF; /* Nuevo color de fondo */
+  }
+  
+  /* Add styles for other classes accordingly */
+  .rounded-top-corners {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+    background-color: #2758BF;
+  }
+
+  .email-input-container {
+    position: relative;
+  }
+  
+  #emailInput {
+    padding-right: 25px; /* Espacio para el icono */
+  }
+  
+  .check-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+  .textFieldWrapper {
+    --padding-end: 40px; /* Ajusta el espacio para el icono */
+  }
+  
+  .custom-item {
+    --border-width: 0;
+    --background: transparent;
+    --padding-start: 0; /* Elimina el padding interno por defecto */
+    --padding-end: 0;
+  }
+
+  // .modal-content {
+  //   padding: 20px; /* Ajusta el padding según tus necesidades */
+  // }
+  
+  // .input-container {
+  //   margin: 0 auto; /* Centra el input horizontalmente */
+  //   margin-bottom: 20px; /* Espacio entre el input y los botones */
+  // }
+  
+  // .button-container {
+  //   display: flex;
+  //   justify-content: center; /* Centra los botones horizontalmente */
+  // }
+
+  // ion-modal {
+  //   --width: 80%; /* Ajusta el ancho del modal */
+  //   --height: 30%; /* Ajusta la altura del modal */
+  // }

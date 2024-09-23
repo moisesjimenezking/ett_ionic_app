@@ -1,0 +1,54 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Agregar habilidades
+      </ion-text>
+    </div>
+
+    <!-- <div class="rowAlignCenter margin20 textFieldWrapper" style="margin-top: 25px">
+      <span class="material-icons" style="color: var(--grayColor); font-size: 20px">
+        search
+      </span>
+      <ion-input mode="ios" placeholder="Busca aquí" class="textField blackColor16Regular"
+        style="min-height: 20px; flex: 1; margin-left: 10px">
+      </ion-input>
+    </div> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <!-- <ion-text style="margin: 0 20px; text-align: center; margin-top: 20px;">
+      Habilidades que cumplan con perfil
+    </ion-text> -->
+
+    <div style="margin: 0 15px; margin-top: 15px">
+      <ion-grid style="--ion-grid-padding: 0px">
+        <ion-row>
+          <ion-col size="auto" *ngFor="let item of recommendedList;let i=index;" style="--ion-grid-column-padding: 0">
+            <div (click)="item.isSelected=!item.isSelected" class="rowAlignCenter skillWrapper"
+              [style.border-color]="item.isSelected?'var(--primaryColor)':'rgba(105, 105, 105, 0.5)'"
+              [style.background]="item.isSelected? '#2758BF':'transparent'">
+              <ion-text [class]="item.isSelected?'whiteColor16Regular':'grayColor16Regular'">
+                {{item.skill}}
+              </ion-text>
+              <span class="material-icons" style="font-size: 18px; margin-left: 3px"
+                [style.color]="item.isSelected?'var(--whiteColor)':'var(--grayColor)'">
+                {{item.isSelected?'check':'add'}}
+              </span>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div (click)="updateUser()" class="button center" style="margin-top: 25px; background-color: #2758BF;">
+    <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+  </div>
+</ion-footer>

@@ -1,0 +1,223 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #fff;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Editar perfil
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="center margin20" style="margin-top: 5px">
+    <div style="position: relative">
+      <ion-img [src]="imageUrl" class="imageOverflow" style="width: 100px; height: 100px; border-radius: 50px">
+      </ion-img>
+      <div id="changeProfilePic" class="center changePicIconWrapper">
+        <ion-icon name="camera" color="whiteColor" style="font-size: 15px"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="margin20" style="margin-top: 25px">
+    <ion-text class="grayColor16Regular"> Nombre Completo </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Ingrese su nombre" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="fullName">
+      </ion-input>
+    </div>
+  </div>
+
+  <!-- <div class="margin20" style="margin-top: 25px">
+    <ion-text class="grayColor16Regular"> Apellido </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Ingrese su apellido" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="apellido">
+      </ion-input>
+    </div>
+  </div> -->
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular"> Dirección de residencia </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Introducir la dirección de residencia" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="residencia">
+      </ion-input>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular"> Número de teléfono </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Introducir su número de teléfono" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="telefono">
+      </ion-input>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular"> Dirección de correo electrónico </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input
+        mode="ios"
+        placeholder="Introducir la dirección de correo electrónico"
+        class="textField blackColor16Medium"
+        style="min-height: 20px"
+        [(ngModel)]="email"
+        inputmode="email"
+      >
+      </ion-input>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Sexo</ion-text>
+    <div class="textFieldWrapper">
+      <ion-select interface="auto" placeholder="Seleccionar su sexo" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="sexo">
+        <ion-select-option value="Masculino">Masculino</ion-select-option>
+        <ion-select-option value="Femenino">Femenino</ion-select-option>
+        <ion-select-option value="otro">otro</ion-select-option>
+      </ion-select>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Estado civil</ion-text>
+    <div class="textFieldWrapper">
+      <ion-select interface="auto" placeholder="Seleccione su estado civil" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="civilState">
+        <ion-select-option value="Masculino">Casado</ion-select-option>
+        <ion-select-option value="Femenino">Soltero</ion-select-option>
+        <ion-select-option value="otro">viudo</ion-select-option>
+      </ion-select>
+    </div>
+  </div>
+  
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Cargas familiares</ion-text>
+    <ion-input type="number" min="0" max="20" [(ngModel)]="cargeFamily" (ionChange)="validateFamilyCarge()"></ion-input>
+    <ion-text color="danger">{{ alertMessageFamily }}</ion-text>
+  </div>
+
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Fecha de nacimiento</ion-text>
+    <ion-input 
+      type="date"
+      [(ngModel)]="dateTime"
+      (ionChange)="validateDate()"
+    ></ion-input>
+    <ion-text color="danger">{{ alertMessagedatetime }}</ion-text>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Cargar Documento de Identidad</ion-text>
+    <ion-input type="file" multiple accept=".txt, .pdf, image/*" #fileInput></ion-input>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Licencia</ion-text>
+    <ion-input type="file" multiple accept=".txt, .pdf, image/*" #fileInput></ion-input>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">RIF</ion-text>
+    <ion-input type="file" multiple accept=".txt, .pdf, image/*" #fileInput></ion-input>
+  </div>
+  
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Nivel de estudio</ion-text>
+    <div class="textFieldWrapper">
+      <ion-select interface="auto" placeholder="Seleccione su nivel de estudio" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="civilState">
+        <ion-select-option value="bachiller">Bachiller</ion-select-option>
+        <ion-select-option value="medio">Tec. Medio</ion-select-option>
+        <ion-select-option value="superior">Tec. Superior</ion-select-option>
+        <ion-select-option value="ingenieria">Ingeniería</ion-select-option>
+        <ion-select-option value="licenciatura">Licenciatura</ion-select-option>
+        <ion-select-option value="posgrado">Posgrado</ion-select-option>
+      </ion-select>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Tipo de sangre</ion-text>
+    <div class="textFieldWrapper">
+      <ion-select interface="auto" placeholder="Seleccione su tipo de sangre" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="bloodType">
+        <ion-select-option value="A+">Tipo A positivo (A+)</ion-select-option>
+        <ion-select-option value="A-">Tipo A negativo (A-)</ion-select-option>
+        <ion-select-option value="B+">Tipo B positivo (B+)</ion-select-option>
+        <ion-select-option value="B-">Tipo B negativo (B-)</ion-select-option>
+        <ion-select-option value="AB+">Tipo AB positivo (AB+)</ion-select-option>
+        <ion-select-option value="AB-">Tipo AB negativo (AB-)</ion-select-option>
+        <ion-select-option value="O+">Tipo O positivo (O+)</ion-select-option>
+        <ion-select-option value="O-">Tipo O negativo (O-)</ion-select-option>
+      </ion-select>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Alergias</ion-text>
+    <div class="textFieldWrapper">
+      <ion-select interface="auto" placeholder="Seleccione su alergia de tener" class="textField blackColor16Medium"
+        style="min-height: 20px" [(ngModel)]="alergiType">
+        <ion-select-option value="polen">Alergia al polen</ion-select-option>
+        <ion-select-option value="polvo">Alergia al polvo</ion-select-option>
+        <ion-select-option value="ácaros">Alergia a los ácaros del polvo</ion-select-option>
+        <ion-select-option value="alimentos">Alergia a los alimentos (por ejemplo, maní, leche, huevo)</ion-select-option>
+        <ion-select-option value="moho">Alergia al moho</ion-select-option>
+        <ion-select-option value="medicamentos">Alergia a los medicamentos (por ejemplo, penicilina)</ion-select-option>
+        <ion-select-option value="insectos">Alergia a las picaduras de insectos (por ejemplo, abejas, avispas)</ion-select-option>
+        <ion-select-option value="animales">Alergia al pelo de animales (por ejemplo, gatos, perros)</ion-select-option>
+        <ion-select-option value="látex">Alergia al látex</ion-select-option>
+        <ion-select-option value="sol">Alergia al sol</ion-select-option>
+      </ion-select>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular"> Contraseña </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Introducir la contraseña" class="textField blackColor16Medium"
+        style="min-height: 20px" [style.font-size]="password? platform.is('ios')?'9px':'16px':'16px'"
+        [(ngModel)]="password" type="password" clearOnEdit="false">
+      </ion-input>
+    </div>
+  </div>
+
+  <div (click)="goBack()" class="center button" style="margin-top: 30px">
+    <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+  </div>
+
+  <ion-modal mode="md" [initialBreakpoint]="1" [breakpoints]="[0,1]"
+    style="--height: auto; --width: 100%; --border-radius: 0px" handle="false" trigger="changeProfilePic"
+    #changePicSheet>
+    <ng-template>
+      <div style="background-color: var(--whiteColor); margin-bottom: 20px">
+        <ion-text class="blackColor20Bold" style="display: flex; justify-content: center; margin: 20px">
+          Cambiar foto de perfil
+        </ion-text>
+        <div class="sheetDivider"></div>
+        <ion-text (click)="changePicSheet.dismiss()" class="redColor16Regular"
+          style="display: flex; justify-content: center">
+          Eliminar la foto actual
+        </ion-text>
+        <div class="sheetDivider"></div>
+        <ion-text (click)="changePicSheet.dismiss()" class="blackColor16Regular"
+          style="display: flex; justify-content: center">
+          Tomar foto
+        </ion-text>
+        <div class="sheetDivider"></div>
+        <ion-text class="blackColor16Regular" style="display: flex; justify-content: center" (click)="fileInput.click()">
+          <input type="file" multiple accept=".txt, .pdf, image/*" style="display: none;" #fileInput>
+          Elige de la biblioteca
+        </ion-text>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

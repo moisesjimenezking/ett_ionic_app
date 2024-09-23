@@ -1,0 +1,99 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow">
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Detalles del Trabajo
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="row jobCard" style="margin-top: 0">
+    <div class="rowAlignCenter">
+      <ion-img
+        src="../../../assets/images/jobs/job1.png"
+        class="imageOverflow"
+        style="width: 65px; height: 65px; border-radius: 10px"
+      ></ion-img>
+      <div class="column" style="flex: 1; margin-left: 15px">
+        <ion-text
+          class="blackColor18SemiBold ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+          Sr. UI/UX Designer
+        </ion-text>
+        <ion-text
+          class="grayColor15Medium ellipseText"
+          style="-webkit-line-clamp: 1; margin-top: 3px"
+        >
+          Aribnb
+        </ion-text>
+      </div>
+    </div>
+  </div>
+
+  <div class="row jobCard" style="margin-top: 0">
+    <div class="rowAlignCenter">
+      <ion-img
+        src="../../../assets/images/icons/pdfLogo.png"
+        class="imageOverflow"
+        style="width: 40px; height: 55px; border-radius: 5px"
+      ></ion-img>
+      <div class="column" style="flex: 1; margin-left: 15px">
+        <ion-text
+          class="blackColor18Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+          Resume - Samantha.pdf
+        </ion-text>
+        <ion-text
+          class="grayColor15Medium ellipseText"
+          style="-webkit-line-clamp: 1; margin-top: 3px"
+        >
+          500kb
+        </ion-text>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div class="column">
+    <div class="center column" style="margin: 0 20px; margin-bottom: 10px">
+      <ion-img
+        src="../../../assets/images/icons/success.png"
+        class="imageOverflow"
+        style="width: 100px; height: 100px; margin: 20px 0"
+      ></ion-img>
+      <ion-text
+        class="blackColor20Bold"
+        style="margin-bottom: 10px; text-align: center"
+      >
+        Exitoso
+      </ion-text>
+      <ion-text
+        class="grayColor16Regular ellipseText"
+        style="-webkit-line-clamp: 2; text-align: center"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+        malesuada est commodo eu.
+      </ion-text>
+    </div>
+    <div (click)="goTo('applied-jobs')" class="center button">
+      <ion-text class="whiteColor18SemiBold"> Ver lista de trabajos solicitados </ion-text>
+    </div>
+    <div
+      (click)="goTo('bottom-tab-bar/home')"
+      class="center button borderButton"
+    >
+      <ion-text class="primaryColor18SemiBold"> Descubra más trabajos</ion-text>
+    </div>
+  </div>
+</ion-footer>

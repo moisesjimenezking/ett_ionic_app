@@ -1,0 +1,149 @@
+<ion-header mode="ios" [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="whiteColor" style="height: 0"></ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="center column" style="margin: 25px">
+    <ion-img src="../../../../assets/images/appIcon.png" style="width: 122px; height: 130px; object-fit: contain">
+    </ion-img>
+  </div>
+
+  <ion-text class="blackColor20Bold" style="justify-content: center; display: flex; margin: 0 28px">
+    Inicia sesión en Ett
+  </ion-text>
+
+  <div class="margin20" style="margin-top: 30px">
+    <div class="textFieldWrapper">
+      <ion-input mode="ios" placeholder="Correo electrónico" class="textField lightColor16Medium"
+        style="min-height: 20px" [(ngModel)]="email" inputmode="email" (ionChange)="validateEmail()">
+      </ion-input>
+    </div>
+    <ion-text color="danger">{{ alertMessageEmail }}</ion-text>
+  </div>
+
+  <div style="margin: 0 20px">
+    <div class="textFieldWrapper rowAlignCenter">
+      <ion-input mode="ios" placeholder="Contraseña" class="textField lightColor16Medium"
+        style="min-height: 20px; flex: 1"
+        [style.font-size]="password&&securePassword? platform.is('ios')?'9px':'16px':'16px'" [(ngModel)]="password"
+        [type]="securePassword?'password':'text'">
+      </ion-input>
+      <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="lightGrayColor" style="font-size: 18px"
+        (click)="securePassword=!securePassword"></ion-icon>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: flex-end; margin: 0 20px">
+    <ion-text class="primaryColor16Medium" style="margin-top: 5px" id="openDialogPass">
+      Contraseña olvidada?
+    </ion-text>
+  </div>
+
+
+  <ion-modal mode="md" #dialogPass trigger="openDialogPass" style="--border-radius: 10px">
+    <ng-template>
+      <div class="column">
+        <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+          Recuperar contraseña
+        </ion-text>
+        <div class="margin20" style="margin-top: 0px">
+          <div class="textFieldWrapper">
+            <ion-input mode="ios" placeholder="Correo electrónico" class="textField lightColor16Medium"
+              style="min-height: 20px" [(ngModel)]="emailRecover" inputmode="email" (ionChange)="validateEmail()">
+            </ion-input>
+          </div>
+        </div>
+        <div class="row">
+          <div (click)="dialogPass.dismiss()" class="center dialogButton" style="margin-right: 1px">
+            <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+          </div>
+          <div (click)="openDialogCode()" class="center dialogButton"
+            style="margin-left: 1px" id="openDialogCode">
+            <ion-text class="whiteColor18SemiBold" > Enviar </ion-text>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal mode="md" #dialogCode trigger="openDialogCode" style="--border-radius: 10px">
+    <ng-template>
+      <div class="column">
+        <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+          Cambiar contraseña
+        </ion-text>
+        <div style="margin: 0 20px">
+          <div class="textFieldWrapper rowAlignCenter">
+            <ion-input mode="ios" placeholder="Código de verificación" class="textField lightColor16Medium"
+              style="min-height: 20px; flex: 1" inputmode="text">
+            </ion-input>
+          </div>
+        </div>
+        <div style="margin: 0 20px">
+          <div class="textFieldWrapper rowAlignCenter">
+            <ion-input mode="ios" placeholder="Contraseña" class="textField lightColor16Medium"
+              style="min-height: 20px; flex: 1"
+              [style.font-size]="password&&securePassword? platform.is('ios')?'9px':'16px':'16px'" [(ngModel)]="password"
+              [type]="securePassword?'password':'text'">
+            </ion-input>
+            <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="lightGrayColor" style="font-size: 18px"
+              (click)="securePassword=!securePassword"></ion-icon>
+          </div>
+        </div>
+        <div style="margin: 0 20px">
+          <div class="textFieldWrapper rowAlignCenter">
+            <ion-input mode="ios" placeholder="Verificar contraseña" class="textField lightColor16Medium"
+              style="min-height: 20px; flex: 1"
+              [style.font-size]="password&&securePassword? platform.is('ios')?'9px':'16px':'16px'" [(ngModel)]="password"
+              [type]="securePassword?'password':'text'">
+            </ion-input>
+            <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="lightGrayColor" style="font-size: 18px"
+              (click)="securePassword=!securePassword"></ion-icon>
+          </div>
+        </div>
+        <div class="row">
+          <div (click)="dialogCode.dismiss()" class="center dialogButton" style="margin-right: 1px">
+            <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+          </div>
+          <div (click)="dialogCode.dismiss()" class="center dialogButton"
+            style="margin-left: 1px">
+            <ion-text class="whiteColor18SemiBold" > Aceptar </ion-text>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <div (click)="token()" class="button center" style="margin: 30px 20px; background-color: #2758BF; color: #ffffff;">
+    <ion-text class="whiteColor18Bold"> Iniciar sesión </ion-text>
+  </div>
+
+  <!-- <div class="center column" style="margin: 0px 20px; margin-top: 40px">
+    <ion-text class="grayColor16Medium"> O inicia sesión con </ion-text>
+    <div class="rowAlignCenter" style="margin-top: 20px">
+      <div class="center circle36" style="background-color: #3c5a9a">
+        <ion-img src="../../../../assets/images/icons/facebook.png"
+          style="width: 20px; height: 20px; object-fit: contain"></ion-img>
+      </div>
+      <div class="center circle36" style="background-color: #2daae1; margin: 0 15px">
+        <ion-img src="../../../../assets/images/icons/twitter.png"
+          style="width: 20px; height: 20px; object-fit: contain"></ion-img>
+      </div>
+      <div class="center circle36" style="background-color: #dd4f43">
+        <ion-img src="../../../../assets/images/icons/google.png"
+          style="width: 20px; height: 20px; object-fit: contain"></ion-img>
+      </div>
+    </div>
+  </div> -->
+</ion-content>
+
+<ion-footer mode="ios">
+  <div class="footer" style="display: flex; justify-content: space-between;">
+    <ion-text class="grayColor16Medium">
+      No tienes una cuenta?
+    </ion-text>
+    <ion-text class="primaryColor16Medium" (click)="goTo('auth/register')">
+      Regístrate ahora
+    </ion-text>
+  </div>
+</ion-footer>

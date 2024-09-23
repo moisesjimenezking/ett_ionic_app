@@ -1,0 +1,49 @@
+.custom-background {
+    --background: #2758BF; /* Nuevo color de fondo */
+  }
+  
+  /* Add styles for other classes accordingly */
+  .rounded-top-corners {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+    background-color: #2758BF;
+  }
+
+  .dialogButton {
+    flex: 1;
+    background-color: #2758BF;
+    padding: 12px;
+  }
+  
+  .menu-button-custom {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .divider {
+    background-color: var(--lightGrayColor);
+    height: 1px;
+    margin: 0px;
+  }
+
+ion-tab-button{
+  background: none;
+  border: none;
+  box-shadow: none;
+  --color:black;
+};
+
+  ion-label{
+    color: black;
+  }
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

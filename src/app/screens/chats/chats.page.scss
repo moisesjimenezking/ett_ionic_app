@@ -1,0 +1,39 @@
+.searchFieldWrapper {
+  background-color: var(--extraLightGrayColor);
+  padding: 15px 12px;
+  border-radius: 10px;
+  margin-top: 25px;
+}
+
+.messageCountWrapper {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: var(--primaryColor);
+  margin-top: 5px;
+}
+
+.custom-background {
+  --background: #2758BF; /* Nuevo color de fondo */
+}
+
+/* Add styles for other classes accordingly */
+.rounded-top-corners {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  background-color: #2758BF;
+}
+
+.dialogButton {
+  flex: 1;
+  background-color: #2758BF;
+  padding: 12px;
+}
+
+.menu-button-custom {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}

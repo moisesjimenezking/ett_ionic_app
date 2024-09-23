@@ -1,0 +1,8 @@
+{
+  "name": "Ett-Venezuela",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

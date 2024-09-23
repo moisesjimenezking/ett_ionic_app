@@ -1,0 +1,218 @@
+<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="sidebarMenuProfile" contentId="main-content" type="overlay" swipeGesture="true">
+  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
+    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%;">
+      <!-- <ion-title style="text-align: center; color: #FFF;">Opciones</ion-title> -->
+      <span class="icon-container" style="text-align: center;">
+        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
+      </span>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item id="openLogoutDialogProfile">
+        <span class="material-icons side-icon">
+          logout
+        </span>  
+        <div class="side-text">Cerrar sesión</div>
+      </ion-item>
+    </ion-list>
+
+    <ion-modal mode="md" #logoutDialogProfile trigger="openLogoutDialogProfile" style="--border-radius: 10px">
+      <ng-template>
+        <div class="column">
+          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+            ¿Está seguro de que desea cerrar sesión?
+          </ion-text>
+          <div class="row">
+            <div (click)="logoutDialogProfile.dismiss()" class="center dialogButton" style="margin-right: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+            </div>
+            <div (click)="logoutDialogProfile.dismiss();goTo('auth/login');logout()" class="center dialogButton"
+              style="margin-left: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </ion-content>
+  <ion-footer>
+    <div>
+      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
+    </div>
+  </ion-footer>
+</ion-menu>
+
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
+
+      <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
+        <ion-menu-button menu="sidebarMenuProfile" class="menu-button-custom" color="whiteColor" style="font-size: 30px"></ion-menu-button>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="position: relative">
+    <ion-img [src]="iconFront" class="imageOverflow" style="width: 100%; height: 270px;"></ion-img>
+    <div class="column imageOverlay">
+      <div class="column image-container" style="position: relative; width: 150px; height: 150px; margin-top: 150px;">
+        <ion-img [src]="icon" class="imageOverflowNew" style=" width: 110px; height: 110px; border-radius: 60px;" />
+      </div>
+      <ion-icon name="camera" color="primaryColor15SemiBold" data-value="profile" (click)="openModal($event)" style="
+        font-size: 20px;
+        position: absolute;
+        bottom: 10px; 
+        left: 110px;
+        border: 4px solid #FFF;
+        border-radius: 18.5px;
+        background-color: #FFF;
+        display: flex;
+        "></ion-icon>
+    </div>
+    <ion-icon name="camera" color="primaryColor15SemiBold" data-value="portada" (click)="openModal($event)" style="
+      font-size: 20px;
+      position: absolute;
+      bottom: 10px; 
+      right: 15px;
+      top: 255px;
+      border: 4px solid #FFF;
+      border-radius: 18.5px;
+      background-color: #FFF;
+      display: flex;
+    "></ion-icon>
+  </div>
+  
+  <div class="margin20" style="margin-top: 35px">
+    <ion-text 
+      class="blackColor16SemiBold ellipseText" 
+      style="flex: 4; -webkit-line-clamp: 1; margin-top: 10px; font-size: 30px; font-weight: bold; text-transform: capitalize;">
+      {{ fullName }}
+    </ion-text>
+    <ion-text 
+      class="blackColor16SemiBold ellipseText" 
+      style="flex: 4; -webkit-line-clamp: 1; margin-top: 10px; font-size: 20px; font-weight: bold; text-transform: capitalize;">
+      {{ specialization }}
+    </ion-text>
+  </div>
+  <div class="divider"></div>
+
+  <div class="margin20" style="margin-top: 35px">
+    <div class="rowAlignCenter" style="justify-content: space-between">
+      <ion-text class="blackColor19SemiBold ellipseText" style="flex: 1; -webkit-line-clamp: 1">
+        Información del contacto
+      </ion-text>
+      <ion-icon (click)="goTo('edit-contact')" name="create-outline" color="blackColor"
+        style="font-size: 22px"></ion-icon>
+    </div>
+    <div class="column" style="margin: 12px 0">
+      <ion-text class="blackColor15Medium"> Dirección de correo electrónico </ion-text>
+      <ion-text class="grayColor15Regular" style="margin-top: 3px">
+        {{ email }}
+      </ion-text>
+    </div>
+    <div class="column" style="margin: 12px 0">
+      <ion-text class="blackColor15Medium"> Número de teléfono móvil </ion-text>
+      <ion-text class="grayColor15Regular" style="margin-top: 3px">
+        {{ phone }}
+      </ion-text>
+    </div>
+    <div class="column" style="margin: 12px 0; margin-bottom: 0">
+      <ion-text class="blackColor15Medium"> Sitio web </ion-text>
+      <div *ngFor="let item of websitesList" class="column" style="margin-top: 3px">
+        <ion-text class="blueColor15Regular"> {{item}} </ion-text>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="account === 'PERSON'">
+    <div class="divider"></div>
+    <div style="margin: 0 20px">
+      <div class="rowAlignCenter" style="justify-content: space-between; margin-bottom: 10px">
+        <ion-text class="blackColor19SemiBold ellipseText" style="flex: 1; -webkit-line-clamp: 1">
+          Acerca de mí
+        </ion-text>
+        <ion-icon (click)="goTo('edit-about')" name="create-outline" color="blackColor"
+          style="font-size: 22px"></ion-icon>
+      </div>
+
+      <div>
+        <ion-text class="ellipseText grayColor15Regular" [style]="!showMore?'-webkit-line-clamp: 3':null">
+          {{about}}
+        </ion-text>
+        <div class="ion-text-end">
+          <ion-text class="primaryColor15SemiBold" (click)="showMore=!showMore">
+            {{showMore?'Leer menos':'Leer más'}}
+          </ion-text>
+        </div>
+      </div>
+    </div>
+
+    <div class="rowAlignCenter" style="margin: 0 20px; margin-top: 10px">
+      <div class="rowAlignCenter" style="flex: 1">
+        <span class="material-icons" style="color: var(--grayColor); font-size: 18px">business_center</span>
+        <ion-text class="grayColor15Medium ellipseText" style="margin-left: 5px; flex: 1; -webkit-line-clamp: 1">
+          {{ experienceYear }} + Años de experiencia
+        </ion-text>
+      </div>
+      <div class="rowAlignCenter" style="flex: 1">
+        <span class="material-icons" style="color: var(--grayColor); font-size: 18px">
+          location_pin
+        </span>
+        <ion-text class="grayColor15Medium" style="margin-left: 5px; flex: 1; -webkit-line-clamp: 1">
+          {{ location }}
+        </ion-text>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="rowAlignCenter" style="margin: 0 20px; justify-content: space-between">
+        <ion-text class="blackColor19SemiBold ellipseText" style="flex: 1; -webkit-line-clamp: 1">
+          Habilidades
+        </ion-text>
+        <div (click)="goTo('add-skills')" class="center square18">
+          <ion-icon name="add" color="blackColor" style="font-size: 22px"></ion-icon>
+        </div>
+      </div>
+
+      <div class="horizontalScroll" style="padding: 0 13px; margin-top: 10px">
+        <ion-chip *ngFor="let item of currentSkill" style="display: inline-block">
+          <ion-label>{{ item }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+  </div>
+    <!-- <div class="divider"></div> -->
+
+  <ion-modal #changePicSheet mode="ios" [initialBreakpoint]="1" [breakpoints]="[0,1]" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
+    style="--height: auto; --width: 100%;">
+    <ng-template class="rounded-top-corners">
+      <div style="background-color: #FFF; margin-bottom: 20px">
+        <div class="sheetDivider"></div>
+        <ion-text (click)="changePicSheet.dismiss(); deletePic()" class="redColor16Regular"
+          style="display: flex; justify-content: center">
+          Eliminar la foto actual
+        </ion-text>
+        <div class="sheetDivider"></div>
+        <!-- <ion-text (click)="changePicSheet.dismiss()" class="blackColor16Regular"
+          style="display: flex; justify-content: center">
+          Tomar foto
+        </ion-text>
+        <div class="sheetDivider"></div> -->
+        <ion-text class="blackColor16Regular" style="display: flex; justify-content: center" (click)="fileInput.click()">
+          <input type="file" accept=".jpg, .jpeg, .png" style="display: none;" #fileInput (change)="handleFileInput($event);changePicSheet.dismiss()">
+          Elige un archivo JPG o PNG
+        </ion-text>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

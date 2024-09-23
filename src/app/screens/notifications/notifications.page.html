@@ -1,0 +1,39 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Notificaciones
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div style="margin-top: 10px;">
+      <div *ngIf="notificationsList.length>0">
+        <div *ngFor="let item of notificationsList; let i = index;" style="background-color: var(--primaryColor)">
+          <app-swipe-item [noti]="item" (delete)="removeNotification(item.id)">
+          </app-swipe-item>
+        </div>
+      </div>
+    </div>
+
+    <ion-toast [isOpen]="isToastOpen" message="Notification Dismissed!" [duration]="2000"
+      (didDismiss)="isToastOpen=false" class="whiteColor14Medium"></ion-toast>
+
+    <div class="center column" style="height: 100%;margin: 0 40px;" *ngIf="notificationsList.length===0">
+      <ion-img src="../../../assets/images/icons/notification.png" class="imageOverflow"
+        style="width: 90px; height: 90px"></ion-img>
+      <ion-text class="blackColor19SemiBold" style="margin-top: 30px">
+        No notifications yet
+      </ion-text>
+      <ion-text class="grayColor16Regular" style="text-align:center;margin-top: 10px;">
+        Stay tuned! Notifications about your activity will how up here.
+      </ion-text>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,48 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow">
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Verification
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="column" style="margin: 0 20px; margin-top: 10px">
+    <ion-text class="grayColor16Regular">
+      Ingrese el código de verificación de 4 dígitos. Que acabamos de enviar al número indicado.
+    </ion-text>
+  </div>
+
+  <ng-otp-input (onInputChange)="onChange($event)" [config]="config">
+  </ng-otp-input>
+
+  <div (click)="onContinue()" class="center button" style="margin-top: 30px">
+    <ion-text class="whiteColor18SemiBold"> Continuar </ion-text>
+  </div>
+
+  <ion-modal
+    mode="md"
+    style="--border-radius: 10px"
+    [isOpen]="showLoadingDialog"
+    (didDismiss)="showLoadingDialog=false"
+  >
+    <ng-template>
+      <div class="column center margin20">
+        <ion-spinner
+          name="lines-sharp"
+          color="primaryColor"
+          style="transform: scale(1.3); margin-bottom: 20px; margin-top: 10px"
+        ></ion-spinner>
+        <ion-text class="blackColor16Regular"> Please wait... </ion-text>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

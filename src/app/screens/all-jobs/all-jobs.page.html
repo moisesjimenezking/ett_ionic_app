@@ -1,0 +1,53 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow">
+        keyboard_backspace
+      </span>
+      <ion-text class="blackColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Recommended Jobs
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="jobList.length > 1">
+    <div *ngFor="let item of jobList;let i=index;">
+      <div *ngIf="item.title !== undefined">
+        <div class="row jobCard" style="margin-top: 0">
+          <div (click)="goTo('job-detail')" class="rowAlignCenter" style="flex: 1">
+            <ion-img [src]="item.sourceLogo" class="imageOverflow"
+              style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+            <div class="column" style="flex: 1; margin-left: 15px">
+              <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+                {{item.title}}
+              </ion-text>
+              <ion-text class="blackColor15Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 7px">
+                {{item.user.fullname}}
+              </ion-text>
+              <ion-text class="grayColor13Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 2px">
+                {{item.location}} • {{item.type_time}}
+              </ion-text>
+            </div>
+          </div>
+          <div class="column" style="align-items: flex-end; justify-content: space-between">
+            <span (click)="
+                      jobList[i].inBookmark=!item.inBookmark;
+                      toastMsg=item.inBookmark?'Added in saved!':'Removed from saved';
+                      showToast=true;
+              " class="material-icons" style="font-size: 22px">
+              {{item.inBookmark? 'bookmark':'bookmark_outline'}}
+            </span>
+            <ion-text class="primaryColor16SemiBold">
+              ${{item.amountPerMonth}}/Mo
+            </ion-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-toast #toast [isOpen]="showToast" mode="ios" [message]="toastMsg" [duration]="1000"
+    (didDismiss)="showToast=false; toast.dismiss;" class="whiteColor14Medium"></ion-toast>
+</ion-content>

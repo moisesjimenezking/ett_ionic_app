@@ -1,0 +1,151 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Editar información de contacto
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div style="margin: 0 20px; margin-top: 20px">
+      <ion-text class="grayColor16Regular">
+        Nombre
+      </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input mode="ios" placeholder="Nombre y apellido"
+          class="textField blackColor16Medium" style="min-height: 20px" [(ngModel)]="fullName" inputmode="text">
+        </ion-input>
+      </div>
+    </div>
+
+    <div style="margin: 0 20px; margin-top: 5px">
+      <ion-text class="grayColor16Regular">
+        Dirección de correo electrónico
+      </ion-text>
+      <div class="textFieldWrapper">
+        <ion-item lines="full" class="custom-item">
+          <ion-input type="email" placeholder="Introducir la dirección de correo electrónico"
+            class="textField blackColor16Medium" style="min-height: 20px" [(ngModel)]="email" inputmode="email"
+            (ionChange)="validateEmail()">
+          </ion-input>
+          <ion-icon slot="end" name="checkmark-circle" [color]="emailVerified ? 'success' : 'medium'" id="openDialogVerific"></ion-icon>
+        </ion-item>
+      </div>
+      <ion-text color="danger">{{ alertMessageEmail }}</ion-text>
+    </div>
+
+    <ion-modal mode="md" #dialogVerific trigger="openDialogVerific" style="--border-radius: 10px">
+      <ng-template>
+        <div class="column">
+          <ion-text class="blackColor18Medium" style="text-align: center; margin: 5px; margin-bottom: 0px">
+            Verificar Email
+          </ion-text>
+          <div style="margin: 0 10px;">
+            <div class="textFieldWrapper rowAlignCenter">
+              <ion-input mode="ios" placeholder="Código de verificación" class="textField lightColor16Medium"
+                style="min-height: 20px; flex: 1" inputmode="text">
+              </ion-input>
+            </div>
+          </div>
+          <div class="row">
+            <div (click)="dialogVerific.dismiss()" class="center dialogButton" style="margin-right: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+            </div>
+            <div (click)="dialogVerific.dismiss()" class="center dialogButton"
+              style="margin-left: 1px" id="openDialogCode">
+              <ion-text class="whiteColor18SemiBold" > Verificar </ion-text>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+
+    <div style="margin: 0 20px; margin-top: 5px">
+      <ion-text class="grayColor16Regular">
+        Título o Especialización 
+      </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input mode="ios" placeholder="Título o Especialización"
+          class="textField blackColor16Medium" style="min-height: 20px" [(ngModel)]="specialization" inputmode="text">
+        </ion-input>
+      </div>
+    </div>
+
+    <div class="margin20">
+      <ion-text class="grayColor16Regular"> Número de teléfono móvil</ion-text>
+      <div class="textFieldWrapper">
+        <ion-input mode="ios" placeholder="Ingrese el número de móvil" class="textField blackColor16Medium"
+          style="min-height: 20px" [(ngModel)]="mobile" inputmode="numeric">
+        </ion-input>
+      </div>
+    </div>
+
+    <div class="margin20">
+      <ion-text class="grayColor16Regular">Sitio web</ion-text>
+      <div class="textFieldWrapper">
+        <ion-input mode="ios" placeholder="Agregar URL" class="textField lightColor16Medium" style="min-height: 20px" [(ngModel)]="newWebsite" (keyup.enter)="addWebsite()"></ion-input>
+      </div>
+      <div *ngFor="let item of websitesList; let i = index">
+        <div class="column margin20">
+          <div>
+            <div class="rowAlignCenter" style="justify-content: space-between">
+              <ion-text class="grayColor16Regular">URL del sitio web</ion-text>
+              <ion-icon name="trash-sharp" color="grayColor" style="font-size: 17px; opacity: 0.6" (click)="removeWebsite(i)"></ion-icon>
+            </div>
+            <div class="textFieldWrapper">
+              <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1">
+                {{ item }}
+              </ion-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="margin20">
+      <ion-text class="grayColor16Regular"> Rif </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input mode="ios" placeholder="Ingrese el rif Ej: J-00000000" class="textField blackColor16Medium"
+          style="min-height: 20px" [(ngModel)]="rifValue" inputmode="text">
+        </ion-input>
+      </div>
+    </div>
+
+    <div class="margin20">
+      <ion-text class="grayColor16Regular"> Documento de identificación </ion-text>
+      <div class="textFieldWrapper">
+        <ion-input mode="ios" placeholder="Ingrese el su CI Ej: V-00000000" class="textField blackColor16Medium"
+          style="min-height: 20px" [(ngModel)]="identificationValue" inputmode="text">
+        </ion-input>
+        <ion-icon slot="end" name="checkmark-circle" [color]="emailVerified ? 'success' : 'medium'" id="openDialogVerific"></ion-icon>
+      </div>
+    </div>
+
+    <div style="margin: 0 20px; margin-top: 5px">
+      <ion-text class="grayColor16Regular">
+        Documento de identificación
+      </ion-text>
+      <div class="textFieldWrapper">
+        <ion-item lines="full" class="custom-item">
+          <ion-input mode="ios" placeholder="Ingrese el su CI Ej: V-00000000" class="textField blackColor16Medium"
+          style="min-height: 20px" [(ngModel)]="identificationValue" inputmode="text">
+          </ion-input>
+          <ion-icon slot="end" name="PDF" [color]="emailVerified ? 'success' : 'medium'" id="openDialogVerific"></ion-icon>
+        </ion-item>
+      </div>
+      <ion-text color="danger">{{ alertMessageEmail }}</ion-text>
+    </div>
+
+  </div>
+</ion-content>
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div (click)="updateUser()" class="center button" style="background-color: #2758BF;">
+    <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+  </div>
+</ion-footer>

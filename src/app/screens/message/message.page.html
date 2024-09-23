@@ -1,0 +1,45 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="justify-content: space-between; margin-right: 15px">
+      <div class="rowAlignCenter" style="flex: 1">
+        <span (click)="backspace()" class="material-icons" style="color: white; font-size: 28px">
+          keyboard_backspace
+        </span>
+        <ion-img [src]="searchIcon(dataChat.sourceImage)" class="imageOverflow sourceLogo"></ion-img>
+        <div class="column" style="flex: 1">
+          <ion-text class="whiteColor19SemiBold ellipseText" style="-webkit-line-clamp: 1">
+            {{ dataChat.sourceName }}
+          </ion-text>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div #scrollContainer style="height: 100%; margin-top: 20px; padding-top: 20px; overflow-y: auto;">
+      <div *ngFor="let item of userMessages" class="column" style="margin: 10px 10px; margin-bottom: 20px;"
+        [style.align-items]="item.isSender?'flex-end':'flex-start'">
+        <div style="padding: 10px; border-radius: 10px; max-width: 85%"
+          [style.background]="item.isSender?'#2758BF':'var(--extraLightGrayColor)'">
+          <ion-text [class]="item.isSender?'whiteColor16Regular':'grayColor16Regular'" style="white-space: pre-line">
+            {{item.message}}
+          </ion-text>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+  <div class="footer">
+    <ion-textarea #textArea [(ngModel)]="newMsg" [ngModelOptions]="{standalone: true}" mode="ios"
+      placeholder="Escribe un mensaje" class="whiteColor14Regular" rows="1"
+      style="--placeholder-color: var(--grayColor); --placeholder-opacity: 1; --color: black;"></ion-textarea>
+
+    <div  class="center circle40">
+      <ion-icon name="send" style="font-size: 20px; color:#2758BF" (click)="addMessage()"></ion-icon>
+    </div>
+  </div>
+</ion-footer>

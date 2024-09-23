@@ -1,0 +1,43 @@
+.circle36 {
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+}
+
+.footer {
+  padding: 20px;
+  justify-content: center;
+  background-color: var(--whiteColor);
+  display: flex;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.rowAlignCenter {
+  /* Styling for the row with job details */
+  display: flex;
+  align-items: center;
+}
+
+.rounded-top-corners {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  background-color: #2758BF;
+}
+
+.dialogButton {
+  flex: 1;
+  background-color: #2758BF;
+  padding: 12px;
+}
+
+.menu-button-custom {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}

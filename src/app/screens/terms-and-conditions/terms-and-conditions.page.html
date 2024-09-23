@@ -1,0 +1,31 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow">
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Términos y condiciones
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="margin: 0 20px; margin-top: 5px">
+    <ion-text class="blackColor19SemiBold"> Condiciones de uso </ion-text>
+    <div *ngFor="let item of termsOfUseList">
+      <ion-text class="grayColor16Regular" style="margin-top: 15px;display: flex;"> {{item}} </ion-text>
+    </div>
+  </div>
+
+  <div style="margin:20px; margin-top: 30px">
+    <ion-text class="blackColor19SemiBold"> Política de la compañía </ion-text>
+    <div *ngFor="let item of companyPoliciesList">
+      <ion-text class="grayColor16Regular" style="margin-top: 15px;display: flex;"> {{item}} </ion-text>
+    </div>
+  </div>
+</ion-content>

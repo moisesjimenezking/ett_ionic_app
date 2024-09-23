@@ -1,0 +1,246 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow">
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Buscar
+      </ion-text>
+    </div>
+
+    <div class="rowAlignCenter margin20 textFieldWrapper" style="margin-top: 25px;">
+      <span
+        class="material-icons"
+        style="color: var(--grayColor); font-size: 20px"
+      >
+        search
+      </span>
+      <ion-input
+        mode="ios"
+        placeholder="Busca aquí"
+        class="textField blackColor16Regular"
+        style="min-height: 20px; flex: 1; margin-left: 10px"
+      >
+      </ion-input>
+      <span
+        id="open-modal"
+        class="material-icons"
+        style="color: var(--primaryColor); font-size: 20px"
+      >
+        filter_list
+      </span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div
+    class="rowAlignCenter"
+    style="justify-content: space-between; margin: 0 20px"
+  >
+    <ion-text class="blackColor19SemiBold"> Resultados </ion-text>
+    <ion-text class="primaryColor16SemiBold">
+      471
+      <ion-text class="grayColor15Regular" style="font-weight: 400">
+        encontrados
+      </ion-text>
+    </ion-text>
+  </div>
+
+  <div *ngFor="let item of searchResultsList;let i=index;">
+    <div class="row jobCard">
+      <div (click)="goTo('job-detail')" class="rowAlignCenter" style="flex: 1">
+        <ion-img
+          [src]="item.sourceLogo"
+          class="imageOverflow"
+          style="width: 65px; height: 65px; border-radius: 10px"
+        ></ion-img>
+        <div class="column" style="flex: 1; margin-left: 15px">
+          <ion-text
+            class="blackColor18SemiBold ellipseText"
+            style="-webkit-line-clamp: 1"
+          >
+            {{item.jobType}}
+          </ion-text>
+          <ion-text
+            class="blackColor15Regular ellipseText"
+            style="-webkit-line-clamp: 1; margin-top: 7px"
+          >
+            {{item.sourceName}}
+          </ion-text>
+          <ion-text
+            class="grayColor13Regular ellipseText"
+            style="-webkit-line-clamp: 1; margin-top: 2px"
+          >
+            {{item.city}} • {{item.jobTime}}
+          </ion-text>
+        </div>
+      </div>
+      <div
+        class="column"
+        style="align-items: flex-end; justify-content: space-between"
+      >
+        <span
+          (click)="
+                  searchResultsList[i].inBookmark=!item.inBookmark;
+                  toastMsg=item.inBookmark?'Added in saved!':'Removed from saved';
+                  showToast=true;
+          "
+          class="material-icons"
+          style="font-size: 22px"
+        >
+          {{item.inBookmark? 'bookmark':'bookmark_outline'}}
+        </span>
+        <ion-text class="primaryColor16SemiBold">
+          ${{item.amountPerMonth}}/Mo
+        </ion-text>
+      </div>
+    </div>
+  </div>
+
+  <ion-toast
+    #toast
+    [isOpen]="showToast"
+    mode="ios"
+    [message]="toastMsg"
+    [duration]="1000"
+    (didDismiss)="showToast=false; toast.dismiss;"
+    class="whiteColor14Medium"
+  ></ion-toast>
+
+  <ion-modal
+    mode="md"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0,0.7,1]"
+    style="--height: auto; --width: 100%; --border-radius: 0px"
+    handle="false"
+    trigger="open-modal"
+    #modal
+  >
+    <ng-template>
+      <div style="background-color: var(--whiteColor); max-height: 80%">
+        <ion-text
+          class="blackColor20Bold"
+          style="display: flex; justify-content: center; margin-top: 20px"
+        >
+          Filtrar
+        </ion-text>
+
+        <div
+          class="rowAlignCenter"
+          style="
+            justify-content: space-between;
+            margin: 20px;
+            margin-bottom: 10px;
+          "
+        >
+          <ion-text class="blackColor19SemiBold"> Campo de trabajo
+          </ion-text>
+          <ion-text class="primaryColor16SemiBold"> Ver todo </ion-text>
+        </div>
+
+        <div style="margin: 0 15px">
+          <ion-grid style="--ion-grid-padding: 0px">
+            <ion-row>
+              <ion-col
+                size="auto"
+                *ngFor="let item of fieldsList;let i=index;"
+                style="--ion-grid-column-padding: 0"
+              >
+                <div
+                  (click)="selectedFieldIndex=i;"
+                  class="row itemWrapper"
+                  [style.border-color]="selectedFieldIndex===i?'var(--primaryColor)':'var(--grayColor)'"
+                  [style.background-color]="selectedFieldIndex===i?'var(--primaryColor)':'transparent'"
+                >
+                  <ion-text
+                    [class]="selectedFieldIndex===i?'whiteColor16Medium':'grayColor16Regular'"
+                  >
+                    {{item}}
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <ion-text
+          class="blackColor19SemiBold"
+          style="margin: 15px 20px; display: flex; margin-bottom: 10px"
+        >
+          Tipo
+        </ion-text>
+
+        <div style="margin: 0 15px">
+          <ion-grid style="--ion-grid-padding: 0px">
+            <ion-row>
+              <ion-col
+                size="auto"
+                *ngFor="let item of jobTypeList;let i=index;"
+                style="--ion-grid-column-padding: 0"
+              >
+                <div
+                  (click)="selectedJobTypeIndex=i;"
+                  class="row itemWrapper"
+                  [style.border-color]="selectedJobTypeIndex===i?'var(--primaryColor)':'var(--grayColor)'"
+                  [style.background-color]="selectedJobTypeIndex===i?'var(--primaryColor)':'transparent'"
+                >
+                  <ion-text
+                    [class]="selectedJobTypeIndex===i?'whiteColor16Medium':'grayColor16Regular'"
+                  >
+                    {{item}}
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <ion-text
+          class="blackColor19SemiBold"
+          style="margin: 15px 20px; display: flex; margin-bottom: 10px"
+        >
+          Salario
+        </ion-text>
+
+        <div style="margin: 0 15px">
+          <ion-grid style="--ion-grid-padding: 0px">
+            <ion-row>
+              <ion-col
+                size="auto"
+                *ngFor="let item of salaryTypesList;let i=index;"
+                style="--ion-grid-column-padding: 0"
+              >
+                <div
+                  (click)="selectedSalaryTypeIndex=i;"
+                  class="row itemWrapper"
+                  [style.border-color]="selectedSalaryTypeIndex===i?'var(--primaryColor)':'var(--grayColor)'"
+                  [style.background-color]="selectedSalaryTypeIndex===i?'var(--primaryColor)':'transparent'"
+                >
+                  <ion-text
+                    [class]="selectedSalaryTypeIndex===i?'whiteColor16Medium':'grayColor16Regular'"
+                  >
+                    {{item}}
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <div class="rowAlignCenter margin20">
+          <ion-text (click)="modal.dismiss()" class="primaryColor20SemiBold">
+            Limpiar
+          </ion-text>
+          <div (click)="modal.dismiss()" class="center applyButton">
+            <ion-text class="whiteColor18SemiBold"> Aplicar </ion-text>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

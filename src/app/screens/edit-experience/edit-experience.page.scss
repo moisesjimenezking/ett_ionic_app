@@ -1,0 +1,13 @@
+.square20 {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid var(--blackColor);
+}
+
+.datePicker {
+  --background: transparent;
+  --wheel-highlight-background:rgba(105, 105, 105, 0.15);
+  --background-rgb: 255, 255, 255;
+  width: 90%;
+}

@@ -1,0 +1,28 @@
+.sourceLogo {
+  width: 46px;
+  height: 46px;
+  border-radius: 23px;
+  margin-left: 20px;
+  margin-right: 12px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 20px;
+  background-color: var(--extraLightGrayColor);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.custom-background {
+  --background: #2758BF; /* Nuevo color de fondo */
+}
+
+/* Add styles for other classes accordingly */
+.rounded-top-corners {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  background-color: #2758BF;
+}

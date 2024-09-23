@@ -1,0 +1,112 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #fff;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Ajustes
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div (click)="goTo('edit-profile')" class="rowAlignCenter" style="margin: 0 20px; margin-top: 10px">
+      <div class="center square34" style="background-color: #ffebee">
+        <span class="material-icons" style="color: #e57373; font-size: 22px">
+          person
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Editar perfil
+      </ion-text>
+    </div>
+
+    <div (click)="goTo('notifications')" class="rowAlignCenter" style="margin: 0 20px; margin-top: 30px">
+      <div class="center square34" style="background-color: #ede7f6">
+        <span class="material-icons" style="color: #9575cd; font-size: 22px">
+          notifications
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Notificaciones
+      </ion-text>
+    </div>
+
+    <div (click)="goTo('applied-jobs')" class="rowAlignCenter" style="margin: 0 20px; margin-top: 30px">
+      <div class="center square34" style="background-color: #e3f2fd">
+        <span class="material-icons" style="color: #64b5f6; font-size: 22px">
+          article
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Trabajos aplicados
+      </ion-text>
+    </div>
+
+    <div class="rowAlignCenter" style="margin: 0 20px; margin-top: 30px">
+      <div class="center square34" style="background-color: #e0f2f1">
+        <span class="material-icons" style="color: #4db6ac; font-size: 22px">
+          share
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Compartir aplicación
+      </ion-text>
+    </div>
+
+    <div (click)="goTo('contact-us')" class="rowAlignCenter" style="margin: 0 20px; margin-top: 30px">
+      <div class="center square34" style="background-color: #fff8e1">
+        <span class="material-icons" style="color: #ffd54f; font-size: 22px">
+          headset
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Contacta con nosotros
+      </ion-text>
+    </div>
+
+    <div (click)="goTo('terms-and-conditions')" class="rowAlignCenter" style="margin: 0 20px; margin-top: 30px">
+      <div class="center square34" style="background-color: #fbe9e7">
+        <span class="material-icons" style="color: #ff8a65; font-size: 22px">
+          insert_drive_file
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Términos y condiciones
+      </ion-text>
+    </div>
+
+    <div id="openLogoutDialog" class="rowAlignCenter" style="margin: 20px; margin-top: 30px">
+      <div class="center square34" style="background-color: #fce4ec">
+        <span class="material-icons" style="color: #f06292; font-size: 22px">
+          logout
+        </span>
+      </div>
+      <ion-text class="blackColor16Medium ellipseText" style="-webkit-line-clamp: 1; margin-left: 15px; flex: 1">
+        Cerrar sesión
+      </ion-text>
+    </div>
+
+    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialog" style="--border-radius: 10px">
+      <ng-template>
+        <div class="column">
+          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+            ¿Está seguro de que desea cerrar sesión?
+          </ion-text>
+          <div class="row">
+            <div (click)="logoutDialog.dismiss()" class="center dialogButton" style="margin-right: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+            </div>
+            <div (click)="logoutDialog.dismiss();goTo('auth/login')" class="center dialogButton"
+              style="margin-left: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </div>
+</ion-content>

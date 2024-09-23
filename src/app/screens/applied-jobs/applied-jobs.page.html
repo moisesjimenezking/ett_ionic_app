@@ -1,0 +1,169 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #2758BF;">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #fff;">
+        keyboard_backspace
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Trabajos aplicados
+      </ion-text>
+    </div>
+    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 25px">
+      <div (click)="selectedTabIndex=0" class="center" style="flex: 1; padding: 8px 15px; border-radius: 30px"
+        [style.background]="selectedTabIndex===0?'#092f81':'transparent'">
+        <ion-text class="ellipseText" [class]="selectedTabIndex===0?'whiteColor16Medium':'blackColor16Medium'"
+          style="-webkit-line-clamp: 1">
+          Todos
+        </ion-text>
+      </div>
+
+      <div (click)="selectedTabIndex=1" class="center" style="
+          flex: 1;
+          padding: 8px 15px;
+          border-radius: 30px;
+          margin: 0 20px;
+        " [style.background]="selectedTabIndex===1?'#092f81':'transparent'">
+        <ion-text class="ellipseText" [class]="selectedTabIndex===1?'whiteColor16Medium':'blackColor16Medium'"
+          style="-webkit-line-clamp: 1">
+          Preseleccionado
+        </ion-text>
+      </div>
+
+      <div (click)="selectedTabIndex=2" class="center" style="flex: 1; padding: 8px 15px; border-radius: 30px"
+        [style.background]="selectedTabIndex===2?'#092f81':'transparent'">
+        <ion-text class="ellipseText" [class]="selectedTabIndex===2?'whiteColor16Medium':'blackColor16Medium'"
+          style="-webkit-line-clamp: 1">
+          Entrevista
+        </ion-text>
+      </div>
+    </div>
+  <!-- </ion-toolbar>
+
+  <ion-toolbar color="whiteColor">
+    <div style="margin: 20px">
+      <div class="rowAlignCenter center" style="position: relative">
+        <span (click)="goBack()" class="material-icons headerBackArrow">
+          keyboard_backspace
+        </span>
+        <ion-text class="blackColor20Bold ellipseText"
+          style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+          Trabajos aplicados
+        </ion-text>
+      </div>
+
+      <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 25px">
+        <div (click)="selectedTabIndex=0" class="center" style="flex: 1; padding: 8px 15px; border-radius: 30px"
+          [style.background]="selectedTabIndex===0?'var(--primaryColor)':'transparent'">
+          <ion-text class="ellipseText" [class]="selectedTabIndex===0?'whiteColor16Medium':'grayColor16Medium'"
+            style="-webkit-line-clamp: 1">
+            Todos
+          </ion-text>
+        </div>
+
+        <div (click)="selectedTabIndex=1" class="center" style="
+            flex: 1;
+            padding: 8px 15px;
+            border-radius: 30px;
+            margin: 0 20px;
+          " [style.background]="selectedTabIndex===1?'var(--primaryColor)':'transparent'">
+          <ion-text class="ellipseText" [class]="selectedTabIndex===1?'whiteColor16Medium':'grayColor16Medium'"
+            style="-webkit-line-clamp: 1">
+            Preseleccionado
+          </ion-text>
+        </div>
+
+        <div (click)="selectedTabIndex=2" class="center" style="flex: 1; padding: 8px 15px; border-radius: 30px"
+          [style.background]="selectedTabIndex===2?'var(--primaryColor)':'transparent'">
+          <ion-text class="ellipseText" [class]="selectedTabIndex===2?'whiteColor16Medium':'grayColor16Medium'"
+            style="-webkit-line-clamp: 1">
+            Entrevista
+          </ion-text>
+        </div>
+      </div>
+    </div> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="custom-background">
+  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
+    <div *ngIf="selectedTabIndex===0">
+      <div *ngFor="let item of appliedAllJobsList;let i=index;">
+        <div (click)="goTo('job-detail')" class="row jobCard" style="margin-top: 0">
+          <div class="rowAlignCenter" style="flex: 1">
+            <ion-img [src]="item.sourceLogo" class="imageOverflow"
+              style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+            <div class="column" style="flex: 1; margin-left: 15px">
+              <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+                {{item.jobType}}
+              </ion-text>
+              <ion-text class="blackColor15Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 7px">
+                {{item.sourceName}}
+              </ion-text>
+              <ion-text class="grayColor13Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 2px">
+                {{item.city}} • {{item.jobTime}}
+              </ion-text>
+            </div>
+          </div>
+          <div class="column" style="align-items: flex-end; justify-content: space-between">
+            <ion-text [class]="item.shortListed?'greenColor15SemiBold':'redColor15SemiBold'" style="margin-top: 3px">
+              {{item.shortListed?'Preseleccionado':'Rechazado'}}
+            </ion-text>
+            <ion-text class="primaryColor16SemiBold">
+              ${{item.amountPerMonth}}/Mo
+            </ion-text>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedTabIndex===1">
+      <div *ngFor="let item of shortlistedJobsList;let i=index;">
+        <div (click)="goTo('job-detail')" class="row jobCard" style="margin-top: 0">
+          <div class="rowAlignCenter" style="flex: 1">
+            <ion-img [src]="item.sourceLogo" class="imageOverflow"
+              style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+            <div class="column" style="flex: 1; margin-left: 15px">
+              <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+                {{item.jobType}}
+              </ion-text>
+              <ion-text class="blackColor15Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 7px">
+                {{item.sourceName}}
+              </ion-text>
+              <ion-text class="grayColor13Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 2px">
+                {{item.city}} • {{item.jobTime}}
+              </ion-text>
+            </div>
+          </div>
+          <ion-text class="primaryColor16SemiBold" style="margin-top: 3px;">
+            ${{item.amountPerMonth}}/Mo
+          </ion-text>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedTabIndex===2">
+      <div *ngFor="let item of interviewsJobList;let i=index;">
+        <div (click)="goTo('job-detail')" class="row jobCard" style="margin-top: 0">
+          <div class="rowAlignCenter" style="flex: 1">
+            <ion-img [src]="item.sourceLogo" class="imageOverflow"
+              style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
+            <div class="column" style="flex: 1; margin-left: 15px">
+              <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
+                {{item.jobType}}
+              </ion-text>
+              <ion-text class="blackColor15Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 7px">
+                {{item.sourceName}}
+              </ion-text>
+              <ion-text class="grayColor13Regular ellipseText" style="-webkit-line-clamp: 1; margin-top: 2px">
+                {{item.city}} • {{item.jobTime}}
+              </ion-text>
+            </div>
+          </div>
+          <ion-text class="primaryColor16SemiBold" style="margin-top: 3px;">
+            ${{item.amountPerMonth}}/Mo
+          </ion-text>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

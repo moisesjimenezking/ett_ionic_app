@@ -1,0 +1,49 @@
+<ion-content [fullscreen]="true" scrollY="false">
+  <div class="column" style="height: 100%">
+    <div style="height: 100%; position: relative">
+      <ion-img slot="fixed" class="bgImage" src="../../../assets/images/onboardingBg.png">
+      </ion-img>
+    </div>
+
+    <div class="swiperPosition">
+      <swiper-container #swiper (slidechange)="slideChangeCall();"
+        [autoplay]="{autoplay:true,disableOnInteraction:false,delay:2800}">
+        <swiper-slide *ngFor="let item of onboardingScreenList">
+          <div class="column" style="margin: 0 20px; display: flex" [style.height]="screenHeight+'px'">
+            <div class="imageWrapper">
+              <ion-img [src]="item.onboardingImage" style="width: 80%; object-fit: contain">
+              </ion-img>
+            </div>
+            <div style="margin-top: 90px">
+              <ion-text class="blackColor22Bold ellipseText" style="text-align: center; margin-bottom: 15px">
+                {{item.onboardingTitle}}
+              </ion-text>
+              <ion-text class="grayColor16Regular" style="display: flex; text-align: center">
+                {{item.onboardingDescription}}
+              </ion-text>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div class="rowAlignCenter margin20" style="margin-bottom: 30px; justify-content: space-between">
+    <ion-text (click)="currentIndex!==2? goTo('/auth/login'):null" class="grayColor16Medium"
+      [style.color]="currentIndex===2?'transparent':'var(--grayColor)'">
+      Saltar
+      <!-- Skip -->
+    </ion-text>
+    <div class="rowAlignCenter">
+      <div *ngFor="let item of onboardingScreenList;let i=index" style="margin: 0 5px"
+        [style.width]="i===currentIndex?'14px':'10px'" [style.height]="i===currentIndex?'14px':'10px'"
+        [style.border-radius]="i===currentIndex?'7px':'5px'"
+        [style.background]="i===currentIndex?'var(--primaryColor)':'var(--lightGrayColor)'"></div>
+    </div>
+    <ion-text (click)="handleButtonPress()" class="primaryColor16Medium">
+      {{currentIndex===2?'Ingresar': 'Próximo'}}<!--'Login':'Next'-->
+    </ion-text>
+  </div>
+</ion-footer>

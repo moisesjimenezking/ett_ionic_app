@@ -1,0 +1,71 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20 center" style="position: relative">
+      <span (click)="goBack()" class="material-icons headerBackArrow">
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Contáctanos
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="margin: 0 20px; margin-top: 5px">
+    <ion-text class="grayColor16Regular">
+      Déjanos un mensaje, nos pondremos en contacto con usted lo antes posible.
+    </ion-text>
+  </div>
+
+  <div class="margin20" style="margin-top: 25px">
+    <ion-text class="grayColor16Regular"> Nombre Completo </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input
+        mode="ios"
+        placeholder="Ingrese el nombre completo"
+        class="textField blackColor16Medium"
+        style="min-height: 20px"
+        [(ngModel)]="fullName"
+      >
+      </ion-input>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular"> Dirección de correo electrónico </ion-text>
+    <div class="textFieldWrapper">
+      <ion-input
+        mode="ios"
+        placeholder="Introducir la dirección de correo electrónico"
+        class="textField blackColor16Medium"
+        style="min-height: 20px"
+        [(ngModel)]="email"
+        inputmode="email"
+      >
+      </ion-input>
+    </div>
+  </div>
+
+  <div class="margin20">
+    <ion-text class="grayColor16Regular"> Acerca de </ion-text>
+    <div class="textFieldWrapper" style="padding: 5px 15px">
+      <ion-textarea
+        mode="ios"
+        placeholder="Escribe aquí..."
+        rows="5"
+        class="blackColor14Regular"
+        style="--placeholder-color: var(--grayColor); --placeholder-opacity: 1"
+        [(ngModel)]="message"
+      >
+      </ion-textarea>
+    </div>
+  </div>
+
+  <div (click)="goBack()" class="center button" style="margin-top: 30px;">
+    <ion-text class="whiteColor18SemiBold"> Enviar </ion-text>
+  </div>
+</ion-content>

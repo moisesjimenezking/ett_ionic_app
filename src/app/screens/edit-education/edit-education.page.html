@@ -1,0 +1,141 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="whiteColor">
+    <div class="rowAlignCenter margin20" style="justify-content: space-between">
+      <span
+        (click)="goBack()"
+        class="material-icons"
+        style="color: var(--blackColor); font-size: 28px"
+      >
+        keyboard_backspace
+      </span>
+      <ion-text
+        class="blackColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
+      >
+        Editar educación
+      </ion-text>
+      <div class="center square20">
+        <span
+          class="material-icons"
+          style="color: var(--blackColor); font-size: 19px"
+        >
+          add
+        </span>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="margin20" style="margin-top: 5px">
+    <ion-text class="grayColor16Regular"> Nombre de la Universidad</ion-text>
+    <div class="textFieldWrapper">
+      <ion-input
+        mode="ios"
+        placeholder="Ingrese el nombre de la universidad"
+        class="textField blackColor16Medium"
+        style="min-height: 20px"
+        [(ngModel)]="universityName"
+      >
+      </ion-input>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Año de graduación</ion-text>
+    <div class="textFieldWrapper">
+      <ion-input
+        mode="ios"
+        placeholder="Ingrese el año de graduación"
+        class="textField blackColor16Medium"
+        style="min-height: 20px"
+        [(ngModel)]="graducationYear"
+        inputmode="numeric"
+      >
+      </ion-input>
+    </div>
+  </div>
+
+  <div class="margin20">
+    <ion-text class="grayColor16Regular"> Grado </ion-text>
+    <div
+      id="degreeSheet"
+      class="textFieldWrapper rowAlignCenter"
+      style="justify-content: space-between"
+    >
+      <ion-text
+        class="blackColor16Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        {{selectedDegree}}
+      </ion-text>
+      <span
+        class="material-icons"
+        style="color: var(--blackColor); font-size: 24px"
+      >
+        arrow_drop_down
+      </span>
+    </div>
+  </div>
+
+  <div style="margin: 0 20px">
+    <ion-text class="grayColor16Regular">Campo de estudio</ion-text>
+    <div class="textFieldWrapper">
+      <ion-input
+        mode="ios"
+        placeholder="Ingrese el campo de estudio"
+        class="textField blackColor16Medium"
+        style="min-height: 20px"
+        [(ngModel)]="fieldOfStudy"
+      >
+      </ion-input>
+    </div>
+  </div>
+
+  <div (click)="goBack()" class="center button" style="margin-top: 30px">
+    <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+  </div>
+
+  <ion-modal
+    mode="md"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0,0.7,1]"
+    style="--height: auto; --width: 100%; --border-radius: 0px"
+    handle="false"
+    trigger="degreeSheet"
+    #degreeSheet
+  >
+    <ng-template>
+      <div style="background-color: var(--whiteColor); margin-bottom: 10px">
+        <ion-text
+          class="blackColor20Bold"
+          style="display: flex; justify-content: center; margin: 20px"
+        >
+        Degrees
+        </ion-text>
+        <div *ngFor="let item of degreesList">
+          <div
+            (click)="selectedDegree=item;degreeSheet.dismiss()"
+            class="rowAlignCenter"
+            style="justify-content: space-between; margin: 10px 20px"
+          >
+            <ion-text
+              [class]="selectedDegree===item?'primaryColor16Medium': 'grayColor16Regular'"
+              class="ellipseText"
+              style="-webkit-line-clamp: 1; flex: 1"
+            >
+              {{item}}
+            </ion-text>
+            <span
+              *ngIf="selectedDegree===item"
+              class="material-icons"
+              style="color: var(--primaryColor); font-size: 22px"
+            >
+              check
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
