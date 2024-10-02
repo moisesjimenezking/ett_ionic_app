@@ -96,8 +96,8 @@ export class NewJobsPage implements OnInit {
   
   formatAmount() {
     this.amount = this.amount.replace(/[^0-9$]/g, '');
-    if (!this.amount.startsWith('$')) {
-      this.amount = '$' + this.amount;
+    if (!this.amount.startsWith('Bs ')) {
+      this.amount = 'Bs ' + this.amount;
     }
   }
 

@@ -47,17 +47,16 @@
   <ion-toolbar color="false" style="background-color: #2758bf;">
     <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
       <ion-img [src]="icon" class="imageOverflow" style="width: 48px; height: 48px; border-radius: 28px"></ion-img>
-      <div style="display: flex; flex-direction: column; justify-content: center; margin-left: 10px;">
-        <ion-label>Balance disponible</ion-label>
-        <ion-label style="font-weight: bold; color: green; font-size: 18px;">Bs. {{ balanceAvailable }}</ion-label>
-        <ion-label>Balance bloqueado</ion-label>
-        <ion-label style="font-weight: bold; color: red; font-size: 18px;">Bs. {{ balanceAvailable }}</ion-label>
+      <div style="display: flex; flex-direction: column; margin-left: 10px; width: 100%;">
+        <ion-label style="font-size: 18px; font-weight: bold; color: black; text-align: center; margin: auto; width: 100%;">Próximo Pago</ion-label>
+        <ion-label style="font-size: 16px; text-align: left; margin-top: 5px"><strong>Monto: </strong> Bs 3.000.000,00</ion-label>
+        <ion-label style="font-size: 16px; text-align: left;"><strong>Fecha: </strong> 01/10/2024</ion-label>
       </div>
-      <div style="display: flex; align-items: center; margin-left: auto;"> <!-- Mover la nueva imagen al borde derecho -->
+      <div style="display: flex; align-items: center; margin-left: auto;"> 
         <ion-img src="../../../../assets/images/appIcon.png" class="imageOverflow" style="width: 28px; height: 28px; border-radius: 28px"></ion-img>
       </div>   
     </ion-chip>
-    <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
+    <!-- <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> 
       <ion-tab-button>
         <span class="material-icons" style="font-size: 26px">savings</span>
         <ion-label>Depositar</ion-label>
@@ -70,7 +69,7 @@
         <span class="material-icons" style="font-size: 26px">swap_horiz</span>
         <ion-label>Transferir</ion-label>
       </ion-tab-button>
-    </ion-chip>
+    </ion-chip> -->
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="custom-background">
@@ -78,10 +77,16 @@
     <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%; display: flex; justify-content: center; align-items: center;">
       <ion-list *ngIf="listTransaction && listTransaction.length > 0">
           <div *ngFor="let item of listTransaction; let i=index;">
-              Contenido del bucle ngFor 
+            <ion-item>
+              <ion-label style="font-size: 12px">Pago de Bs</ion-label>
+              <ion-label style="font-size: 12px">item.amount</ion-label>
+              <!-- <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
+              <ion-label style="font-size: 12px">0.00</ion-label>
+              <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon> -->
+            </ion-item>
           </div>
       </ion-list>
-      <ion-label *ngIf="!listTransaction || listTransaction.length === 0" style="font-weight: bold; color: black;">Sin transacciones</ion-label>
+      <ion-label *ngIf="!listTransaction || listTransaction.length === 0" style="font-weight: bold; color: black;">Sin Pagos recibidos</ion-label>
     </div>
       <!-- <ion-list>
         <ion-item>
@@ -91,6 +96,7 @@
           <ion-label style="font-size: 12px">0.00</ion-label>
           <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
         </ion-item>
+         </ion-list>
         <ion-item>
           <ion-label style="font-size: 12px">Transferencia</ion-label>
           <ion-label style="font-size: 12px">#89657127</ion-label>

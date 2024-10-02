@@ -12,30 +12,27 @@ export class OnboardingPage implements OnInit {
 
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
 
+  showMainImage = true;
   currentIndex = 0;
-
-  //! Toda la data mostrada en el
-  dummyText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscingelit. Malesuada aliquet ut in ac cursus."; //todo: Este texto esta en latin
 
   onboardingScreenList = [
     {
       id: "1",
-      onboardingImage: "../../../assets/images/onboarding/onboarding1.png",
-      onboardingTitle: "Toma la oportunidad",  //todo: texto anterior -> "Grab The Opportunity", 
-      onboardingDescription: this.dummyText,
+      onboardingImage: "../../../assets/images/person-working-1.png",
+      onboardingTitle: "Encuentra tu trabajo ideal",
+      onboardingDescription: 'La primera plataforma pensada para profesionales en búsqueda de nuevas oportunidaes laborales.',
     },
     {
       id: "2",
-      onboardingImage: "../../../assets/images/onboarding/onboarding2.png",
-      onboardingTitle: "Consigue el trabajo de tus sueños", //todo: texto anterior -> "Get your Dream Job",
-      onboardingDescription: this.dummyText,
+      onboardingImage: "../../../assets/images/woman-worker.png",
+      onboardingTitle: "Para todas las áreas laborales",
+      onboardingDescription: 'Desarrolla tus habilidades y talentos al máximo con nuestras ofertas.',
     },
     {
       id: "3",
-      onboardingImage: "../../../assets/images/onboarding/onboarding3.png",
-      onboardingTitle: "Una mejor manera de alcanzar el éxito", //todo: texto anterior -> "A Better way to Success",
-      onboardingDescription: this.dummyText,
+      onboardingImage: "../../../assets/images/woman-worker-2.png",
+      onboardingTitle: "Pública tus ofertas con nosotros",
+      onboardingDescription: 'Si eres dueño de una empresa y necesitas personal, nosotros tenemos los mejores.',
     },
   ];
 
@@ -46,6 +43,9 @@ export class OnboardingPage implements OnInit {
   ngOnInit() {
   }
 
+  continueToCarousel() {
+    this.showMainImage = false;
+  }
   slideChangeCall() {
     this.currentIndex = this.swiperRef?.nativeElement.swiper.activeIndex;
   }

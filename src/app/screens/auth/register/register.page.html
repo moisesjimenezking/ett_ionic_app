@@ -3,85 +3,98 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="center column" style="margin: 25px">
-    <ion-img src="../../../../assets/images/appIcon.png" style="width: 122px; height: 130px; object-fit: contain">
-    </ion-img>
-  </div>
-
-  <ion-text class="blackColor20Bold" style="justify-content: center; display: flex; margin: 0 28px">
+  <ion-text class="textTitle" style="justify-content: center; display: flex; margin: 0 28px">
     Regístrate
   </ion-text>
 
-  <div class="margin20" style="margin-top: 10px">
+  <div style="margin: 20px 10px -10px 10px">
     <div class="textFieldWrapper">
-      <ion-input mode="ios" placeholder="Nombre" class="textField lightColor16Medium"
-        style="min-height: 20px" [(ngModel)]="name">
-      </ion-input>
+      <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Nombre</ion-text>
+      <ion-chip class="customChip" style="margin-top: 10-px;">
+        <ion-input mode="ios" placeholder="Introduce tu nombre" 
+          class="textField whiteColor16Medium"
+          style="min-height: 20px" 
+          [(ngModel)]="name">
+        </ion-input>
+      </ion-chip>
+      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo es obligatorio</ion-text>
     </div>
-    <ion-text color="danger" *ngIf="!name && showErrorMessage">Este campo es obligatorio</ion-text>
   </div>
 
-  <div style="margin: 0 20px">
+  <div style="margin: 10px 10px -30px 10px">
     <div class="textFieldWrapper">
-      <ion-input mode="ios" placeholder="Correo electrónico"
-        class="textField lightColor16Medium" style="min-height: 20px" [(ngModel)]="email" inputmode="email" required (ionChange)="validateEmail()">
-      </ion-input>
+      <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px;"> Correo electrónico</ion-text>
+      <ion-chip class="customChip" style="margin-top: 10px;">
+        <ion-input mode="ios" placeholder="Introduce tu correo" 
+          class="textField whiteColor16Medium"
+          style="min-height: 20px" 
+          [(ngModel)]="email" inputmode="email" required (ionChange)="validateEmail()">
+        </ion-input>
+      </ion-chip>
+      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo es obligatorio</ion-text>
+      <ion-text class="textAux" color="danger" style="margin-left: 15px;">{{ alertMessageEmail }}</ion-text>
     </div>
-    <ion-text color="danger" *ngIf="!email && showErrorMessage">Este campo es obligatorio</ion-text>
-    <ion-text color="danger">{{ alertMessageEmail }}</ion-text>
   </div>
 
-  <div class="margin20">
+  <div style="margin: 10px 10px -10px 10px">
     <div class="textFieldWrapper">
-      <ion-input mode="ios" placeholder="Número de teléfono" class="textField lightColor16Medium"
-        style="min-height: 20px" [(ngModel)]="mobileNo" inputmode="numeric">
-      </ion-input>
+      <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Teléfono</ion-text>
+      <ion-chip class="customChip" style="margin-top: 10px;">
+        <ion-input mode="ios" placeholder="Introduce tu teléfono" 
+          class="textField whiteColor16Medium"
+          style="min-height: 20px" 
+          [(ngModel)]="mobileNo" inputmode="numeric">
+        </ion-input>
+      </ion-chip>
+      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo es obligatorio</ion-text>
     </div>
-    <ion-text color="danger" *ngIf="!mobileNo && showErrorMessage">Este campo es obligatorio</ion-text>
   </div>
 
-  <div style="margin: 0 20px">
-    <div class="textFieldWrapper rowAlignCenter">
-      <ion-input mode="ios" placeholder="Contraseña" class="textField lightColor16Medium"
-        style="min-height: 20px; flex: 1"
-        [style.font-size]="password&&securePassword? platform.is('ios')?'9px':'16px':'16px'" [(ngModel)]="password"
-        [type]="securePassword?'password':'text'">
-      </ion-input>
-      <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="lightGrayColor" style="font-size: 18px"
-        (click)="securePassword=!securePassword">
-      </ion-icon>
+  <div style="margin: 10px 10px 0px 10px">
+    <div class="textFieldWrapper">
+      <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Contraseña </ion-text>
+      <ion-chip class="customChip" style="margin-top: 10px;">
+        <ion-input mode="ios"
+          class="textField whiteColor16Medium"
+          style="margin: 0; padding-left: 10px;" 
+          [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'" [(ngModel)]="password"
+          [type]="securePassword?'password':'text'">
+        </ion-input>
+        <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="whiteColor" style="font-size: 18px"
+        (click)="securePassword=!securePassword"></ion-icon>
+      </ion-chip>
     </div>
-    <ion-text color="danger" *ngIf="!password && showErrorMessage">Este campo es obligatorio</ion-text>
   </div>
 
-  <div style="margin: 0 20px">
-    <div class="textFieldWrapperNew rowAlignCenter">
-      <ion-segment value="PERSON" mode="ios" (ionChange)="seleccionarTipoCuenta($event)">
-        <ion-segment-button value="PERSON" style="border-radius: 20px;">
-          <ion-icon slot="icon-only" name="person"></ion-icon>
-          <ion-label><ion-icon name="person"></ion-icon> Personal</ion-label>
+  <div style="margin: 90px 10px">
+    <div class="customChipTow" style="margin-left: 10px; margin-right: 10px; border-radius: 30px; overflow: hidden;">
+      <ion-segment value="PERSON" mode="ios" style="margin: 0;">
+        <ion-segment-button value="PERSON" layout="icon-start">
+          <ion-icon name="person" style="font-size: 16px"></ion-icon>
+          <ion-label>Personal</ion-label>
         </ion-segment-button>
-      
-        <ion-segment-button value="COMPANY" style="border-radius: 20px;">
-          <ion-icon slot="icon-only" name="business"></ion-icon>
-          <ion-label><ion-icon name="business"></ion-icon> Empresarial</ion-label>
+        <ion-segment-button value="COMPANY" layout="icon-start">
+          <ion-icon name="business" style="font-size: 16px"></ion-icon>
+          <ion-label>Empresarial</ion-label>
         </ion-segment-button>
       </ion-segment>
     </div>
   </div>
 
-  <div (click)="crearCuenta()" class="button center margin20" style="margin-top: 30px; background-color: #2758BF; color: #ffffff;">
-    <ion-text class="whiteColor18Bold">Crear cuenta</ion-text>
-  </div>
+  <ion-chip class="customChip" (click)="crearCuenta()"
+    style="margin: -50px 20px; background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
+    <ion-text class="textAux">Crear cuenta</ion-text>
+  </ion-chip>
 </ion-content>
 
+
 <ion-footer mode="ios">
-  <div class="footer" style="display: flex; justify-content: space-between;">
-    <ion-text class="grayColor16Medium">
-      Ya tienes cuenta?
+  <div class="footer" style="display: flex;">
+    <ion-text class="textAux" style="color: #FFFFFF;">
+      Ya tienes una cuenta?
     </ion-text>
-    <ion-text class="primaryColor16Medium" (click)="goTo('auth/login')">
-      Inicia sesión
+    <ion-text class="textAux" style="color: #95B0E9; margin-left: 10px;" (click)="goTo('auth/login')">
+      Iniciar sesión
     </ion-text>
   </div>
 </ion-footer>

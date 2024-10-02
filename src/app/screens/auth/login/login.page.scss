@@ -7,7 +7,7 @@
 .footer {
   padding: 20px;
   justify-content: center;
-  background-color: var(--whiteColor);
+  background-color: black;
   display: flex;
 }
 
@@ -40,4 +40,30 @@
   border: none;
   box-shadow: none;
   margin: 0;
+}
+
+.textTitle {
+  margin-top: 20% !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 30.91px !important;
+  font-weight: 700 !important;
+  line-height: 46.36px !important;
+  text-align: center !important;
+  color: white !important;
+}
+
+.textAux {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.customChip {
+  background-color: black; /* Color de fondo del chip */
+  border-radius: 100px; /* Bordes redondeados */
+  border: 1px solid white;
+  padding: 1px 20px; /* Espaciado interno */
+  display: flex; /* Flex para centrar contenido */
+  margin-left: 0%;
+  margin-right: 0%;
+  height: 40px;
 }

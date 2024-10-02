@@ -1,7 +1,6 @@
 <ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="sidebarMenuProfile" contentId="main-content" type="overlay" swipeGesture="true">
   <ion-header mode="ios" [translucent]="false" class="ion-no-border">
     <ion-toolbar color="false" style="background-color: #2758bf; height: 100%;">
-      <!-- <ion-title style="text-align: center; color: #FFF;">Opciones</ion-title> -->
       <span class="icon-container" style="text-align: center;">
         <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
       </span>
@@ -44,11 +43,11 @@
   </ion-footer>
 </ion-menu>
 
-<ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #2758BF;">
-    <div class="rowAlignCenter margin20 center" style="position: relative">
-      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
-        keyboard_backspace
+<ion-header mode="ios" [translucent]="true" class="ion-no-border" style="background-color: #2758BF; height: 30%">
+  <ion-toolbar color="false">
+    <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 0px 20px 10px">
+      <span (click)="goBack()" class="material-icons" style="color: #fff; font-size: 32px">
+        chevron_left
       </span>
       <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
 
@@ -57,37 +56,16 @@
       </ion-text>
     </div>
   </ion-toolbar>
+  <div class="column imageOverlay">
+    <div class="column image-container" style="position: relative; width: 150px; height: 150px; margin-top: 150px;">
+      <ion-img [src]="icon" class="imageOverflowNew" style=" width: 110px; height: 110px; border-radius: 60px;" />
+    </div>
+  </div>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div style="position: relative">
-    <ion-img [src]="iconFront" class="imageOverflow" style="width: 100%; height: 270px;"></ion-img>
-    <div class="column imageOverlay">
-      <div class="column image-container" style="position: relative; width: 150px; height: 150px; margin-top: 150px;">
-        <ion-img [src]="icon" class="imageOverflowNew" style=" width: 110px; height: 110px; border-radius: 60px;" />
-      </div>
-      <ion-icon name="camera" color="primaryColor15SemiBold" data-value="profile" (click)="openModal($event)" style="
-        font-size: 20px;
-        position: absolute;
-        bottom: 10px; 
-        left: 110px;
-        border: 4px solid #FFF;
-        border-radius: 18.5px;
-        background-color: #FFF;
-        display: flex;
-        "></ion-icon>
-    </div>
-    <ion-icon name="camera" color="primaryColor15SemiBold" data-value="portada" (click)="openModal($event)" style="
-      font-size: 20px;
-      position: absolute;
-      bottom: 10px; 
-      right: 15px;
-      top: 255px;
-      border: 4px solid #FFF;
-      border-radius: 18.5px;
-      background-color: #FFF;
-      display: flex;
-    "></ion-icon>
+
   </div>
   
   <div class="margin20" style="margin-top: 35px">
@@ -203,11 +181,6 @@
           Eliminar la foto actual
         </ion-text>
         <div class="sheetDivider"></div>
-        <!-- <ion-text (click)="changePicSheet.dismiss()" class="blackColor16Regular"
-          style="display: flex; justify-content: center">
-          Tomar foto
-        </ion-text>
-        <div class="sheetDivider"></div> -->
         <ion-text class="blackColor16Regular" style="display: flex; justify-content: center" (click)="fileInput.click()">
           <input type="file" accept=".jpg, .jpeg, .png" style="display: none;" #fileInput (change)="handleFileInput($event);changePicSheet.dismiss()">
           Elige un archivo JPG o PNG

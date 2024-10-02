@@ -14,8 +14,11 @@ import { NgZone } from '@angular/core';
 })
 
 export class ApiService {
-  // private apiUrl = 'http://172.21.0.1:1263';
-  private apiUrl = 'http://149.50.141.62:1263/'
+  private apiUrl = 'http://172.20.0.1:1263';
+  // private apiUrl = 'http://149.50.141.62:1263/'
+  // private apiUrl = 'https://api-tunnel.flippoapp.com/proxy/';
+  // private apiUrl = 'http://app.ettvenezuela.com:1263/';
+
 
   
   private options = {
@@ -255,21 +258,7 @@ export class ApiService {
 
 
   getChat(data: any) {
-    const request = this.http.get(`${this.apiUrl}/chats`, {headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}, params: data});
-
-    request.subscribe({
-        error: (error) => {
-            let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-            if (error.status !== 200 && error.error && error.error.message) {
-                errorMessage = error.error.message;
-            }
-
-            this.presentAlert(errorMessage);
-        },
-        complete: () => {}
-    });
-
-    return request;
+    return this.http.get(`${this.apiUrl}/chats`, {headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}, params: data});
   }
 
   postJobs(data: any){
@@ -292,6 +281,12 @@ export class ApiService {
     );
 
     return result;
+  }
+  
+  postChats(data: any){
+    
+    return this.http.post(`${this.apiUrl}/chats`,  data, this.options);
+
   }
 
   putJobs(data: any){
@@ -317,20 +312,7 @@ export class ApiService {
   }
 
   postMessage(data: any){
-    const request = this.http.post(`${this.apiUrl}/messages`, data, this.options); 
-
-    request.subscribe({
-        error: (error) => {
-            let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-            if (error.status !== 201 && error.error && error.error.message) {
-                errorMessage = error.error.message;
-            }
-            this.presentAlert(errorMessage);
-        },
-        complete: () => {}
-    });
-
-    return request
+    return this.http.post(`${this.apiUrl}/messages`, data, this.options); 
   }
 
   putViewsAll(data: any){

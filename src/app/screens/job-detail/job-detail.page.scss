@@ -5,11 +5,11 @@
 }
 
 .bullet {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 3px;
-  background-color: var(--grayColor);
-  margin-top: 8px;
+  background-color: #FFFFFF;
+  margin-top: 5px;
 }
 
 .smallButton {
@@ -49,4 +49,35 @@
   border-top-right-radius: 20px;
   overflow: hidden;
   background-color: #2758BF;
+}
+
+.menu-button-custom {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+ion-content {
+  --background: #121212; /* Establecer el fondo del ion-content */
+  --ion-color-background: #121212; /* Asegurarte de que el color de fondo se aplique */
+  margin: 0; /* Eliminar márgenes */
+  padding: 0; /* Eliminar relleno */
+  border: none; /* Eliminar bordes */
+}
+
+.customChip {
+  background-color: black; /* Color de fondo del chip */
+  border-radius: 100px; /* Bordes redondeados */
+  border: 1px solid white;
+  padding: 1px 20px; /* Espaciado interno */
+  display: flex; /* Flex para centrar contenido */
+  margin-left: 0%;
+  margin-right: 0%;
+  height: 40px;
+}
+
+.textAux {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
 }

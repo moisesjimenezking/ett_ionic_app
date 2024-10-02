@@ -1,14 +1,14 @@
-.bgImage {
-  top: 0;
-  right: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  object-fit: fill;
-}
+// .bgImage {
+//   top: 0;
+//   right: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 50%;
+//   object-fit: fill;
+// }
 
 .imageWrapper {
-  height: 40%;
+  height: 100%;
   width: 100%;
   justify-content: center;
   display: flex;
@@ -38,4 +38,152 @@
   display: flex;
   flex-direction: column;
   justify-content: center; // Centra el contenido verticalmente
+}
+
+// .bgImage {
+//   background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+//   width: 100%;
+//   height: 100%;
+//   position: absolute;
+// }
+
+// .centeredButton {
+//   position: absolute;
+//   bottom: 50px;
+//   left: 0;
+//   right: 0;
+//   text-align: center;
+//   z-index: 1; /* El botón estará sobre la imagen */
+// }
+
+.bgImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
+}
+
+.darkOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #121212BF;
+  z-index: 1; /* Asegura que esté sobre la imagen */
+}
+
+.overlayContent {
+  position: absolute;
+  top: -200px;
+  left: 0;
+  right: 0;
+  bottom: 0; /* Asegura que ocupe todo el espacio disponible */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  flex-direction: column; /* Asegura que el logo y el texto se ubiquen en columna */
+  z-index: 2; /* Para asegurar que esté sobre la imagen y la capa oscura */
+}
+
+.overlayLogo {
+  gap: 0px;
+  opacity: 0px;
+  margin-top: 0px;
+  width: 140px; /* Tamaño del logo, ajustable */
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+.overlayText {
+  font-family: 'Poppins', sans-serif; /* Aplica la fuente Poppins */
+  font-size: 24px; /* Tamaño de la fuente */
+  font-weight: 500; /* Peso de la fuente */
+  line-height: 36px; /* Altura de línea */
+  text-align: center; /* Alineación centrada */
+  color: white; /* Cambia el color según sea necesario */
+}
+
+.centeredButton {
+  display: flex; /* Utiliza Flexbox para centrar */
+  justify-content: center; /* Centra horizontalmente */
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  right: 10px;
+  top: 711px;
+  bottom: 66px;
+  align-items: center;
+  z-index: 2; /* El botón estará sobre la imagen y la capa oscura */
+  font-family: 'Poppins', sans-serif; /* Aplica la fuente Poppins */
+  font-size: 14px; /* Tamaño de la fuente */
+  font-weight: 600; /* Peso de la fuente */
+  line-height: 21px; /* Altura de línea */
+  text-align: center; /* Alineación centrada */
+  color: white; /* Cambia el color según sea necesario */
+}
+
+.overlayTextTow{
+  font-family: 'Poppins', sans-serif; /* Aplica la fuente Poppins */
+  font-size: 14px; /* Tamaño de la fuente */
+  font-weight: 400; /* Peso de la fuente */
+  line-height: 36px; /* Altura de línea */
+  text-align: center; /* Alineación centrada */
+  color: white; /* Cambia el color según sea necesario */
+}
+
+.blueOverlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2758BF99;
+  z-index: 1; /* Asegura que esté sobre la imagen */
+}
+
+.indicators {
+  position: absolute;
+  top: 80%; /* Ajusta este valor según la posición deseada */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 2
+}
+
+.indicator {
+  width: 24px; /* Ajusta el tamaño según lo necesites */
+  height: 8px; /* Ajusta el tamaño según lo necesites */
+  border-radius: 100px; /* Para hacer los indicadores redondeados */
+  background-color: white; /* Color por defecto */
+  margin: 0 5px; /* Espaciado entre indicadores */
+  
+}
+
+.indicator.active {
+  background-color: #040A15; /* Color del indicador activo */
+}
+
+.overlayTextThree{
+  margin-top: 350px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 45px;
+  text-align: center;  
+  color: white;
+}
+
+.overlayTextfour{
+  margin-top: 150px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
+  color: white;
 }

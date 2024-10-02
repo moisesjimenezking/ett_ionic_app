@@ -113,7 +113,7 @@ export class HomePage implements OnInit {
   resetPlaceholder() {
     const inputElement = this.elementRef.nativeElement.querySelector('ion-input');
     if (inputElement && typeof inputElement.value === 'string' && inputElement.value.trim() === '') {
-      inputElement.placeholder = 'Buscar empresa, palabra clave...';
+      inputElement.placeholder = 'Buscar';
     }
   }
 

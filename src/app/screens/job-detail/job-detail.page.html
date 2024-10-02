@@ -1,14 +1,66 @@
+<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="menufirst" contentId="main-content" type="overlay" swipeGesture="true">
+  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
+    <ion-toolbar color="false" style="background-color: #121212; height: 100%">
+      <span class="icon-container">
+        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
+      </span>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content style="background-color: #121212;">
+    <ion-list>
+      <ion-item id="openLogoutDialogHome"  class="custom-item">
+        <span class="material-icons side-icon">
+          logout
+        </span>  
+        <div class="side-text">Cerrar sesión</div>
+      </ion-item>
+      <ion-item class="custom-item">
+        <span class="material-icons">
+          info
+        </span>
+        <div class="side-text">Terminos y condiciones</div>
+      </ion-item>
+    </ion-list>
+
+    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialogHome" style="--border-radius: 10px">
+      <ng-template>
+        <div class="column">
+          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
+            ¿Está seguro de que desea cerrar sesión?
+          </ion-text>
+          <div class="row">
+            <div (click)="logoutDialog.dismiss()" class="center dialogButton" style="margin-right: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+            </div>
+            <div (click)="logoutDialog.dismiss();goTo('auth/login');logout()" class="center dialogButton"
+              style="margin-left: 1px">
+              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </ion-content>
+  <ion-footer style="background-color: #121212;">
+  </ion-footer>
+</ion-menu>
+
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #2758BF;">
-    <div class="rowAlignCenter margin20" style="justify-content: space-between">
-      <span (click)="goBack()" class="material-icons" style="color: #fff; font-size: 28px">
-        keyboard_backspace
+  <ion-toolbar color="false" style="background-color: #121212;">
+    <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 0px 20px 10px">
+      <span (click)="goBack()" class="material-icons" style="color: #fff; font-size: 32px">
+        chevron_left
       </span>
       <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
         Detalles del trabajo
       </ion-text>
-      <span *ngIf="account === 'PERSON'" class="material-icons" style="color: #2758BF; font-size: 22px"> share </span>
-      <ion-icon id=openEditJobs *ngIf="account === 'COMPANY'" name="create-outline" color="whiteColor" style="font-size: 30px;"></ion-icon>
+      <div style="position: relative">
+        <ion-buttons style="background-color: #121212; color: white;">
+          <ion-menu-button  menu="menufirst" class="menu-button-custom"></ion-menu-button>
+        </ion-buttons>
+      </div>
+      <!-- <ion-icon id=openEditJobs *ngIf="account === 'COMPANY'" name="create-outline" color="whiteColor" style="font-size: 30px;"></ion-icon> -->
     </div>
     <ion-modal mode="md" #openEditJobs trigger="openEditJobs" style="--border-radius: 10px">
       <ng-template>
@@ -99,110 +151,105 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="custom-background">
-  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
-    <div class="row jobCard" style="margin-top: 0">
-      <div class="rowAlignCenter">
-        <ion-img [src]="searchIcon(dataJobs.user.icon)" class="imageOverflow"
-          style="width: 65px; height: 65px; border-radius: 10px"></ion-img>
-        <div class="column" style="flex: 1; margin-left: 15px">
-          <ion-text class="blackColor18SemiBold ellipseText" style="-webkit-line-clamp: 1">
-            {{ dataJobs.title }}
-          </ion-text>
-          <ion-text class="grayColor15Medium ellipseText" style="-webkit-line-clamp: 1; margin-top: 3px">
-            {{ dataJobs.user.fullname }}
-          </ion-text>
-        </div>
-      </div>
-      <div *ngIf="account === 'COMPANY'" style="display: flex; flex-direction: column; align-items: center;">
-        <span class="material-icons" style="font-size: 50px; color: #2758BF">group_add</span>
-        <ion-label>Postulaciones: {{ dataJobs.listApplied }}</ion-label>
-      </div>
-      <!-- <div style="display: flex; flex-direction: column; align-items: center;">
-        <ion-img [src]="searchIcon(dataJobs.user.icon)" class="imageOverflow" style="width: 65px; height: 65px; border-radius: 10px;"></ion-img>
-        <ion-label>Texto debajo del icono</ion-label>
-    </div> -->
-    </div>
-
-    <div class="rowAlignCenter" style="justify-content: space-between; margin: 0 20px">
-      <ion-text class="grayColor16Regular ellipseText" style="flex: 1; -webkit-line-clamp: 1">
-        Salario
+<ion-content [fullscreen]="true" style="background-color: #121212;">
+  <div style="width: 95%; margin: auto; background-color: #1E1E1E; border-radius: 10px; padding: 20px; position: relative; min-height: 95%; max-height: 95%; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; word-wrap: break-word;">
+    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: -10px;">
+      <ion-text class="textAux" style="color: #FFFFFF; font-size: 20px; flex: 1; -webkit-line-clamp: 1; line-clamp: 1;">
+        {{ dataJobs.title }}
       </ion-text>
-      <ion-text class="primaryColor16Medium"> ${{ dataJobs.amount }}/Mo </ion-text>
+      <ion-text class="textAux" style="color: #FFFFFF; font-size: 14px;"> Bs {{ dataJobs.amount }}/mes </ion-text>
     </div>
-
-    <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 20px">
-      <ion-text class="grayColor16Regular ellipseText" style="flex: 1; -webkit-line-clamp: 1">
-        Tipo
+    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 5px;">
+      <ion-text class="textAux" style="color: #FFFFFF; font-size: 12px;">{{ dataJobs.location }}</ion-text>
+    </div>
+    <ion-chip style="background-color: #FFFFFF; margin-top: 20px; padding: 0 20px; max-width: fit-content;">
+      <ion-text class="textAux" style="color: #040A15; font-size: 12px;">{{ dataJobs.type_time }}</ion-text>
+    </ion-chip>
+    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 20px;">
+      <ion-text class="textAux" style="color: #FFFFFF; font-size: 18px; flex: 1; -webkit-line-clamp: 1; line-clamp: 1;">
+        Acerca del empleo
       </ion-text>
-      <ion-text class="primaryColor16Medium"> {{ dataJobs.type_time }}</ion-text>
     </div>
-
-    <div class="rowAlignCenter" style="justify-content: space-between; margin: 0 20px">
-      <ion-text class="grayColor16Regular ellipseText" style="flex: 1; -webkit-line-clamp: 1">
-        Ubicación
-      </ion-text>
-      <ion-text class="primaryColor16Medium">{{ dataJobs.location }}</ion-text>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="column" style="margin: 0 20px">
-      <ion-text class="blackColor19SemiBold"> Descripción del trabajo </ion-text>
-      <ion-text class="grayColor16Regular" style="margin-top: 10px; text-align: justify">
+    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 20px;">
+      <ion-text class="textAux" style="color: #FFFFFF; font-size: 12px; flex: 1; text-align: justify; word-break: break-word; overflow: hidden; white-space: normal;">
         {{ dataJobs.description }}
       </ion-text>
     </div>
-
-    <div class="divider"></div>
-
-    <div style="margin: 0 20px">
-      <ion-text class="blackColor19SemiBold"> Requisitos </ion-text>
-      <div *ngFor="let item of dataJobs.requeriment" class="row" style="margin-top: 10px">
-        <div class="bullet"></div>
-        <ion-text class="grayColor16Regular" style="flex: 1; margin-left: 10px">
-          {{ item }}
+    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 20px;">
+      <ion-text class="textAux" style="color: #FFFFFF; font-size: 18px; flex: 1; -webkit-line-clamp: 1; line-clamp: 1;">
+        Requisitos
+      </ion-text>
+    </div>
+    <div *ngFor="let item of dataJobs.requeriment" class="row" style="margin-top: 10px;">
+      <div class="bullet"></div>
+      <ion-text class="textAux" style="flex: 1; color: #FFFFFF; font-size: 12px; margin-left: 5px;">
+        {{ item }}
+      </ion-text>
+    </div>
+    <div style="margin-top: auto; display: flex; justify-content: space-between; padding-top: 20px;">
+      <ion-chip id="openModalMessage" style="background-color: #1E1E1E; display: flex; justify-content: center; align-items: center; width: 180px;">
+        <ion-text class="textAux" style="color: white; text-align: center;">Enviar mensaje</ion-text>
+      </ion-chip>
+      <ion-chip id="openModal" style="display: flex; justify-content: center; align-items: center; width: 180px;"
+        [ngStyle]="{'background-color': enableButton ? '#FFFFFF' : '#2758BF', 'cursor': enableButton ? 'not-allowed' : 'pointer'}"
+        (click)="!enableButton && applicateJob()"
+      >
+        <ion-text class="textAux" [ngStyle]="{'color': enableButton ? '#2758BF' : '#FFFFFF'}" style="text-align: center;">
+          {{ buttonText }}
         </ion-text>
-      </div>
-    </div>
-
-    <div *ngIf="!enableButton">
-      <ion-modal mode="md" #modal trigger="openModal" style="--border-radius: 10px">
-        <ng-template>
-          <div class="column">
-            <div class="center column" style="margin: 0 20px; margin-bottom: 10px">
-              <ion-img src="../../../assets/images/icons/success.png" class="imageOverflow"
-                style="width: 100px; height: 100px; margin: 20px 0"></ion-img>
-              <ion-text class="blackColor20Bold" style="margin-bottom: 10px; text-align: center">
-                ¡Felicidades! Tu solicitud para este trabajo ha sido enviada exitosamente.
-              </ion-text>
-            </div>
-          </div>
-        </ng-template>
-      </ion-modal>
-    </div>
-
-    <div *ngIf="dataJobs.appliedJobs.length >= 1">
-      <ion-modal mode="ios" #modalListUser trigger="openListUser" style="--border-radius: 30px">
-        <ng-template>
-          <ion-list>
-            <ion-item *ngFor="let item of dataJobs.appliedJobs">
-                <ion-label><strong>{{ item.user.fullname.toUpperCase() }}</strong> ({{ item.user.specialization }})</ion-label>
-                <div class="center button" style="background-color: #2758BF;" (click)="goToDetails('candidate', item)">
-                  <ion-text class="whiteColor18SemiBold"> Ver Perfil </ion-text>
-                </div>
-            </ion-item>
-          </ion-list>
-        </ng-template>
-      </ion-modal>
+      </ion-chip>
     </div>
   </div>
 </ion-content>
 
-<ion-footer mode="ios" style="background-color: var(--whiteColor)">
+<ion-modal mode="md" #modal trigger="openModalMessage" style="--border-radius: 5px; --background: #2C2C2C;">
+  <ng-template>
+    <div class="column" style="background-color: #2C2C2C;">
+      <div class="center column" style="margin: 0 20px; margin-bottom: 0px">
+        <ion-text class="textAux" style="margin-bottom: 20px; text-align: center; margin-top: 20px; font-size: 22px; color:#FFFFFF">
+          Enviar mensaje
+        </ion-text>
+      </div>
+      <div class="textFieldWrapper" style="background-color: #2C2C2C;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Mensaje </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #2C2C2C">
+          <ion-input mode="ios" placeholder="Escribe tu mensaje" 
+            class="textAux"
+            placeholder="Escribe tu mensaje aquí..." 
+            rows="1"
+            style="color: #FFFFFF; font-size: 12px; margin-bottom: 10px; resize: none; width: 100%; max-width: 100%; min-height: 50px;"
+            [(ngModel)]="message" inputmode="text">
+          </ion-input>
+        </ion-chip>
+      </div>
+    
+      <!-- Aquí aplicamos los cambios -->
+      <div style="display: flex; justify-content: center; margin:10px">
+        <ion-chip (click)="modal.dismiss()" 
+                  style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 45%; margin-right: 10px;">
+          <ion-text class="textAux" style="color: white; text-align: center;">
+            Cancelar
+          </ion-text>
+        </ion-chip>
+        <ion-chip (click)="sendMessage(message);modal.dismiss()" 
+                  style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 45%; margin-left: 10px;">
+          <ion-text class="textAux" style="color: white; text-align: center;">
+            Enviar
+          </ion-text>
+        </ion-chip>
+      </div>
+    </div>
+    
+  </ng-template>
+</ion-modal>
+
+<!-- <ion-footer mode="ios" style="background-color: var(--whiteColor)">
   <div *ngIf="account === 'PERSON'">
     <div id="openModal" class="center button" [ngStyle]="{'background-color': enableButton ? '#cccccc' : '#2758BF'}" (click)="!enableButton && applicateJob()" [attr.disabled]="enableButton ? true : null">
         <ion-text class="whiteColor18SemiBold"> {{ buttonText }} </ion-text>
+    </div>
+    <div id="openModalMessage" class="center button" style="background-color:#2758BF">
+      <ion-text class="whiteColor18SemiBold"> Enviar un mensaje </ion-text>
     </div>
   </div>
   <div *ngIf="account === 'COMPANY'">
@@ -211,4 +258,4 @@
     </div>
   </div>
 
-</ion-footer>
+</ion-footer> -->

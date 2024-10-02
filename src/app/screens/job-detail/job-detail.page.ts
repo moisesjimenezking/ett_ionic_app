@@ -6,7 +6,7 @@ import { ApiService } from '../../service/api.service';
 import { ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
-
+import { IonMenu, IonModal } from '@ionic/angular';
 
 
 @Component({
@@ -17,6 +17,8 @@ import { Observable, throwError } from 'rxjs';
 export class JobDetailPage implements OnInit {
   @ViewChild('modal') modal: any;
   @ViewChild('openEditJobs') openEditJobs: any;
+  @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
+  @ViewChild('logoutDialog', { read: IonModal }) logoutDialog!: IonModal;
 
   dataJobs = this.details();
   enableButton = this.dataJobs.appliedUser;
@@ -25,7 +27,8 @@ export class JobDetailPage implements OnInit {
     : "Aplicar ahora";
   
   account = localStorage.getItem('accountType')
-
+  
+  isProcessing = false;
 
   title = this.dataJobs.title;
   type_time= this.dataJobs.type_time;
@@ -39,7 +42,7 @@ export class JobDetailPage implements OnInit {
   closeModal: boolean = false;
 
   showErrorMessage: boolean = false;
-
+  message: string = '';
   constructor(
     private navCtrl: NavController, 
     private router: Router,
@@ -216,5 +219,48 @@ export class JobDetailPage implements OnInit {
   
   removeItem(item: string) {
     this.requeriment = this.requeriment.filter(i => i !== item);
+  }
+
+  sendMessage(message: string) {
+    if (this.isProcessing) return; // Evita múltiples clics
+    this.isProcessing = true;
+  
+    console.log('Message sent:', message);
+    console.log('id: ', );
+  
+    const body = {
+      "user_sending_id": localStorage.getItem('user_id'),
+      "user_recept_id": this.dataJobs.user_id
+    }
+    
+    setTimeout(() => {
+      this.apiJobsService.postChats(body).subscribe((data: any) => {
+        const body = {
+          'message' : message,
+          'chats_id' : data.id,
+          'jobs_id' : this.dataJobs.id
+        }
+  
+        setTimeout(() => {
+          this.apiJobsService.postMessage(body).subscribe((data: any) => {
+            this.isProcessing = false;
+          });
+        }, 50); 
+      }, (error) => {
+        // Manejar el error de postChats aquí
+        this.isProcessing = false;
+        console.error("Error al crear el chat:", error);
+      });
+    }, 1000);
+  }
+
+  closeMenu() {
+    if (this.menu) {
+      this.menu.close();
+    }
+  }
+
+  logout() {
+    this.closeMenu();
   }
 }

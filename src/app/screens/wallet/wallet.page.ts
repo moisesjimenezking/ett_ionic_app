@@ -22,7 +22,7 @@ export class WalletPage implements OnInit {
   balanceAvailable: string = '';
   balanceLocked: string = '';
   walletCode: string = '';
-  listTransaction: any[] = [];
+  listTransaction: any[] = [{amount:10}];
 
   constructor(
     private router: Router,

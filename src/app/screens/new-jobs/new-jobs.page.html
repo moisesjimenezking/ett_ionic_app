@@ -1,6 +1,6 @@
 <ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="sidebarMenuCourses" contentId="main-content" type="overlay" swipeGesture="true">
   <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%;">
+    <ion-toolbar color="false" style="background-color: #121212; height: 100%;">
       <span class="icon-container" style="text-align: center;">
         <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
       </span>
@@ -44,93 +44,130 @@
 </ion-menu>
 
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #2758BF;">
+  <ion-toolbar color="false" style="background-color: #121212;">
     <div class="rowAlignCenter margin20 center" style="position: relative">
-      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+      <!-- <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
         keyboard_backspace
-      </span>
+      </span> -->
       <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
         Crear nueva oferta
       </ion-text>
-      <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
+      <!-- <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
         <ion-menu-button menu="sidebarMenuCourses" class="menu-button-custom" color="whiteColor" style="font-size: 30px"></ion-menu-button>
-      </ion-text>
+      </ion-text> -->
     </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="custom-background">
-  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%;">
-    <div class="margin20" style="margin-top: 10px">
-      <div class="textFieldWrapper">
-        <ion-input mode="ios" placeholder="Titulo de la oferta" class="textField lightColor16Medium"
-          style="min-height: 20px" [(ngModel)]="title">
-        </ion-input>
-      </div>
-      <ion-text color="danger" *ngIf="!title && showErrorMessage">Este campo es obligatorio</ion-text>
-    </div>
-
-    <div class="margin20" style="margin-top: 10px">
-      <div class="textFieldWrapper">
-        <ion-select interface="auto" placeholder="Horario de Trabajo" class="textField blackColor16Medium"
-          style="min-height: 20px" [(ngModel)]="type_time">
-          <ion-select-option value="Tiempo completo">Tiempo completo</ion-select-option>
-          <ion-select-option value="Medio tiempo">Medio tiempo</ion-select-option>
-          <ion-select-option value="Freelance">Freelance</ion-select-option>
-        </ion-select>
-      </div>
-      <ion-text color="danger" *ngIf="!type_time && showErrorMessage">Este campo es obligatorio</ion-text>
-    </div>
-
-    <div class="margin20" style="margin-top: 10px">
-      <div class="textFieldWrapper">
-        <ion-input 
-          mode="ios" 
-          type="text" 
-          placeholder="Salario" 
-          [(ngModel)]="amount"
-          (ionChange)="formatAmount()"
-        ></ion-input>
-      </div>
-      <ion-text color="danger" *ngIf="!amount && showErrorMessage">Este campo es obligatorio</ion-text>
-    </div>
-
-    <div class="margin20" style="margin-top: 10px">
-      <div class="textFieldWrapper">
-        <ion-input 
-          mode="ios" 
-          type="text" 
-          placeholder="Ubicación" 
-          [(ngModel)]="location"
-        ></ion-input>
+<ion-content [fullscreen]="true"  style="background-color: #121212;">
+  <div>
+    <div style="margin-top: 10px;">
+      <div class="textFieldWrapper" style="background-color: #121212;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+          <ion-input mode="ios"
+            placeholder="Introduce el título de la oferta"
+            class="textAux"
+            style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" 
+            [(ngModel)]="title">
+          </ion-input>
+        </ion-chip>
+        <ion-text color="danger" style="margin-left:20px;" *ngIf="!title && showErrorMessage">Este campo es obligatorio</ion-text>
       </div>
     </div>
 
-    <div class="margin20" style="margin-top: 10px">
-      <div class="textFieldWrapper">
-        <ion-input 
-          mode="ios" 
-          type="text" 
-          placeholder="Descripción" 
-          [(ngModel)]="description"
-        ></ion-input>
+    <div style="margin-top: -15px">
+      <div class="textFieldWrapper" style="background-color: #121212;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+          <ion-select interface="auto" placeholder="Horario de Trabajo" class="textAux"
+            style="min-height: 20px; color: #FFFBF7;" [(ngModel)]="type_time">
+            <ion-select-option value="Tiempo completo">Tiempo completo</ion-select-option>
+            <ion-select-option value="Medio tiempo">Medio tiempo</ion-select-option>
+            <ion-select-option value="Freelance">Freelance</ion-select-option>
+          </ion-select>
+        </ion-chip>
+        <ion-text color="danger" style="margin-left:20px;" *ngIf="!type_time && showErrorMessage">Este campo es obligatorio</ion-text>
       </div>
     </div>
 
-    <div class="margin20" style="margin-top: 10px">
-      <div class="textFieldWrapper">
-        <ion-input mode="ios" placeholder="Requerimientos" class="textField lightColor16Medium" style="min-height: 20px" [(ngModel)]="newItem" (keyup.enter)="addItemToList()"></ion-input>
+    <div style="margin-top: -15px">
+      <div class="textFieldWrapper" style="background-color: #121212;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Salario de la oferta </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+          <ion-input mode="ios"
+            type="text" 
+            placeholder="Salario"
+            class="textAux"
+            style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" 
+            [(ngModel)]="amount"
+            (ionChange)="formatAmount()">
+          </ion-input>
+        </ion-chip>
+        <ion-text color="danger" style="margin-left:20px;" *ngIf="!amount && showErrorMessage">Este campo es obligatorio</ion-text>
       </div>
-      <ion-chip *ngFor="let item of requeriment">
-        <ion-label>{{ item }}</ion-label>
-        <ion-icon name="close-circle" (click)="removeItem(item)"></ion-icon>
-      </ion-chip>
+    </div>
+
+    <div style="margin-top: -15px">
+      <div class="textFieldWrapper" style="background-color: #121212;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Ubicación </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+          <ion-input mode="ios"
+            type="text" 
+            placeholder="Introduce la ubicación"
+            class="textAux"
+            style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" 
+            [(ngModel)]="location">
+          </ion-input>
+        </ion-chip>
+      </div>
+    </div>
+
+    <div style="margin-top: -15px">
+      <div class="textFieldWrapper" style="background-color: #121212;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Descripción </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+          <ion-input mode="ios"
+            type="text" 
+            placeholder="Introduce la descripción"
+            class="textAux"
+            style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" 
+            [(ngModel)]="description">
+          </ion-input>
+        </ion-chip>
+      </div>
+    </div>
+
+    <div style="margin-top: -15px">
+      <div class="textFieldWrapper" style="background-color: #121212;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Requerimientos </ion-text>
+        <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+          <ion-input mode="ios"
+            type="text" 
+            placeholder="Introduce los requerimientos"
+            class="textAux"
+            style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" 
+            [(ngModel)]="newItem" (keyup.enter)="addItemToList()">
+          </ion-input>
+        </ion-chip>
+      </div>
+      <div style="margin-left: 20px;">
+        <ion-chip style="background-color: #FFFBF7;" *ngFor="let item of requeriment">
+          <ion-label class="textAux" style="color: #121212; font-size: 12px;" >{{ item }}</ion-label>
+          <ion-icon name="close-circle" (click)="removeItem(item)" style="color: #2758BF;" ></ion-icon>
+        </ion-chip>
+      </div>
     </div>
   </div>
 </ion-content>
 
-<ion-footer mode="ios" style="background-color: var(--whiteColor)">
-  <div class="center button" style="background-color: #2758BF" (click)="saveNewRecord()">
+<ion-footer mode="ios" style="background-color: #121212">
+  <ion-chip class="customChip" (click)="saveNewRecord()"
+    style="margin: 60px 10px; background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
+    <ion-text class="textAux" style="font-size: 16px;">Guardar </ion-text>
+  </ion-chip>
+
+  <!-- <div class="center button" style="background-color: #2758BF" (click)="saveNewRecord()">
       <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
-  </div>
+  </div> -->
 </ion-footer>
