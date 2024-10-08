@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { JobDetailPageRoutingModule } from './job-detail-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { JobDetailPage } from './job-detail.page';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -14,9 +15,10 @@ import { JobDetailPage } from './job-detail.page';
     FormsModule,
     IonicModule,
     JobDetailPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [JobDetailPage],
   providers: [ApiService]
 })
-export class JobDetailPageModule {}
+export class JobDetailPageModule { }

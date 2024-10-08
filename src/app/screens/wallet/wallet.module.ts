@@ -6,6 +6,7 @@ import { WalletPageRoutingModule } from './wallet-routing.module';
 import { WalletPage } from './wallet.page';
 import { ApiService } from '../../service/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -13,9 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     IonicModule,
     WalletPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [WalletPage],
   providers: [ApiService]
 })
-export class WalletPageModule {}
+export class WalletPageModule { }

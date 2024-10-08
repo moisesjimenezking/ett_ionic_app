@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { Router } from '@angular/router';
+import { UtilsLib } from 'src/app/lib/utils';
 
 
 @Component({
@@ -15,12 +16,15 @@ export class EditContactPage implements OnInit {
   specialization: any = '';
   email: any = '';
   mobile: any = '';
+  code: string = '';
   newWebsite: string = '';
   websitesList: string[] = [];
   isModalOpen = false;
   rifValue: string = '';
   identificationValue: string = '';
   selectedFile: File | null = null;
+
+  utils = new UtilsLib();
 
   websiteTypesList = [
     "Personal",
@@ -33,7 +37,7 @@ export class EditContactPage implements OnInit {
 
   showWebsiteTypeSheet = false;
   selectedWebsiteType = '';
-  selectedItemIndex:any;
+  selectedItemIndex: any;
   alertMessageEmail: string = '';
 
   constructor(
@@ -72,38 +76,38 @@ export class EditContactPage implements OnInit {
   removeWebsite(index: number) {
     this.websitesList.splice(index, 1);
   }
-  
-  validateEmail(){
+
+  validateEmail() {
     console.log(this.email);
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
     if (this.email && !emailRegex.test(this.email)) {
       this.alertMessageEmail = 'Por favor ingresa un correo electrónico válido';
       return false
-    } 
+    }
 
-    return this.apiServic.getVerificEmailFalse({email:this.email});
+    return this.apiServic.getVerificEmailFalse({ email: this.email });
   }
 
-  updateUser(){
+  updateUser() {
     const body: { [key: string]: any } = {};
-    if(this.fullName){
+    if (this.fullName) {
       body["fullname"] = this.fullName
     }
 
-    if(this.email){
+    if (this.email) {
       body["email"] = this.email
     }
 
-    if(this.mobile){
+    if (this.mobile) {
       body["phone"] = this.mobile
     }
 
-    if(this.specialization && this.specialization !== 'null'){
+    if (this.specialization && this.specialization !== 'null') {
       body["specialization"] = this.specialization
     }
 
-    if(this.websitesList){
+    if (this.websitesList) {
       body["social_link"] = this.websitesList
     }
 
@@ -115,19 +119,19 @@ export class EditContactPage implements OnInit {
         this.specialization = data.specialization;
         this.websitesList = data.social_link;
 
-        localStorage.setItem('fullname'      , data.fullname);
-        localStorage.setItem('email'         , data.email);
-        localStorage.setItem('phone'         , data.phone);
-        localStorage.setItem('social_link',  JSON.stringify(data.social_link));
+        localStorage.setItem('fullname', data.fullname);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('phone', data.phone);
+        localStorage.setItem('social_link', JSON.stringify(data.social_link));
         localStorage.setItem('specialization', data.specialization);
-        
+
         this.cdr.detectChanges();
-        this.goTo(localStorage.getItem('accountType') === "PERSON" 
-          ? 'bottom-tab-bar/profile' 
+        this.goTo(localStorage.getItem('accountType') === "PERSON"
+          ? 'bottom-tab-bar/profile'
           : 'bottom-tab-bar-company/profile'
         );
       });
-    }, 50);     
+    }, 50);
   }
 
   onFileChange(event: any) {

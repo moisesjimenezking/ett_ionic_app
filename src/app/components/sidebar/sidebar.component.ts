@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonMenu, IonModal } from '@ionic/angular';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-menu',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent  implements OnInit {
+export class SidebarComponent implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialog', { read: IonModal }) logoutDialog!: IonModal;
 
@@ -15,7 +15,7 @@ export class SidebarComponent  implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   goTo(screen: any) {
     this.router.navigateByUrl(screen);
@@ -26,6 +26,10 @@ export class SidebarComponent  implements OnInit {
   }
 
   logout() {
+    localStorage.clear();
+    this.logoutDialog.dismiss();
     this.closeMenu();
+    this.goTo('/auth/login');
+
   }
 }

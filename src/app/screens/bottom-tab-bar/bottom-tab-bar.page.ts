@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { StatusBar, Style } from '@capacitor/status-bar';
+
 import { IonRouterOutlet, Platform } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ export class BottomTabBarPage implements OnInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private routerOutlet: IonRouterOutlet, 
+    private routerOutlet: IonRouterOutlet,
     private platform: Platform
   ) { }
 
@@ -22,7 +22,7 @@ export class BottomTabBarPage implements OnInit {
   ngAfterViewInit() {
     this.cdr.detectChanges();
   }
-  
+
   ionViewWillEnter() {
     this.cdr.detectChanges();
   }

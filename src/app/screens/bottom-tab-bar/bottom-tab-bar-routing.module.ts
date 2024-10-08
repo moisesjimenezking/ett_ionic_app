@@ -7,34 +7,39 @@ const routes: Routes = [
   {
     path: '',
     component: BottomTabBarPage,
-    children:[
+    children: [
       {
         path: 'home',
-        loadChildren: () => import('../../screens/home/home.module').then( m => m.HomePageModule),
+        loadChildren: () => import('../../screens/home/home.module').then(m => m.HomePageModule),
         data: { noCache: true }
       },
       {
         path: 'saved',
-        loadChildren: () => import('../../screens/saved/saved.module').then( m => m.SavedPageModule),
+        loadChildren: () => import('../../screens/saved/saved.module').then(m => m.SavedPageModule),
         data: { noCache: true }
       },
       {
         path: 'chats',
-        loadChildren: () => import('../../screens/chats/chats.module').then( m => m.ChatsPageModule),
+        loadChildren: () => import('../../screens/chats/chats.module').then(m => m.ChatsPageModule),
         data: { noCache: true }
       },
       {
         path: 'profile',
-        loadChildren: () => import('../../screens/profile/profile.module').then( m => m.ProfilePageModule),
+        loadChildren: () => import('../../screens/profile/profile.module').then(m => m.ProfilePageModule),
       },
       {
         path: 'courses',
-        loadChildren: () => import('../../screens/courses/courses.module').then( m => m.CoursesPageModule),
+        loadChildren: () => import('../../screens/courses/courses.module').then(m => m.CoursesPageModule),
+        data: { noCache: true }
+      },
+      {
+        path: 'job-detail',
+        loadChildren: () => import('../../screens/job-detail/job-detail.module').then(m => m.JobDetailPageModule),
         data: { noCache: true }
       },
       {
         path: 'wallet',
-        loadChildren: () => import('../../screens/wallet/wallet.module').then( m => m.WalletPageModule),
+        loadChildren: () => import('../../screens/wallet/wallet.module').then(m => m.WalletPageModule),
         data: { noCache: true }
       },
       {
@@ -50,4 +55,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BottomTabBarPageRoutingModule {}
+export class BottomTabBarPageRoutingModule { }

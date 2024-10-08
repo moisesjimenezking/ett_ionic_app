@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     this.email = '';
+    this.emailRecover = '';
     this.password = '';
     this.securePassword = true;
   }
@@ -72,10 +73,20 @@ export class LoginPage implements OnInit {
     this.isModalOpen = false; // Cerrar el modal después de enviar
   }
 
+  onDismissDialogPass() {
+    this.dialogPass.dismiss();
+    this.emailRecover = '';
+  }
+
+  isDialogOpen(modal: IonModal) {
+    return modal.isOpen || modal.isCmpOpen;
+  }
+
   validateEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
-    const email = this.dialogPass.isOpen ? this.emailRecover : this.email;
+    const email = this.isDialogOpen(this.dialogPass) ? this.emailRecover : this.email;
+
     if (email && !emailRegex.test(email)) {
       this.alertMessageEmail = 'Por favor ingresa un correo electrónico válido';
       return false

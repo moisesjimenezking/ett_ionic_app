@@ -11,13 +11,12 @@
     <div class="textFieldWrapper">
       <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Nombre</ion-text>
       <ion-chip class="customChip" style="margin-top: 10-px;">
-        <ion-input mode="ios" placeholder="Introduce tu nombre" 
-          class="textField whiteColor16Medium"
-          style="min-height: 20px" 
-          [(ngModel)]="name">
+        <ion-input mode="ios" placeholder="Introduce tu nombre" class="textField whiteColor16Medium"
+          style="min-height: 20px" [(ngModel)]="name">
         </ion-input>
       </ion-chip>
-      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo es obligatorio</ion-text>
+      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo
+        es obligatorio</ion-text>
     </div>
   </div>
 
@@ -25,13 +24,12 @@
     <div class="textFieldWrapper">
       <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px;"> Correo electrónico</ion-text>
       <ion-chip class="customChip" style="margin-top: 10px;">
-        <ion-input mode="ios" placeholder="Introduce tu correo" 
-          class="textField whiteColor16Medium"
-          style="min-height: 20px" 
-          [(ngModel)]="email" inputmode="email" required (ionChange)="validateEmail()">
+        <ion-input mode="ios" placeholder="Introduce tu correo" class="textField whiteColor16Medium"
+          style="min-height: 20px" [(ngModel)]="email" inputmode="email" required (ionChange)="validateEmail()">
         </ion-input>
       </ion-chip>
-      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo es obligatorio</ion-text>
+      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo
+        es obligatorio</ion-text>
       <ion-text class="textAux" color="danger" style="margin-left: 15px;">{{ alertMessageEmail }}</ion-text>
     </div>
   </div>
@@ -40,13 +38,12 @@
     <div class="textFieldWrapper">
       <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Teléfono</ion-text>
       <ion-chip class="customChip" style="margin-top: 10px;">
-        <ion-input mode="ios" placeholder="Introduce tu teléfono" 
-          class="textField whiteColor16Medium"
-          style="min-height: 20px" 
-          [(ngModel)]="mobileNo" inputmode="numeric">
+        <ion-input mode="ios" placeholder="Introduce tu teléfono" class="textField whiteColor16Medium"
+          style="min-height: 20px" [(ngModel)]="mobileNo" inputmode="numeric">
         </ion-input>
       </ion-chip>
-      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo es obligatorio</ion-text>
+      <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo
+        es obligatorio</ion-text>
     </div>
   </div>
 
@@ -54,26 +51,24 @@
     <div class="textFieldWrapper">
       <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Contraseña </ion-text>
       <ion-chip class="customChip" style="margin-top: 10px;">
-        <ion-input mode="ios"
-          class="textField whiteColor16Medium"
-          style="margin: 0; padding-left: 10px;" 
+        <ion-input mode="ios" class="textField whiteColor16Medium" style="margin: 0; padding-left: 10px;"
           [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'" [(ngModel)]="password"
           [type]="securePassword?'password':'text'">
         </ion-input>
         <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="whiteColor" style="font-size: 18px"
-        (click)="securePassword=!securePassword"></ion-icon>
+          (click)="securePassword=!securePassword"></ion-icon>
       </ion-chip>
     </div>
   </div>
 
   <div style="margin: 90px 10px">
     <div class="customChipTow" style="margin-left: 10px; margin-right: 10px; border-radius: 30px; overflow: hidden;">
-      <ion-segment value="PERSON" mode="ios" style="margin: 0;">
-        <ion-segment-button value="PERSON" layout="icon-start">
+      <ion-segment value="PERSON" mode="ios" style="margin: 0;" (ionChange)="seleccionarTipoCuenta($event)">
+        <ion-segment-button value="PERSON" layout="icon-start" (click)="this.accountType='PERSON'">
           <ion-icon name="person" style="font-size: 16px"></ion-icon>
           <ion-label>Personal</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="COMPANY" layout="icon-start">
+        <ion-segment-button value="COMPANY" layout="icon-start" (click)="this.accountType='COMPANY'">
           <ion-icon name="business" style="font-size: 16px"></ion-icon>
           <ion-label>Empresarial</ion-label>
         </ion-segment-button>

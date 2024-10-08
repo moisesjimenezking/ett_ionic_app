@@ -1,21 +1,18 @@
 <ion-content [fullscreen]="true" scrollY="false">
-  <div class="column" style="height: 100%">
+  <div class="column relative h-full max-h-full">
     <div style="height: 100%; position: relative" *ngIf="showMainImage">
       <ion-img class="bgImage" src="../../../assets/images/small-business.png"></ion-img>
       <div class="darkOverlay"></div>
 
       <div class="overlayContent">
         <ion-img src="../../../assets/images/ett-logo.png" class="overlayLogo"></ion-img>
-        
+
         <ion-text class="overlayText">Haz que tu búsqueda de empleo sea efectiva</ion-text>
         <ion-text class="overlayTextTow">Ett, una app creada para venezolanos en busca de empleo.</ion-text>
       </div>
 
-      <ion-chip 
-        class="centeredButton" 
-        (click)="continueToCarousel()" 
-        style="background-color: #2758BF; color: white;"
-      >Comenzar</ion-chip>
+      <ion-chip class="centeredButton" (click)="continueToCarousel()"
+        style="background-color: #2758BF; color: white;">Comenzar</ion-chip>
     </div>
 
     <!-- Carrusel que se muestra al continuar -->
@@ -37,16 +34,12 @@
       </swiper-container>
       <!-- Indicadores -->
       <div class="indicators">
-        <div *ngFor="let item of onboardingScreenList; let i = index" 
-          class="indicator" 
+        <div *ngFor="let item of onboardingScreenList; let i = index" class="indicator"
           [ngClass]="{'active': i === currentIndex}">
         </div>
       </div>
-      <ion-chip 
-        class="centeredButton" 
-        (click)="handleButtonPress()" 
-        style="background-color: white; color: #2758BF;"
-      >Comenzar</ion-chip>
+      <ion-chip class="centeredButton" (click)="handleButtonPress()" style="background-color: white; color: #2758BF;">
+        {{currentIndex < 2 ? 'Siguiente' : 'Comenzar' }}</ion-chip>
     </div>
   </div>
 </ion-content>
