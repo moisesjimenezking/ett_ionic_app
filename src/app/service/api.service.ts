@@ -134,7 +134,7 @@ export class ApiService {
     for (let key in data) {
       params = params.append(key, data[key]);
     }
-    this.showSpinner();
+    // this.showSpinner();
     return this.http.get(`${this.apiUrl}/verific_email`, { params: params })
       .pipe(
         catchError((error) => {

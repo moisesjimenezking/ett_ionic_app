@@ -58,12 +58,12 @@
             </ion-text>
           </div>
           <div class="flex justify-end mt-4">
-            <ion-text (click)="goToDetails('/bottom-tab-bar/job-detail', item)" class="textAux"
+            <ion-text (click)="goToDetails('job-detail', item)" class="textAux cursor-pointer"
               style="color: white; font-size: 12">
               Ver oferta
             </ion-text>
           </div>
-          <div class="w-full mt-6">
+          <div *ngIf="!accountType" class="w-full mt-6">
             <ion-chip class="bg-primary flex justify-center items-center w-full h-12 rounded-full">
               <ion-text class="text-primary-foreground text-center text-[16px] font-medium">
                 Postularme

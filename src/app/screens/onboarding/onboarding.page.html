@@ -17,7 +17,7 @@
 
     <!-- Carrusel que se muestra al continuar -->
     <div class="swiperPosition" *ngIf="!showMainImage">
-      <swiper-container #swiper (slidechange)="slideChangeCall();"
+      <swiper-container class="h-auto" #swiper (slidechange)="slideChangeCall();"
         [autoplay]="{autoplay:true,disableOnInteraction:false,delay:2800}">
         <swiper-slide *ngFor="let item of onboardingScreenList; let i = index">
           <div class="column" style="margin: 0 20px; display: flex" [style.height]="screenHeight+'px'">

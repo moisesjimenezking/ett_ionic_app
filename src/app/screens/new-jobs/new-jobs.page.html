@@ -1,10 +1,10 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #121212;">
+  <ion-toolbar color="false">
     <div class="rowAlignCenter margin20 center" style="position: relative">
       <!-- <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
         keyboard_backspace
       </span> -->
-      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+      <ion-text class="text-primary-foreground text-2xl text-ellipsis line-clamp-1 font-semibold text-center">
         Crear nueva oferta
       </ion-text>
       <!-- <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
@@ -14,10 +14,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" style="background-color: #121212;">
-  <div>
+<ion-content [fullscreen]="true">
+  <div class="w-full h-full px-5 py-6 max-h-full overflow-y-auto">
     <div style="margin-top: 10px;">
-      <div class="textFieldWrapper" style="background-color: #121212;">
+      <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta
         </ion-text>
         <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
@@ -31,8 +31,8 @@
     </div>
 
     <div style="margin-top: -15px">
-      <div class="textFieldWrapper" style="background-color: #121212;">
-        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta
+      <div class="textFieldWrapper" style="background-color: transparent;">
+        <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Horario de trabajo
         </ion-text>
         <ion-chip id="open-work-time-dialog" class="customChip relative"
           style="margin-top: 10px; background-color: #121212;">
@@ -49,7 +49,7 @@
     </div>
 
     <div style="margin-top: -15px">
-      <div class="textFieldWrapper" style="background-color: #121212;">
+      <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Salario de la oferta
         </ion-text>
         <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
@@ -65,7 +65,7 @@
     </div>
 
     <div style="margin-top: -15px">
-      <div class="textFieldWrapper" style="background-color: #121212;">
+      <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Ubicación </ion-text>
         <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
           <ion-input mode="ios" type="text" placeholder="Introduce la ubicación" class="textAux"
@@ -76,7 +76,7 @@
     </div>
 
     <div style="margin-top: -15px">
-      <div class="textFieldWrapper" style="background-color: #121212;">
+      <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Descripción </ion-text>
         <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
           <ion-input mode="ios" type="text" placeholder="Introduce la descripción" class="textAux"
@@ -87,7 +87,7 @@
     </div>
 
     <div style="margin-top: -15px">
-      <div class="textFieldWrapper" style="background-color: #121212;">
+      <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Requerimientos
         </ion-text>
         <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
@@ -140,9 +140,9 @@
   </ion-modal>
 </ion-content>
 
-<ion-footer mode="ios" style="background-color: #121212">
-  <ion-chip class="customChip" (click)="saveNewRecord()"
-    style="margin: 60px 10px; background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
+<ion-footer mode="ios" class="bg-background px-5">
+  <ion-chip class="customChip mx-2 mb-4 mt-5" (click)="saveNewRecord()"
+    style="background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
     <ion-text class="textAux" style="font-size: 16px;">Guardar </ion-text>
   </ion-chip>
 

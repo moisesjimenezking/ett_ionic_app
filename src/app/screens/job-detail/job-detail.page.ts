@@ -40,6 +40,8 @@ export class JobDetailPage implements OnInit {
   requeriment: string[] = this.dataJobs.requeriment;
   amount = this.dataJobs.amount;
 
+
+  defaultUserIcon = '../../../../assets/images/users/iconHuman.jpg';
   newItem: string = '';
   itemList: string[] = [];
   closeModal: boolean = false;
@@ -60,6 +62,7 @@ export class JobDetailPage implements OnInit {
   details() {
     const storedItemString = localStorage.getItem('jobs');
     if (storedItemString) {
+      console.log("Job ", JSON.parse(storedItemString).appliedJobs);
       return JSON.parse(storedItemString);
     } else {
       return {};
@@ -73,7 +76,7 @@ export class JobDetailPage implements OnInit {
       ? "Ya has aplicado a esta oferta"
       : "Aplicar ahora";
 
-    console.log(this.dataJobs.amount)
+
 
   }
 
@@ -174,9 +177,9 @@ export class JobDetailPage implements OnInit {
   }
 
   saveNewRecord() {
-    console.log(this.amount)
+
     this.amount = this.amount.replace(/[^0-9.]/g, '');
-    console.log(this.amount)
+
     if (!this.title || !this.type_time || !this.amount || this.amount === '') {
       this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
@@ -227,9 +230,6 @@ export class JobDetailPage implements OnInit {
   sendMessage(message: string) {
     if (this.isProcessing) return; // Evita múltiples clics
     this.isProcessing = true;
-
-    console.log('Message sent:', message);
-    console.log('id: ',);
 
     const body = {
       "user_sending_id": localStorage.getItem('user_id'),

@@ -7,30 +7,34 @@ const routes: Routes = [
   {
     path: '',
     component: BottomTabBarPage,
-    children:[
+    children: [
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then( m => m.HomePageModule)
+        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'chats',
-        loadChildren: () => import('../chats/chats.module').then( m => m.ChatsPageModule)
+        loadChildren: () => import('../chats/chats.module').then(m => m.ChatsPageModule)
       },
       {
         path: 'courses',
-        loadChildren: () => import('../courses/courses.module').then( m => m.CoursesPageModule)
+        loadChildren: () => import('../courses/courses.module').then(m => m.CoursesPageModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: 'newJobs',
-        loadChildren: () => import('../new-jobs/new-jobs.module').then( m => m.NewJobsPageModule)
+        loadChildren: () => import('../new-jobs/new-jobs.module').then(m => m.NewJobsPageModule)
+      },
+      {
+        path: 'job-detail',
+        loadChildren: () => import('../job-detail/job-detail.module').then(m => m.JobDetailPageModule)
       },
       {
         path: 'wallet',
-        loadChildren: () => import('../../screens/wallet/wallet.module').then( m => m.WalletPageModule),
+        loadChildren: () => import('../../screens/wallet/wallet.module').then(m => m.WalletPageModule),
         data: { noCache: true }
       },
       {
@@ -46,4 +50,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BottomTabBarPageRoutingModule {}
+export class BottomTabBarPageRoutingModule { }

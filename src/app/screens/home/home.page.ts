@@ -75,8 +75,11 @@ export class HomePage implements OnInit {
   }
 
   goToDetails(screen: any, item: any) {
+
     this.ionViewWillEnter();
-    this.router.navigateByUrl(screen);
+
+    let tab = this.accountType ? '/bottom-tab-bar-company' : '/bottom-tab-bar'
+    this.router.navigateByUrl(`${tab}/${screen}`);
     let itemAux = this.details();
 
     if (itemAux.id !== item.id) {
