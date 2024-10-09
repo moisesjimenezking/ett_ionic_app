@@ -7,8 +7,9 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   server: {
     androidScheme: 'https',
-    cleartext: true
-  }
+    cleartext: true,
+  },
+
 };
 
 export default config;
