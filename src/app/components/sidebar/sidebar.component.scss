@@ -1,43 +1,45 @@
 .dialogButton {
   flex: 1;
-  background-color: #2758bf;
+
   padding: 12px;
 }
 
 ion-menu.custom-menu {
-  --border-radius: 20px;
-  --border-style: solid;
-  --border-color: transparent;
+  --border-radius: 0px;
+
 }
 
 ion-menu.custom-menu::part(container) {
-  border-top-left-radius: 20px !important;
-  border-bottom-left-radius: 20px !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   overflow: hidden !important;
-  border: 1px var(--border-style) var(--border-color);
+  border: none !important;
+  box-shadow: none !important;
+  width: 85%;
 }
 
 ion-menu.custom-menu::part(content) {
-  border-top-left-radius: 20px !important;
-  border-bottom-left-radius: 20px !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   overflow: hidden !important;
 }
 
 .side-icon {
-  margin-right: 15px; /* Ajusta el margen según sea necesario */
-  color: #2758bf; 
-  font-size: 22px; 
+  margin-right: 15px;
+  /* Ajusta el margen según sea necesario */
+  color: #2758bf;
+  font-size: 22px;
   text-align: right;
 }
 
 .side-text {
   flex-grow: 2;
   text-align: left;
-  color: #2758bf; 
+  color: #2758bf;
   font-size: 4vw;
 }
 
@@ -45,5 +47,6 @@ ion-menu.custom-menu::part(content) {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Ajusta según sea necesario */
+  height: 100%;
+  /* Ajusta según sea necesario */
 }

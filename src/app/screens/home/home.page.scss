@@ -39,7 +39,8 @@
 }
 
 .custom-background {
-  --background: #2758BF; /* Nuevo color de fondo */
+  --background: #2758BF;
+  /* Nuevo color de fondo */
 }
 
 .card-container {
@@ -47,7 +48,8 @@
 }
 
 ion-card {
-  margin-top: 40px; /* Ajusta este valor según el tamaño de la imagen para evitar solapamientos */
+  margin-top: 40px;
+  /* Ajusta este valor según el tamaño de la imagen para evitar solapamientos */
 }
 
 .custom-margin-top {
@@ -108,37 +110,51 @@ ion-card {
 }
 
 .customChip {
-  background-color: black; /* Color de fondo del chip */
-  border-radius: 100px; /* Bordes redondeados */
+  background-color: black;
+  /* Color de fondo del chip */
+  border-radius: 100px;
+  /* Bordes redondeados */
   border: 1px solid white;
-  padding: 1px 20px; /* Espaciado interno */
-  display: flex; /* Flex para centrar contenido */
-  margin-left: 0%;
-  margin-right: 0%;
+  padding: 1px 20px;
+  /* Espaciado interno */
+  display: flex;
+  /* Flex para centrar contenido */
   height: 40px;
 }
 
 .custom-item {
-  background-color: #121212 !important; /* Color de fondo */
-  color: white !important; /* Color del texto */
-  --border-color: transparent; /* Eliminar el borde */
+  background-color: #121212 !important;
+  /* Color de fondo */
+  color: white !important;
+  /* Color del texto */
+  --border-color: transparent;
+  /* Eliminar el borde */
 }
 
 .custom-item::part(native) {
-  background-color: #121212 !important; /* Asegúrate de que el fondo se aplique al elemento nativo */
+  background-color: #121212 !important;
+  /* Asegúrate de que el fondo se aplique al elemento nativo */
 }
+
 .custom-item:first-child {
-  --border-top: none; /* Eliminar el borde superior del primer elemento */
+  --border-top: none;
+  /* Eliminar el borde superior del primer elemento */
 }
 
 ion-list {
-  --ion-item-background: transparent; /* Eliminar el fondo blanco de la lista */
-  --ion-item-border-color: transparent; /* Eliminar el borde de la lista */
-  margin: 0; /* Asegúrate de que no haya márgenes */
-  padding: 0; /* Asegúrate de que no haya relleno */
+  --ion-item-background: transparent;
+  /* Eliminar el fondo blanco de la lista */
+  --ion-item-border-color: transparent;
+  /* Eliminar el borde de la lista */
+  margin: 0;
+  /* Asegúrate de que no haya márgenes */
+  padding: 0;
+  /* Asegúrate de que no haya relleno */
 }
 
 ion-content {
-  --background: #121212; /* Establecer el fondo del ion-content */
-  --ion-color-background: #121212; /* Asegurarte de que el color de fondo se aplique */
+  --background: #121212;
+  /* Establecer el fondo del ion-content */
+  --ion-color-background: #121212;
+  /* Asegurarte de que el color de fondo se aplique */
 }

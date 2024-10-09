@@ -7,6 +7,7 @@ import { ApiService } from '../../service/api.service';
 import { NewJobsPageRoutingModule } from './new-jobs-routing.module';
 
 import { NewJobsPage } from './new-jobs.page';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -14,9 +15,10 @@ import { NewJobsPage } from './new-jobs.page';
     FormsModule,
     IonicModule,
     NewJobsPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [NewJobsPage],
   providers: [ApiService]
 })
-export class NewJobsPageModule {}
+export class NewJobsPageModule { }

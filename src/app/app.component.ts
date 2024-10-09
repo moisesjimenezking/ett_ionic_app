@@ -31,7 +31,7 @@ export class AppComponent {
         this.location.isCurrentPathEqualTo('/bottom-tab-bar/saved') ||
         this.location.isCurrentPathEqualTo('/bottom-tab-bar/chats') ||
         this.location.isCurrentPathEqualTo('/bottom-tab-bar/profile') ||
-        this.location.isCurrentPathEqualTo('/onboarding')||
+        this.location.isCurrentPathEqualTo('/onboarding') ||
         this.location.isCurrentPathEqualTo('/auth/login')
       ) {
         this.tap++;
@@ -52,7 +52,7 @@ export class AppComponent {
 
   intializeApp() {
     this.platform.ready().then(() => {
-      StatusBar.setBackgroundColor({ color: '#2758BF' });
+      StatusBar.setBackgroundColor({ color: 'transparent' });
     })
   }
 }

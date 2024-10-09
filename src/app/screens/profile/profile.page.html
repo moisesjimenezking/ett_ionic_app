@@ -1,190 +1,194 @@
-<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="sidebarMenuProfile" contentId="main-content" type="overlay" swipeGesture="true">
-  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%;">
-      <span class="icon-container" style="text-align: center;">
-        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
-      </span>
+<ion-content [fullscreen]="true">
+
+  <ion-header mode="ios" [translucent]="true" class="ion-no-border h-[30%] relative">
+    <div class="absolute top-0 w-full h-[75%] bg-primary">
+
+    </div>
+    <ion-toolbar color="false">
+      <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 0px 20px 10px">
+        <span (click)="goBack()" class="material-icons text-[36px] text-primary-foreground">
+          chevron_left
+        </span>
+        <ion-text class="whiteColor20Bold ellipseText"
+          style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
+
+        <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
+          <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
+            style="font-size: 30px"></ion-menu-button>
+        </ion-text>
+      </div>
     </ion-toolbar>
+    <div class="column imageOverlay">
+      <div class="column image-container" style="position: relative; width: 150px; height: 150px; margin-top: 28%;">
+        <ion-img [src]="icon" class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full"
+          style="width: 110px; height: 110px;" (click)="openModal(icon)" />
+      </div>
+    </div>
   </ion-header>
 
-  <ion-content>
-    <ion-list>
-      <ion-item id="openLogoutDialogProfile">
-        <span class="material-icons side-icon">
-          logout
-        </span>  
-        <div class="side-text">Cerrar sesión</div>
-      </ion-item>
-    </ion-list>
 
-    <ion-modal mode="md" #logoutDialogProfile trigger="openLogoutDialogProfile" style="--border-radius: 10px">
-      <ng-template>
-        <div class="column">
-          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
-            ¿Está seguro de que desea cerrar sesión?
-          </ion-text>
-          <div class="row">
-            <div (click)="logoutDialogProfile.dismiss()" class="center dialogButton" style="margin-right: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-            </div>
-            <div (click)="logoutDialogProfile.dismiss();goTo('auth/login');logout()" class="center dialogButton"
-              style="margin-left: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </ion-modal>
-  </ion-content>
-  <ion-footer>
-    <div>
-      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
-    </div>
-  </ion-footer>
-</ion-menu>
-
-<ion-header mode="ios" [translucent]="true" class="ion-no-border" style="background-color: #2758BF; height: 30%">
-  <ion-toolbar color="false">
-    <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 0px 20px 10px">
-      <span (click)="goBack()" class="material-icons" style="color: #fff; font-size: 32px">
-        chevron_left
-      </span>
-      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
-
-      <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
-        <ion-menu-button menu="sidebarMenuProfile" class="menu-button-custom" color="whiteColor" style="font-size: 30px"></ion-menu-button>
-      </ion-text>
-    </div>
-  </ion-toolbar>
-  <div class="column imageOverlay">
-    <div class="column image-container" style="position: relative; width: 150px; height: 150px; margin-top: 150px;">
-      <ion-img [src]="icon" class="imageOverflowNew" style=" width: 110px; height: 110px; border-radius: 60px;" />
-    </div>
-  </div>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <div style="position: relative">
-
-  </div>
-  
-  <div class="margin20" style="margin-top: 35px">
-    <ion-text 
-      class="blackColor16SemiBold ellipseText" 
-      style="flex: 4; -webkit-line-clamp: 1; margin-top: 10px; font-size: 30px; font-weight: bold; text-transform: capitalize;">
+  <div class="px-4">
+    <ion-text
+      class="blackColor16SemiBold text-3xl capitalize font-bold ellipseText text-primary-foreground line-clamp-1"
+      style="flex: 4;margin-top: 10px;">
       {{ fullName }}
     </ion-text>
-    <ion-text 
-      class="blackColor16SemiBold ellipseText" 
-      style="flex: 4; -webkit-line-clamp: 1; margin-top: 10px; font-size: 20px; font-weight: bold; text-transform: capitalize;">
+    <ion-text class="capitalize text-sm text-ellipsis text-primary-foreground line-clamp-1 mb-[10px]">
       {{ specialization }}
     </ion-text>
-  </div>
-  <div class="divider"></div>
-
-  <div class="margin20" style="margin-top: 35px">
-    <div class="rowAlignCenter" style="justify-content: space-between">
-      <ion-text class="blackColor19SemiBold ellipseText" style="flex: 1; -webkit-line-clamp: 1">
-        Información del contacto
-      </ion-text>
-      <ion-icon (click)="goTo('edit-contact')" name="create-outline" color="blackColor"
-        style="font-size: 22px"></ion-icon>
-    </div>
-    <div class="column" style="margin: 12px 0">
-      <ion-text class="blackColor15Medium"> Dirección de correo electrónico </ion-text>
-      <ion-text class="grayColor15Regular" style="margin-top: 3px">
-        {{ email }}
-      </ion-text>
-    </div>
-    <div class="column" style="margin: 12px 0">
-      <ion-text class="blackColor15Medium"> Número de teléfono móvil </ion-text>
-      <ion-text class="grayColor15Regular" style="margin-top: 3px">
-        {{ phone }}
-      </ion-text>
-    </div>
-    <div class="column" style="margin: 12px 0; margin-bottom: 0">
-      <ion-text class="blackColor15Medium"> Sitio web </ion-text>
-      <div *ngFor="let item of websitesList" class="column" style="margin-top: 3px">
-        <ion-text class="blueColor15Regular"> {{item}} </ion-text>
-      </div>
-    </div>
+    <ion-text class="text-ellipsis text-sm text-primary-foreground/80 line-clamp-1 capitalize">
+      {{ location.replace('null','') }}
+    </ion-text>
   </div>
 
-  <div *ngIf="account === 'PERSON'">
-    <div class="divider"></div>
-    <div style="margin: 0 20px">
-      <div class="rowAlignCenter" style="justify-content: space-between; margin-bottom: 10px">
-        <ion-text class="blackColor19SemiBold ellipseText" style="flex: 1; -webkit-line-clamp: 1">
-          Acerca de mí
-        </ion-text>
-        <ion-icon (click)="goTo('edit-about')" name="create-outline" color="blackColor"
-          style="font-size: 22px"></ion-icon>
-      </div>
+  <!-- ABOUT ME -->
+  <div class="px-4">
+    <ng-template *ngIf="account === 'PERSON'">
+      <div class="my-[20px] bg-destructive rounded-xl p-3">
+        <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
+          <ion-text class="blackColor19SemiBold ellipseText text-primary-foreground"
+            style="flex: 1; -webkit-line-clamp: 1">
+            Acerca de mí
+          </ion-text>
+          <ion-icon (click)="goTo('edit-about')" name="create-outline" style="font-size: 22px"></ion-icon>
+        </div>
 
-      <div>
-        <ion-text class="ellipseText grayColor15Regular" [style]="!showMore?'-webkit-line-clamp: 3':null">
-          {{about}}
-        </ion-text>
-        <div class="ion-text-end">
+        <div>
+          <ion-text class="text-ellipsis line-clamp-6 text-primary-foreground">
+            {{about.replace('null', "Escribe aquí una biografía")}}
+          </ion-text>
+          <!-- <div class="ion-text-end">
           <ion-text class="primaryColor15SemiBold" (click)="showMore=!showMore">
             {{showMore?'Leer menos':'Leer más'}}
           </ion-text>
+        </div> -->
         </div>
       </div>
-    </div>
 
-    <div class="rowAlignCenter" style="margin: 0 20px; margin-top: 10px">
-      <div class="rowAlignCenter" style="flex: 1">
-        <span class="material-icons" style="color: var(--grayColor); font-size: 18px">business_center</span>
-        <ion-text class="grayColor15Medium ellipseText" style="margin-left: 5px; flex: 1; -webkit-line-clamp: 1">
-          {{ experienceYear }} + Años de experiencia
+      <!-- EXPERIENCE -->
+      <div class="">
+        <div class="my-[20px] bg-destructive rounded-xl p-3">
+          <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
+            <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
+              Experiencia
+            </ion-text>
+
+          </div>
+          <div class="w-full grid gap-3 divide-y-[.25px] divide-muted">
+            <ng-container *ngFor="let exp of workExperiencesList">
+              <div class="w-full flex flex-col gap-3 py-3">
+                <p class="text-lg text-primary-foreground">
+                  {{exp.post}}
+                </p>
+                <p class="text-sm text-primary-foreground/80 m-0">
+                  {{exp.serviceProvider}}
+                </p>
+                <small class="text-sm text-primary-foreground/80 m-0">
+                  {{exp.experience}}
+                </small>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="my-[20px] bg-destructive rounded-xl p-3">
+      <div class="rowAlignCenter flex-1">
+        <span class="material-icons text-primary-foreground/80 text-lg">business_center</span>
+        <ion-text class="text-primary-foreground/80 font-medium text-ellipsis ml-[5px] flex-1 line-clamp-1">
+          {{ experienceYear ?? 0}} + Años de experiencia
         </ion-text>
       </div>
       <div class="rowAlignCenter" style="flex: 1">
-        <span class="material-icons" style="color: var(--grayColor); font-size: 18px">
+        <span class="material-icons text-primary-foreground/80 text-lg">
           location_pin
         </span>
-        <ion-text class="grayColor15Medium" style="margin-left: 5px; flex: 1; -webkit-line-clamp: 1">
+        <ion-text class="grayColor15Medium flex-1 ml-[5px] line-clamp-1 text-primary-foreground/80">
           {{ location }}
         </ion-text>
       </div>
-    </div>
+    </div> -->
 
-    <div class="divider"></div>
+      <div>
+        <div class="my-[20px] bg-destructive rounded-xl p-3">
+          <ion-text class="text-ellipsis font-semibold text-primary-foreground" style="flex: 1; -webkit-line-clamp: 1">
+            Habilidades
+          </ion-text>
+          <div (click)="goTo('add-skills')" class="center square18 mt-1">
+            <ion-icon name="add" class="text-[24px] text-primary-foreground"></ion-icon>
+          </div>
 
-    <div>
-      <div class="rowAlignCenter" style="margin: 0 20px; justify-content: space-between">
-        <ion-text class="blackColor19SemiBold ellipseText" style="flex: 1; -webkit-line-clamp: 1">
-          Habilidades
-        </ion-text>
-        <div (click)="goTo('add-skills')" class="center square18">
-          <ion-icon name="add" color="blackColor" style="font-size: 22px"></ion-icon>
+          <div class="horizontalScroll" style="padding: 0 13px; margin-top: 10px">
+            <ion-chip *ngFor="let item of currentSkill" style="display: inline-block">
+              <ion-label>{{ item }}</ion-label>
+            </ion-chip>
+          </div>
         </div>
-      </div>
 
-      <div class="horizontalScroll" style="padding: 0 13px; margin-top: 10px">
-        <ion-chip *ngFor="let item of currentSkill" style="display: inline-block">
-          <ion-label>{{ item }}</ion-label>
-        </ion-chip>
+
+      </div>
+    </ng-template>
+    <div>
+      <div class="my-[20px] bg-destructive rounded-xl p-3">
+        <div class="flex items-center justify-between">
+          <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
+            Información del contacto
+          </ion-text>
+          <ion-icon (click)="goTo('edit-contact')" name="create-outline"
+            class="text-[22px] text-primary-foreground"></ion-icon>
+        </div>
+
+        <div class="flex flex-col gap-1.5 my-6">
+          <ion-text class="text-primary-foreground font-medium text-lg"> Dirección de correo electrónico </ion-text>
+          <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
+            {{ email }}
+          </ion-text>
+        </div>
+        <div class="flex flex-col gap-1.5 my-6">
+          <ion-text class="text-primary-foreground font-medium text-lg"> Número de teléfono móvil </ion-text>
+          <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
+            {{ phone }}
+          </ion-text>
+        </div>
+
+        <div *ngIf="websitesList?.length" class="flex flex-col gap-1.5 mt-6">
+          <ion-text class="text-primary-foreground font-medium text-lg"> Sitio web </ion-text>
+          <div *ngFor="let item of websitesList" class="column" style="margin-top: 3px">
+            <ion-text class="text-primary text-sm"> {{item}} </ion-text>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-    <!-- <div class="divider"></div> -->
 
-  <ion-modal #changePicSheet mode="ios" [initialBreakpoint]="1" [breakpoints]="[0,1]" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
+
+
+  <!-- <div class="divider"></div> -->
+
+  <!-- CHANGE PROFILE IMAGE MODAL -->
+  <ion-modal #changePicSheet mode="ios" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
     style="--height: auto; --width: 100%;">
-    <ng-template class="rounded-top-corners">
-      <div style="background-color: #FFF; margin-bottom: 20px">
-        <div class="sheetDivider"></div>
-        <ion-text (click)="changePicSheet.dismiss(); deletePic()" class="redColor16Regular"
-          style="display: flex; justify-content: center">
-          Eliminar la foto actual
-        </ion-text>
-        <div class="sheetDivider"></div>
-        <ion-text class="blackColor16Regular" style="display: flex; justify-content: center" (click)="fileInput.click()">
-          <input type="file" accept=".jpg, .jpeg, .png" style="display: none;" #fileInput (change)="handleFileInput($event);changePicSheet.dismiss()">
-          Elige un archivo JPG o PNG
-        </ion-text>
+    <ng-template>
+      <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
+        <ion-img [src]="modalValue" class="min-w-[110px] min-h-[110px] rounded-full overflow-hidden"
+          style="width: 110px; height: 110px;" (click)="openModal(icon)" />
+        <div class="w-full flex gap-2 justify-between items-center">
+          <ion-chip
+            class="text-primary-foreground  text-lg flex justify-center items-center font-medium bg-transparent w-full">
+            <ion-text (click)="changePicSheet.dismiss(); deletePic()">
+              Eliminar foto
+            </ion-text>
+          </ion-chip>
+          <ion-chip
+            class="text-primary-foreground bg-primary text-lg w-full h-12 rounded-3xl py-4 flex justify-center items-center"
+            (click)="fileInput.click()">
+            <ion-text>
+              <input type="file" accept=".jpg, .jpeg, .png" style="display: none;" #fileInput
+                (change)="handleFileInput($event);changePicSheet.dismiss()">
+              Añadir foto
+            </ion-text>
+          </ion-chip>
+        </div>
       </div>
     </ng-template>
   </ion-modal>

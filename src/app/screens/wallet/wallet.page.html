@@ -1,60 +1,20 @@
-<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="first" contentId="main-content" type="overlay" swipeGesture="true">
-  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%">
-      <span class="icon-container">
-        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
-      </span>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content>
-    <ion-list>
-      <ion-item id="openLogoutDialogHome">
-        <span class="material-icons side-icon">
-          logout
-        </span>  
-        <div class="side-text">Cerrar sesión</div>
-      </ion-item>
-    </ion-list>
-
-    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialogHome" style="--border-radius: 10px">
-      <ng-template>
-        <div class="column">
-          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
-            ¿Está seguro de que desea cerrar sesión?
-          </ion-text>
-          <div class="row">
-            <div (click)="logoutDialog.dismiss()" class="center dialogButton" style="margin-right: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-            </div>
-            <div (click)="logoutDialog.dismiss();goTo('auth/login');logout()" class="center dialogButton"
-              style="margin-left: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </ion-modal>
-  </ion-content>
-  <ion-footer>
-    <div>
-      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
-    </div>
-  </ion-footer>
-</ion-menu>
-
-<ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #2758bf;">
-    <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
-      <ion-img [src]="icon" class="imageOverflow" style="width: 48px; height: 48px; border-radius: 28px"></ion-img>
-      <div style="display: flex; flex-direction: column; margin-left: 10px; width: 100%;">
-        <ion-label style="font-size: 18px; font-weight: bold; color: black; text-align: center; margin: auto; width: 100%;">Próximo Pago</ion-label>
-        <ion-label style="font-size: 16px; text-align: left; margin-top: 5px"><strong>Monto: </strong> Bs 3.000.000,00</ion-label>
-        <ion-label style="font-size: 16px; text-align: left;"><strong>Fecha: </strong> 01/10/2024</ion-label>
+<ion-header mode="ios" [translucent]="false" class="ion-no-border bg-background">
+  <ion-toolbar color="false" class="bg-transparent">
+    <ion-chip class="flex items-center m-3 gap-3 rounded-xl bg-muted">
+      <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
+      <ion-img [src]="icon" class="imageOverflow min-w-12 w-12 h-12 rounded-[28px]"></ion-img>
+      <div class="flex flex-col flex-1 text-primary-foreground">
+        <ion-label [color]="false" class="text-lg font-bold text-primary-foreground">Próximo
+          Pago</ion-label>
+        <ion-label [color]="false" class="text-[16px] text-left mt-1 text-primary-foreground"><strong>Monto: </strong>
+          Bs
+          3.000.000,00</ion-label>
+        <ion-label [color]="false" class="text-muted text-sm text-left"><strong>Fecha: </strong> 01/10/2024</ion-label>
       </div>
-      <div style="display: flex; align-items: center; margin-left: auto;"> 
-        <ion-img src="../../../../assets/images/appIcon.png" class="imageOverflow" style="width: 28px; height: 28px; border-radius: 28px"></ion-img>
-      </div>   
+      <div class="flex items-center ml-auto">
+        <ion-img src="../../../../assets/images/appIcon.png"
+          class="imageOverflow min-w-12 w-12 h-12 rounded-full"></ion-img>
+      </div>
     </ion-chip>
     <!-- <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> 
       <ion-tab-button>
@@ -72,23 +32,25 @@
     </ion-chip> -->
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="custom-background">
-  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%">
-    <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%; display: flex; justify-content: center; align-items: center;">
-      <ion-list *ngIf="listTransaction && listTransaction.length > 0">
-          <div *ngFor="let item of listTransaction; let i=index;">
-            <ion-item>
-              <ion-label style="font-size: 12px">Pago de Bs</ion-label>
-              <ion-label style="font-size: 12px">item.amount</ion-label>
-              <!-- <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
+<ion-content [fullscreen]="true">
+  <div class="w-full h-full py-2">
+    <div class="w-full flex justify-center items-center h-full px-4">
+      <ion-list class="w-full h-full bg-muted py-2 px-4 rounded-xl"
+        *ngIf="listTransaction && listTransaction.length > 0">
+        <div *ngFor="let item of listTransaction; let i=index;">
+          <div class="w-full flex gap-1 text-primary-foreground">
+            <p class="text-lg">Pago de Bs</p>
+            <p class="text-xl text-primary-foreground/90">{{item.amount}}</p>
+            <!-- <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
               <ion-label style="font-size: 12px">0.00</ion-label>
               <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon> -->
-            </ion-item>
           </div>
+        </div>
       </ion-list>
-      <ion-label *ngIf="!listTransaction || listTransaction.length === 0" style="font-weight: bold; color: black;">Sin Pagos recibidos</ion-label>
+      <ion-label *ngIf="!listTransaction || listTransaction.length === 0" style="font-weight: bold; color: black;">Sin
+        Pagos recibidos</ion-label>
     </div>
-      <!-- <ion-list>
+    <!-- <ion-list>
         <ion-item>
           <ion-label style="font-size: 12px">Retiro</ion-label>
           <ion-label style="font-size: 12px">#89657128</ion-label>

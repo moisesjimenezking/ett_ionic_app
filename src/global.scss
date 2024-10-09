@@ -26,7 +26,9 @@
 @import "@ionic/angular/css/flex-utils.css";
 @import "./theme/fonts.scss";
 @import "./theme/styles.scss";
+@import "./theme/tailwind.scss";
 @import "material-icons/iconfont/material-icons.css";
+
 
 @font-face {
   font-family: 'SF-Compact-Display';
@@ -34,8 +36,39 @@
   font-weight: 600;
 }
 
-* {
-  font-family: "CompactDisplay";
+html {
+  --ion-default-font: "CompactDisplay", sans-serif;
+  font-family: "CompactDisplay", sans-serif;
+}
+
+body,
+*,
+*::after,
+*::before {
+  font-family: inherit;
+}
+
+p,
+span {
+  text-wrap: pretty;
+  color: hsl(var(--primary-foreground));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+  color: hsl(var(--primary-foreground));
+}
+
+img,
+video,
+svg {
+  height: auto;
+  max-width: 100%;
 }
 
 ion-content::part(scroll)::-webkit-scrollbar {
@@ -43,7 +76,7 @@ ion-content::part(scroll)::-webkit-scrollbar {
 }
 
 ion-content {
-  --background: black;
+  --background: hsl(var(--background));
 }
 
 .ellipseText {
@@ -56,6 +89,7 @@ ion-content {
 .horizontalScroll {
   overflow-x: scroll;
   white-space: nowrap;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -123,9 +157,13 @@ ion-modal {
   --width: 90%;
   --height: fit-content;
   --border-radius: 5px;
+
+  &::part(content) {
+    background: transparent !important;
+  }
 }
 
-.textFieldWrapper{
+.textFieldWrapper {
   background-color: var(--extraLightGrayColor);
   padding: 15px 12px;
   border-radius: 10px;
@@ -155,11 +193,116 @@ ion-modal {
   padding: 20px 15px;
 }
 
-.button{
+.button {
   background-color: var(--primaryColor);
   padding: 18px;
-  margin:20px;
+  margin: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px var(--primaryColor);
 }
 
+ion-buttons {
+  background: transparent !important;
+}
+
+ion-menu-button {
+  padding: 0px !important;
+  margin: 0px !important;
+  background: transparent !important;
+}
+
+::part(scroll) {
+  // display: flex;
+  // flex-direction: column;
+  // max-height: 100%;
+  // flex: 1;
+  // row-gap: .25rem;
+}
+
+
+/* CUSTOM SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: hsl(var(--destructive));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--destructive));
+  border-radius: 10px;
+  border: 2px solid hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--destructive));
+}
+
+.overflow-y-auto,
+.overflow-y-scroll,
+.scroll-y,
+::part(scroll) {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) hsl(var(--destructive));
+}
+
+/*   */
+
+/* CUSTOM RADIO GROUP */
+
+ion-radio {
+  --border-radius: 10px;
+  --inner-border-radius: 10px;
+
+  --color: hsl(var(--foreground));
+  --color-checked: hsl(var(--foreground));
+
+  &::part(label) {
+    margin-inline-start: 10px !important;
+  }
+
+  .radio-wrapper {
+    justify-content: flex-start;
+    gap: 0;
+  }
+}
+
+ion-radio.ios::part(container) {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid hsl(var(--foreground));
+  border-radius: 50%;
+}
+
+.radio-checked.ios::part(container) {
+  border-color: hsl(var(--foreground));
+}
+
+/* */
+
+.field {
+  background-color: transparent;
+  /* Color de fondo del chip */
+  border-radius: 100px;
+  /* Bordes redondeados */
+  border: 1px solid hsl(var(--foreground));
+  padding: 1px 20px;
+  /* Espaciado interno */
+  display: flex;
+
+  height: 40px;
+
+  position: relative;
+
+
+  ion-input {
+    height: 100% !important;
+    min-height: 100% !important;
+    font-size: 16px;
+    color: hsl(var(--primary-foreground));
+  }
+}

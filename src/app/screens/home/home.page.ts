@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
   accountType = localStorage.getItem('accountType') === "COMPANY" ? true : false;
   icon = "";
   temporalIcon = "";
-  
+
   showErrorMessage: boolean = false;
 
   title: string = '';
@@ -34,7 +34,8 @@ export class HomePage implements OnInit {
   closeModal: boolean = false;
 
 
-  jobList: any;
+  jobList: any[] = [];
+  isLoadingJobList = false;
 
   selectedJobTypeIndex = 0;
   showToast = false;
@@ -57,14 +58,14 @@ export class HomePage implements OnInit {
     this.icon = this.stablishUrlPic(localStorage.getItem('icon_profile'));
   }
 
-  stablishUrlPic (current: any){
-    let iconItem = current; 
+  stablishUrlPic(current: any) {
+    let iconItem = current;
     let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
     return value
   }
 
-  searchIcon(item: any): string{
+  searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
     return newIcon;
   }
@@ -74,8 +75,11 @@ export class HomePage implements OnInit {
   }
 
   goToDetails(screen: any, item: any) {
+
     this.ionViewWillEnter();
-    this.router.navigateByUrl(screen);
+
+    let tab = this.accountType ? '/bottom-tab-bar-company' : '/bottom-tab-bar'
+    this.router.navigateByUrl(`${tab}/${screen}`);
     let itemAux = this.details();
 
     if (itemAux.id !== item.id) {
@@ -87,19 +91,26 @@ export class HomePage implements OnInit {
     const storedItemString = localStorage.getItem('jobs');
     if (storedItemString) {
       return JSON.parse(storedItemString);
-    }else{
+    } else {
       return {};
     }
   }
 
   ionViewWillEnter() {
     const body: { [key: string]: any } = {};
-    if(this.accountType){
+    if (this.accountType) {
       body["user_id"] = localStorage.getItem('user_id')
     }
 
-    this.apiService.allJobsApi(body).subscribe((data) => {
-      this.jobList = data;
+    this.isLoadingJobList = true;
+    this.apiService.allJobsApi(body).subscribe({
+      next: (data) => {
+        this.jobList = data;
+        this.isLoadingJobList = false;
+      },
+      error: (_) => {
+        this.isLoadingJobList = false;
+      }
     });
   }
 
@@ -128,14 +139,14 @@ export class HomePage implements OnInit {
 
   goToSearch(searchText: any) {
     const body: { [key: string]: any } = {
-      title: searchText, 
-      type_time: searchText, 
-      description: searchText, 
-      location: searchText, 
-      requeriment: searchText 
+      title: searchText,
+      type_time: searchText,
+      description: searchText,
+      location: searchText,
+      requeriment: searchText
     }
 
-    if(this.accountType){
+    if (this.accountType) {
       body["user_id"] = localStorage.getItem('user_id')
     }
 
@@ -167,10 +178,10 @@ export class HomePage implements OnInit {
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
-  
+
   formatAmount() {
     this.amount = this.amount.replace(/[^0-9$]/g, '');
     if (!this.amount.startsWith('$')) {
@@ -178,17 +189,17 @@ export class HomePage implements OnInit {
     }
   }
 
-  saveNewRecord(){
+  saveNewRecord() {
     this.amount = this.amount.replace(/[^0-9]/g, '');
     if (!this.title || !this.type_time || !this.amount || this.amount === '') {
-      this.showErrorMessage = true; 
+      this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
       this.closeModal = false;
       this.presentAlert(errorMessage);
       return throwError(() => new Error(errorMessage));
     }
 
-    this.showErrorMessage = false; 
+    this.showErrorMessage = false;
     this.closeModal = true;
 
     const body: { [key: string]: any } = {
@@ -198,20 +209,20 @@ export class HomePage implements OnInit {
       amount: this.amount,
     };
 
-    if(this.description){
+    if (this.description) {
       body["description"] = this.description
     }
-    
-    if(this.location){
+
+    if (this.location) {
       body["location"] = this.location
     }
 
-    if(this.requeriment){
+    if (this.requeriment) {
       body["requeriment"] = this.requeriment
     }
 
     let fin = false
-    if(this.apiService.postJobs(body)){
+    if (this.apiService.postJobs(body)) {
       fin = true;
     }
     return fin;
@@ -223,7 +234,7 @@ export class HomePage implements OnInit {
       this.newItem = '';
     }
   }
-  
+
   removeItem(item: string) {
     this.requeriment = this.requeriment.filter(i => i !== item);
   }

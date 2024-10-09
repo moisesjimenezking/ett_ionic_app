@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonMenu, IonModal } from '@ionic/angular';
+import { IonMenu } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -14,8 +14,8 @@ export class CandidatePage implements OnInit {
   userData = this.details();
   websitesList = this.userData.user.social_link;
   currentSkill = this.userData.user.skills;
-  icon='';
-  iconFront='';
+  icon = '';
+  iconFront = '';
 
   showMore = false;
 
@@ -34,7 +34,7 @@ export class CandidatePage implements OnInit {
     const storedItemString = localStorage.getItem('candidate');
     if (storedItemString) {
       return JSON.parse(storedItemString);
-    }else{
+    } else {
       return {};
     }
   }
@@ -47,8 +47,8 @@ export class CandidatePage implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  stablishUrlPic (current: any){
-    let iconItem = current; 
+  stablishUrlPic(current: any) {
+    let iconItem = current;
     let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
     return value

@@ -11,13 +11,11 @@
     <div class="textFieldWrapper">
       <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Correo electrónico </ion-text>
       <ion-chip class="customChip" style="margin-top: 10px;">
-        <ion-input mode="ios" placeholder="Introduce tu correo" 
-          class="textField whiteColor16Medium"
-          style="margin: 0; padding-left: 10px;" 
-          [(ngModel)]="email" inputmode="email" (ionChange)="validateEmail()">
+        <ion-input mode="ios" placeholder="Introduce tu correo" class="textField whiteColor16Medium"
+          style="margin: 0; padding-left: 10px;" [(ngModel)]="email" inputmode="email" (ionChange)="validateEmail()">
         </ion-input>
       </ion-chip>
-      <ion-text class="textAux" color="danger" style="margin-left: 10px;">{{ alertMessageEmail }}</ion-text>      
+      <ion-text class="textAux" color="danger" style="margin-left: 10px;">{{ alertMessageEmail }}</ion-text>
     </div>
   </div>
 
@@ -25,14 +23,12 @@
     <div class="textFieldWrapper">
       <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Contraseña </ion-text>
       <ion-chip class="customChip" style="margin-top: 10px;">
-        <ion-input mode="ios"
-          class="textField whiteColor16Medium"
-          style="margin: 0; padding-left: 10px;" 
+        <ion-input mode="ios" class="textField whiteColor16Medium" style="margin: 0; padding-left: 10px;"
           [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'" [(ngModel)]="password"
           [type]="securePassword?'password':'text'">
         </ion-input>
         <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="whiteColor" style="font-size: 18px"
-        (click)="securePassword=!securePassword"></ion-icon>
+          (click)="securePassword=!securePassword"></ion-icon>
       </ion-chip>
     </div>
   </div>
@@ -40,28 +36,30 @@
   <ion-modal mode="md" #dialogPass trigger="openDialogPass" style="--border-radius: 10px">
     <ng-template>
       <div class="column" style="background-color: #2C2C2C;">
-        <ion-text class="textAux" style="text-align: center; margin: 20px; margin-bottom: 10px; color:#FFFFFF; font-size: 18px">
+        <ion-text class="textAux"
+          style="text-align: center; margin: 20px; margin-bottom: 10px; color:#FFFFFF; font-size: 18px">
           Recuperar contraseña
         </ion-text>
         <div style="background-color: #2C2C2C;">
           <div class="textFieldWrapper" style="background-color: #2C2C2C;">
             <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px;"> Correo electrónico </ion-text>
             <ion-chip class="customChip" style="margin-top: 10px; background-color: #2C2C2C;">
-              <ion-input mode="ios" placeholder="Introduce tu correo" 
-                class="textField whiteColor16Medium"
-                style="margin: 0; padding-left: 10px;" 
-                [(ngModel)]="email" inputmode="email" (ionChange)="validateEmail()">
+              <ion-input mode="ios" placeholder="Introduce tu correo" class="textField whiteColor16Medium"
+                style="margin: 0; padding-left: 10px;" [(ngModel)]="emailRecover" inputmode="email"
+                (ionChange)="validateEmail()">
               </ion-input>
             </ion-chip>
           </div>
         </div>
         <div style="display: flex; justify-content: space-between; margin: 20px; margin-top: 10px">
-          <ion-chip (click)="dialogPass.dismiss()" style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 150px;">
+          <ion-chip (click)="onDismissDialogPass()"
+            style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 150px;">
             <ion-text class="textAux" style="color: white; text-align: center;">
               Cancelar
             </ion-text>
           </ion-chip>
-          <ion-chip (click)="openDialogCode()" id="openDialogCode" style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 150px;">
+          <ion-chip (click)="openDialogCode()" id="openDialogCode"
+            style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 150px;">
             <ion-text class="textAux" style="color: white; text-align: center;">
               Enviar
             </ion-text>
@@ -81,50 +79,47 @@
           <div class="textFieldWrapper" style="background-color: #2C2C2C;">
             <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px;"> Código de verificación </ion-text>
             <ion-chip class="customChip" style="margin-top: 10px; background-color: #2C2C2C;">
-              <ion-input mode="ios" placeholder="Introduce el código" 
-                class="textField whiteColor16Medium"
-                style="margin: 0; padding-left: 10px;" 
-                [(ngModel)]="email" inputmode="text" (ionChange)="validateEmail()">
+              <ion-input mode="ios" placeholder="Introduce el código" class="textField whiteColor16Medium"
+                style="margin: 0; padding-left: 10px;" [(ngModel)]="email" inputmode="text"
+                (ionChange)="validateEmail()">
               </ion-input>
             </ion-chip>
-            <ion-text class="textAux" color="danger" style="margin-left: 10px;">{{ alertMessageEmail }}</ion-text>      
+            <ion-text class="textAux" color="danger" style="margin-left: 10px;">{{ alertMessageEmail }}</ion-text>
           </div>
         </div>
         <div class="textFieldWrapper" style="background-color: #2C2C2C; margin-top: -30px">
           <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Contraseña </ion-text>
           <ion-chip class="customChip" style="margin-top: 10px; background-color: #2C2C2C;">
-            <ion-input mode="ios"
-              placeholder="Introduce una nueva contraseña"
-              class="textField whiteColor16Medium"
-              style="margin: 0; padding-left: 10px;" 
-              [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'" [(ngModel)]="password"
-              [type]="securePassword?'password':'text'">
+            <ion-input mode="ios" placeholder="Introduce una nueva contraseña" class="textField whiteColor16Medium"
+              style="margin: 0; padding-left: 10px;"
+              [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'"
+              [(ngModel)]="password" [type]="securePassword?'password':'text'">
             </ion-input>
             <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="whiteColor" style="font-size: 18px"
-            (click)="securePassword=!securePassword"></ion-icon>
+              (click)="securePassword=!securePassword"></ion-icon>
           </ion-chip>
         </div>
         <div class="textFieldWrapper" style="background-color: #2C2C2C; margin-top: -15px">
           <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Verificar contraseña </ion-text>
           <ion-chip class="customChip" style="margin-top: 10px; background-color: #2C2C2C;">
-            <ion-input mode="ios"
-              placeholder="Verificar contraseña"
-              class="textField whiteColor16Medium"
-              style="margin: 0; padding-left: 10px;" 
-              [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'" [(ngModel)]="password"
-              [type]="securePassword?'password':'text'">
+            <ion-input mode="ios" placeholder="Verificar contraseña" class="textField whiteColor16Medium"
+              style="margin: 0; padding-left: 10px;"
+              [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'"
+              [(ngModel)]="password" [type]="securePassword?'password':'text'">
             </ion-input>
             <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="whiteColor" style="font-size: 18px"
-            (click)="securePassword=!securePassword"></ion-icon>
+              (click)="securePassword=!securePassword"></ion-icon>
           </ion-chip>
         </div>
         <div style="display: flex; justify-content: space-between; margin: 20px; margin-top: 20px">
-          <ion-chip (click)="dialogCode.dismiss()" style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 150px;">
+          <ion-chip (click)="dialogCode.dismiss()"
+            style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 150px;">
             <ion-text class="textAux" style="color: white; text-align: center;">
               Cancelar
             </ion-text>
           </ion-chip>
-          <ion-chip (click)="dialogCode.dismiss()" id="openDialogCode" style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 150px;">
+          <ion-chip (click)="dialogCode.dismiss()" id="openDialogCode"
+            style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 150px;">
             <ion-text class="textAux" style="color: white; text-align: center;">
               Enviar
             </ion-text>

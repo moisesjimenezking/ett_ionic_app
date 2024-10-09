@@ -14,7 +14,7 @@ import { IonMenu, IonModal } from '@ionic/angular';
 export class LoginPage implements OnInit {
   @ViewChild('dialogPass', { read: IonModal }) dialogPass!: IonModal;
   @ViewChild('dialogCode', { read: IonModal }) dialogCode!: IonModal;
-  
+
   email: string = '';
   emailRecover: string = '';
   password: string = '';
@@ -24,8 +24,8 @@ export class LoginPage implements OnInit {
   isModalOpen = false;
 
   constructor(
-    private routerOutlet: IonRouterOutlet, 
-    public platform: Platform, 
+    private routerOutlet: IonRouterOutlet,
+    public platform: Platform,
     private router: Router,
     private alertController: AlertController,
     private apiService: ApiService
@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     this.email = '';
+    this.emailRecover = '';
     this.password = '';
     this.securePassword = true;
   }
@@ -59,7 +60,7 @@ export class LoginPage implements OnInit {
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 
@@ -71,16 +72,27 @@ export class LoginPage implements OnInit {
     // Lógica para enviar el email
     this.isModalOpen = false; // Cerrar el modal después de enviar
   }
-  
-  validateEmail(){
+
+  onDismissDialogPass() {
+    this.dialogPass.dismiss();
+    this.emailRecover = '';
+  }
+
+  isDialogOpen(modal: IonModal) {
+    return modal.isOpen || modal.isCmpOpen;
+  }
+
+  validateEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
-    if (this.email && !emailRegex.test(this.email)) {
+    const email = this.isDialogOpen(this.dialogPass) ? this.emailRecover : this.email;
+
+    if (email && !emailRegex.test(email)) {
       this.alertMessageEmail = 'Por favor ingresa un correo electrónico válido';
       return false
-    } 
+    }
 
-    return this.apiService.getVerificEmail({email:this.email});
+    return this.apiService.getVerificEmail({ email });
   }
 
   token() {
@@ -89,12 +101,12 @@ export class LoginPage implements OnInit {
       this.presentAlert(errorMessage);
       return throwError(() => new Error(errorMessage));
     }
-  
+
     const body = {
       username: this.email,
       password: this.password
     };
-  
+
     return this.apiService.postToken(body)
   }
 

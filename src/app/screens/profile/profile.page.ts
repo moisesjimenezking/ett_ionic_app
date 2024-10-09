@@ -13,22 +13,22 @@ export class ProfilePage implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialogProfile', { read: IonModal }) logoutDialog!: IonModal;
   @ViewChild('rifInput') rifInput!: ElementRef;
-  @ViewChild('identificacionInput') identificacionInput!: ElementRef; 
+  @ViewChild('identificacionInput') identificacionInput!: ElementRef;
   @ViewChild('conducirInput') conducirInput!: ElementRef;
 
   rifPdf: string | null = null;
   rifValue: string = '';
   identificacionPdf: string | null = null;
-  conducirPdf: string | null = null; 
+  conducirPdf: string | null = null;
 
   account = localStorage.getItem('accountType')
   fullName: any = '';
   specialization = localStorage.getItem('specialization') === 'null' ? '' : localStorage.getItem('specialization');;
   email: any = '';
   phone: any = '';
-  icon='';
-  iconFront='';
-  
+  icon = '';
+  iconFront = '';
+
   isModalOpen = false;
   modalValue: string = '';
 
@@ -75,12 +75,12 @@ export class ProfilePage implements OnInit {
   ionViewWillEnter() {
     this.defineData();
   }
-  
+
   ngAfterViewInit() {
     this.defineData();
   }
 
-  defineData(){
+  defineData() {
     setTimeout(() => {
       this.fullName = localStorage.getItem('fullname');
       this.email = localStorage.getItem('email');
@@ -102,9 +102,9 @@ export class ProfilePage implements OnInit {
       this.cdr.detectChanges();
     }, 1000);
   }
-  
-  stablishUrlPic (current: any){
-    let iconItem = current; 
+
+  stablishUrlPic(current: any) {
+    let iconItem = current;
     let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
     return value
@@ -118,9 +118,8 @@ export class ProfilePage implements OnInit {
     this.navCtrl.back()
   }
 
-  openModal(event: any) {
-    const value = event.target.getAttribute('data-value');
-    this.modalValue = value;
+  openModal(img: string) {
+    this.modalValue = img;
     this.isModalOpen = true;
   }
 
@@ -129,11 +128,11 @@ export class ProfilePage implements OnInit {
     this.modalValue = '';
   }
 
-  deletePic(){
+  deletePic() {
     const body: { [key: string]: any } = {}
-    if (this.modalValue === "profile"){
+    if (this.modalValue === "profile") {
       body["icon"] = "";
-    }else{
+    } else {
       body["icon_front"] = "";
     }
 
@@ -141,19 +140,19 @@ export class ProfilePage implements OnInit {
       this.apService.putUser(body).subscribe((data: any) => {
         this.icon = this.stablishUrlPic(data.icon);
         this.iconFront = this.stablishUrlPic(data.icon_front);
-        localStorage.setItem('icon_profile'           , data.icon);
-        localStorage.setItem('icon_front'             , data.icon_front);
+        localStorage.setItem('icon_profile', data.icon);
+        localStorage.setItem('icon_front', data.icon_front);
 
         this.cdr.detectChanges();
       });
     }, 50);
   }
 
-  updatePic(base64String: string){
+  updatePic(base64String: string) {
     const body: { [key: string]: any } = {}
-    if (this.modalValue === "profile"){
+    if (this.modalValue === "profile") {
       body["icon"] = base64String;
-    }else{
+    } else {
       body["icon_front"] = base64String;
     }
 
@@ -167,7 +166,7 @@ export class ProfilePage implements OnInit {
 
         this.cdr.detectChanges();
       });
-    }, 50);     
+    }, 50);
   }
 
   handleFileInput(event: any) {
@@ -190,6 +189,7 @@ export class ProfilePage implements OnInit {
   }
 
   logout() {
+    localStorage.clear();
     this.closeMenu();
   }
 
@@ -223,9 +223,9 @@ export class ProfilePage implements OnInit {
 
   selectFile(type: string) {
     const input = type === 'rif' ? this.rifInput.nativeElement :
-                  type === 'identificacion' ? this.identificacionInput.nativeElement :
-                  this.conducirInput.nativeElement;
-  
+      type === 'identificacion' ? this.identificacionInput.nativeElement :
+        this.conducirInput.nativeElement;
+
     input.click(); // Simula un clic en el input de tipo file
   }
 

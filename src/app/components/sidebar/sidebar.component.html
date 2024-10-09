@@ -1,57 +1,58 @@
-<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="first" contentId="main-content" type="overlay" swipeGesture="true">
-  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%">
-      <!-- <ion-title style="text-align: center; color: #FFF;">Opciones</ion-title> -->
-      <span class="icon-container">
-        <span class="material-icons" style="color: white;">
-          handyman
-        </span>
-        <ion-text style="color: white; margin-left: 10px; margin-right: 10px;"> Opciones </ion-text>
-        <span class="material-icons" style="color: white;">
-          handyman
-        </span>
-      </span>
-    </ion-toolbar>
-  </ion-header>
+<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="app-menu"
+  contentId="main-content" type="overlay" swipeGesture="true">
 
-  <ion-content>
-    <ion-list>
-      <ion-item id="openLogoutDialogHome">
-        <span class="material-icons side-icon">
-          logout
-        </span>  
-        <div class="side-text">Cerrar sesión</div>
-      </ion-item>
-    </ion-list>
+  <ion-content style="--background: hsl(var(--muted))">
+    <div class="flex flex-col items-end gap-4 px-3 py-4 mt-8">
+      <div class="flex justify-end py-4 px-2">
+        <button class="bg-primary w-8 h-8 rounded-full flex justify-center items-center" (click)="closeMenu()">
+          <span class="material-icons">
+            close
+          </span>
+        </button>
+      </div>
+      <div class="flex flex-col items-end gap-y-5 px-2 py-4">
+        <button type="button" id="openLogoutDialog"
+          class="bg-transparent outline-none border-none text-right text-pretty" (click)="closeMenu()">
 
-    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialogHome" style="--border-radius: 10px">
+          <span class="text-2xl font-semibold text-primary-foreground">Cerrar sesión</span>
+        </button>
+        <button type="button" class="bg-transparent outline-none border-none text-right text-pretty"
+          (click)="closeMenu()">
+
+          <span class="text-2xl font-semibold text-primary-foreground">Términos y condiciones</span>
+        </button>
+
+      </div>
+    </div>
+    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialog" style="--border-radius: 10px">
       <ng-template>
-        <div class="column">
-          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
-            ¿Está seguro de que desea cerrar sesión?
-          </ion-text>
-          <div class="row">
-            <div (click)="logoutDialog.dismiss()" class="center dialogButton" style="margin-right: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-            </div>
-            <div (click)="logoutDialog.dismiss();goTo('auth/login');logout()" class="center dialogButton"
-              style="margin-left: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
-            </div>
+        <div class="column bg-muted text-primary-foreground px-4">
+          <div class="flex justify-center items-center w-full h-24">
+            <ion-text class="text-center text-lg">
+              ¿Está seguro de que desea cerrar sesión?
+            </ion-text>
+          </div>
+          <div class="w-full flex gap-2 justify-center items-center mt-3 mb-5">
+            <ion-chip
+              class="w-full text-primary-foreground  text-lg flex justify-center items-center font-medium bg-transparent px-4">
+              <ion-text (click)="logoutDialog.dismiss()">
+                Cancelar
+              </ion-text>
+            </ion-chip>
+            <ion-chip
+              class="w-full text-primary-foreground bg-primary text-lg h-12 rounded-3xl py-4 px-6 flex justify-center items-center"
+              (click)="logout()">
+              <ion-text>
+                Cerrar sesión
+              </ion-text>
+            </ion-chip>
           </div>
         </div>
       </ng-template>
     </ion-modal>
   </ion-content>
-  <ion-footer>
-    <div>
-      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
-    </div>
-  </ion-footer>
 </ion-menu>
 
-<ion-router-outlet id="main-content"></ion-router-outlet>
-
-
-
-
+<div class="ion-page bg-background" id="main-content">
+  <ng-content />
+</div>

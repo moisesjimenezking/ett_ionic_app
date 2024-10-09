@@ -4,8 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
+
 import { ChatsPageRoutingModule } from './chats-routing.module';
 import { ChatsPage } from './chats.page';
+
+// COMPONENTS //
+import { ChatEmptyStateComponent } from './chat-empty-state/chat-empty-state.component';
+import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -13,9 +19,10 @@ import { ChatsPage } from './chats.page';
     FormsModule,
     IonicModule,
     ChatsPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
-  declarations: [ChatsPage],
+  declarations: [ChatsPage, ChatEmptyStateComponent, ChatMessagesComponent],
   providers: [ApiService]
 })
-export class ChatsPageModule {}
+export class ChatsPageModule { }

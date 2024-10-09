@@ -1,15 +1,17 @@
-ion-tab-bar{
-  --background: #121212;
-  height: 60px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+ion-tab-bar {
+  --background: hsl(var(--muted));
+  height: 70px;
+  box-shadow: 0 1px 6px hsl(var(--muted) / .15)
 }
 
-ion-tab-button{
-  --color:#FFFFFF;
-  --color-selected:var(--primaryColor);
-};
+ion-tab-button {
+  --color: #FFFFFF;
+  --color-selected: var(--primaryColor);
+}
 
-ion-label{
+;
+
+ion-label {
   color: #FFFFFF;
 }
 
@@ -17,5 +19,6 @@ ion-label{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Ajusta según sea necesario */
+  height: 100%;
+  /* Ajusta según sea necesario */
 }

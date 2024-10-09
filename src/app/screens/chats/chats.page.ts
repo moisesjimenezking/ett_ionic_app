@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonMenu, IonModal, NavController } from '@ionic/angular';
+
 import { ApiService } from '../../service/api.service';
-import { IonMenu, IonModal } from '@ionic/angular';
+import { ChatMessage } from 'src/app/types/chat-messages';
+
 
 @Component({
   selector: 'app-chats',
@@ -13,10 +15,13 @@ export class ChatsPage implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
 
-  chatsList: any[] = [];
+  chatsList: ChatMessage[] = [
+  ];
+  isLoadingChatList = false;
+  // conversation: Message | null = null;
 
   constructor(
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private router: Router,
     private apiChat: ApiService,
     private cdr: ChangeDetectorRef,
@@ -28,7 +33,7 @@ export class ChatsPage implements OnInit {
   ngAfterViewInit() {
     this.allChats();
   }
-  
+
   ionViewWillEnter() {
     this.allChats();
   }
@@ -46,13 +51,25 @@ export class ChatsPage implements OnInit {
     this.navCtrl.back()
   }
 
-  allChats(){
+  allChats() {
+    this.isLoadingChatList = true;
     setTimeout(() => {
-      this.apiChat.getChat({}).subscribe((data: any) => {
-        this.chatsList = data;
-        this.cdr.detectChanges();
+      this.apiChat.getChat({}).subscribe({
+        next: (data: any) => {
+          this.chatsList = data;
+          this.isLoadingChatList = false;
+          this.cdr.detectChanges();
+        },
+        error: (_) => {
+          this.isLoadingChatList = false;
+        }
       });
-    }, 100);     
+    }, 100);
+  }
+
+  onMessageSelected(message: ChatMessage) {
+    this.goToDetails('/message', message);
+    // this.conversation = message;
   }
 
   closeMenu() {
@@ -65,14 +82,14 @@ export class ChatsPage implements OnInit {
     this.closeMenu();
   }
 
-  stablishUrlPic (current: any){
-    let iconItem = current; 
+  stablishUrlPic(current: any) {
+    let iconItem = current;
     let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
     return value
   }
 
-  searchIcon(item: any): string{
+  searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
     return newIcon;
   }

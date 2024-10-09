@@ -1,66 +1,43 @@
-<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="sidebarMenuChat" contentId="main-content" type="overlay" swipeGesture="true">
-  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-    <ion-toolbar color="false" style="background-color: #2758bf; height: 100%;">
-      <span class="icon-container" style="text-align: center;">
-        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
-      </span>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content>
-    <ion-list>
-      <ion-item id="openLogoutDialogChat">
-        <span class="material-icons side-icon">
-          logout
-        </span>  
-        <div class="side-text">Cerrar sesión</div>
-      </ion-item>
-    </ion-list>
-
-    <ion-modal mode="md" #logoutDialogChat trigger="openLogoutDialogChat" style="--border-radius: 10px">
-      <ng-template>
-        <div class="column">
-          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
-            ¿Está seguro de que desea cerrar sesión?
-          </ion-text>
-          <div class="row">
-            <div (click)="logoutDialogChat.dismiss()" class="center dialogButton" style="margin-right: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-            </div>
-            <div (click)="logoutDialogChat.dismiss();goTo('auth/login');logout()" class="center dialogButton"
-              style="margin-left: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </ion-modal>
-  </ion-content>
-  <ion-footer>
-    <div>
-      <ion-text class="whiteColor18SemiBold" style="font-size: 6vw;">text</ion-text>
-    </div>
-  </ion-footer>
-</ion-menu>
-
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #2758BF;">
+  <ion-toolbar color="false" class="bg-background">
     <div class="rowAlignCenter margin20 center" style="position: relative">
       <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
-        keyboard_backspace
+        arrow_back_ios
       </span>
       <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
-        Chats
+        Mensajes
       </ion-text>
       <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
-        <ion-menu-button menu="sidebarMenuChat" class="menu-button-custom" color="whiteColor" style="font-size: 30px"></ion-menu-button>
+        <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
+          style="font-size: 30px"></ion-menu-button>
       </ion-text>
     </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="custom-background">
-  <div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%; max-height: 100%; overflow-y: auto;">
+<ion-content [fullscreen]="true" class="bg-background">
+  <ng-container *ngIf="chatsList.length && !isLoadingChatList;">
+    <div class="px-1.5">
+      <app-chat-messages [messages]="chatsList" (onMessageSelected)="onMessageSelected($event);" />
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoadingChatList;">
+    <div class="px-1.5">
+      <app-chat-messages [isLoading]="true" />
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!chatsList.length && !isLoadingChatList">
+    <app-chat-empty-state />
+  </ng-container>
+
+
+</ion-content>
+
+<!-- 
+
+<div class="rounded-top-corners" style="background-color: rgb(255, 255, 255); height: 100%; max-height: 100%; overflow-y: auto;">
     <div *ngFor="let item of chatsList" style="margin: 10px 20px; margin-bottom: 20px">
       <div (click)="goToDetails('message', item)" class="rowAlignCenter" style="justify-content: space-between">
         <div class="rowAlignCenter" style="flex: 1">
@@ -88,4 +65,5 @@
       </div>
     </div>
   </div>
-</ion-content>
+
+-->

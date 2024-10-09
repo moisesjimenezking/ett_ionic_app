@@ -5,8 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { IonMenu, IonModal } from '@ionic/angular';
+import { UtilsLib } from 'src/app/lib/utils';
 
 
 @Component({
@@ -25,18 +26,22 @@ export class JobDetailPage implements OnInit {
   buttonText = this.enableButton
     ? "Ya has aplicado a esta oferta"
     : "Aplicar ahora";
-  
+
+  utils = new UtilsLib();
+
   account = localStorage.getItem('accountType')
-  
+
   isProcessing = false;
 
   title = this.dataJobs.title;
-  type_time= this.dataJobs.type_time;
-  description= this.dataJobs.description;
-  location= this.dataJobs.location;
+  type_time = this.dataJobs.type_time;
+  description = this.dataJobs.description;
+  location = this.dataJobs.location;
   requeriment: string[] = this.dataJobs.requeriment;
-  amount= this.dataJobs.amount;
+  amount = this.dataJobs.amount;
 
+
+  defaultUserIcon = '../../../../assets/images/users/iconHuman.jpg';
   newItem: string = '';
   itemList: string[] = [];
   closeModal: boolean = false;
@@ -44,7 +49,7 @@ export class JobDetailPage implements OnInit {
   showErrorMessage: boolean = false;
   message: string = '';
   constructor(
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private router: Router,
     private route: ActivatedRoute,
     private apiJobsService: ApiService,
@@ -52,13 +57,14 @@ export class JobDetailPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
 
-  ){}
+  ) { }
 
   details() {
     const storedItemString = localStorage.getItem('jobs');
     if (storedItemString) {
+      console.log("Job ", JSON.parse(storedItemString).appliedJobs);
       return JSON.parse(storedItemString);
-    }else{
+    } else {
       return {};
     }
   }
@@ -70,8 +76,8 @@ export class JobDetailPage implements OnInit {
       ? "Ya has aplicado a esta oferta"
       : "Aplicar ahora";
 
-    console.log(this.dataJobs.amount)
-    
+
+
   }
 
   goBack() {
@@ -88,16 +94,16 @@ export class JobDetailPage implements OnInit {
     this.cerrarModal()
   }
 
-  applicateJob(){
-    if (this.enableButton === false){
+  applicateJob() {
+    if (this.enableButton === false) {
       const body = {
         "jobs_id": this.dataJobs.id
       }
-      
+
       this.apiJobsService.postJobsApplied(body);
 
       setTimeout(() => {
-        this.apiJobsService.allJobsApi({id:this.dataJobs.id}).subscribe((data: any) => {
+        this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data: any) => {
           let result = data[0];
           localStorage.setItem('jobs', JSON.stringify(result));
           this.dataJobs = this.details();
@@ -112,25 +118,25 @@ export class JobDetailPage implements OnInit {
     }
   }
 
-  stablishUrlPic (current: any){
-    let iconItem = current; 
+  stablishUrlPic(current: any) {
+    let iconItem = current;
     let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
     return value
   }
 
-  searchIcon(item: any): string{
+  searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
     return newIcon;
   }
-  
+
   cerrarModal() {
     this.modalController.dismiss();
     // this.goBack();
     // this.goTo(localStorage.getItem('accountType') === "PERSON" 
     //   ? 'bottom-tab-bar/home' 
     //   : 'bottom-tab-bar-company/home'
-  // );
+    // );
   }
 
   modalDidPresent() {
@@ -150,7 +156,7 @@ export class JobDetailPage implements OnInit {
     if (this.closeModal) {
       this.openEditJobs.dismiss();
       setTimeout(() => {
-        this.apiJobsService.allJobsApi({id:this.dataJobs.id}).subscribe((data: any) => {
+        this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data: any) => {
           let result = data[0];
           localStorage.setItem('jobs', JSON.stringify(result));
           this.dataJobs = this.details();
@@ -159,30 +165,30 @@ export class JobDetailPage implements OnInit {
       }, 1000);
     }
   }
-  
+
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Error',
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 
-  saveNewRecord(){
-    console.log(this.amount)
+  saveNewRecord() {
+
     this.amount = this.amount.replace(/[^0-9.]/g, '');
-    console.log(this.amount)
+
     if (!this.title || !this.type_time || !this.amount || this.amount === '') {
-      this.showErrorMessage = true; 
+      this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
       this.closeModal = false;
       this.presentAlert(errorMessage);
       return throwError(() => new Error(errorMessage));
     }
 
-    this.showErrorMessage = false; 
+    this.showErrorMessage = false;
     this.closeModal = true;
 
     const body = {
@@ -196,7 +202,7 @@ export class JobDetailPage implements OnInit {
     };
 
     let fin = false
-    if(this.apiJobsService.putJobs(body)){
+    if (this.apiJobsService.putJobs(body)) {
       fin = true;
     }
     return fin;
@@ -216,7 +222,7 @@ export class JobDetailPage implements OnInit {
     }
     console.log(this.amount)
   }
-  
+
   removeItem(item: string) {
     this.requeriment = this.requeriment.filter(i => i !== item);
   }
@@ -224,28 +230,25 @@ export class JobDetailPage implements OnInit {
   sendMessage(message: string) {
     if (this.isProcessing) return; // Evita múltiples clics
     this.isProcessing = true;
-  
-    console.log('Message sent:', message);
-    console.log('id: ', );
-  
+
     const body = {
       "user_sending_id": localStorage.getItem('user_id'),
       "user_recept_id": this.dataJobs.user_id
     }
-    
+
     setTimeout(() => {
       this.apiJobsService.postChats(body).subscribe((data: any) => {
         const body = {
-          'message' : message,
-          'chats_id' : data.id,
-          'jobs_id' : this.dataJobs.id
+          'message': message,
+          'chats_id': data.id,
+          'jobs_id': this.dataJobs.id
         }
-  
+
         setTimeout(() => {
           this.apiJobsService.postMessage(body).subscribe((data: any) => {
             this.isProcessing = false;
           });
-        }, 50); 
+        }, 50);
       }, (error) => {
         // Manejar el error de postChats aquí
         this.isProcessing = false;

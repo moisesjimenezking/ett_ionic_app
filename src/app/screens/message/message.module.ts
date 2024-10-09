@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MessagePageRoutingModule } from './message-routing.module';
 
 import { MessagePage } from './message.page';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -14,9 +15,10 @@ import { MessagePage } from './message.page';
     FormsModule,
     IonicModule,
     MessagePageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [MessagePage],
   providers: [ApiService]
 })
-export class MessagePageModule {}
+export class MessagePageModule { }

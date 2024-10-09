@@ -1,177 +1,67 @@
-<ion-menu #menu class="custom-menu" style="border: none; margin: 0;" side="end" menuId="menufirst" contentId="main-content" type="overlay" swipeGesture="true">
-  <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-    <ion-toolbar color="false" style="background-color: #121212; height: 100%">
-      <span class="icon-container">
-        <ion-text style="color: white; margin-left: 30%; margin-right: 10px; margin-top: 1px; text-align: center;"> Ett Venezuela </ion-text>
-      </span>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content style="background-color: #121212;">
-    <ion-list>
-      <ion-item id="openLogoutDialogHome"  class="custom-item">
-        <span class="material-icons side-icon">
-          logout
-        </span>  
-        <div class="side-text">Cerrar sesión</div>
-      </ion-item>
-      <ion-item class="custom-item">
-        <span class="material-icons">
-          info
-        </span>
-        <div class="side-text">Terminos y condiciones</div>
-      </ion-item>
-    </ion-list>
-
-    <ion-modal mode="md" #logoutDialog trigger="openLogoutDialogHome" style="--border-radius: 10px">
-      <ng-template>
-        <div class="column">
-          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
-            ¿Está seguro de que desea cerrar sesión?
-          </ion-text>
-          <div class="row">
-            <div (click)="logoutDialog.dismiss()" class="center dialogButton" style="margin-right: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-            </div>
-            <div (click)="logoutDialog.dismiss();goTo('auth/login');logout()" class="center dialogButton"
-              style="margin-left: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cerrar sesión </ion-text>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </ion-modal>
-  </ion-content>
-  <ion-footer style="background-color: #121212;">
-  </ion-footer>
-</ion-menu>
-
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" style="background-color: #121212;">
-    <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 0px 20px 10px">
+  <ion-toolbar color="false" class="mt-4 mb-8 bg-background">
+    <div class="flex justify-between mx-[10px] mb-[20xp]">
       <span (click)="goBack()" class="material-icons" style="color: #fff; font-size: 32px">
         chevron_left
       </span>
-      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
-        Detalles del trabajo
+      <ion-text class="flex-1 text-center whiteColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+        Detalles de la oferta
       </ion-text>
       <div style="position: relative">
         <ion-buttons style="background-color: #121212; color: white;">
-          <ion-menu-button  menu="menufirst" class="menu-button-custom"></ion-menu-button>
+          <ion-menu-button menu="app-menu" class="menu-button-custom"></ion-menu-button>
         </ion-buttons>
       </div>
       <!-- <ion-icon id=openEditJobs *ngIf="account === 'COMPANY'" name="create-outline" color="whiteColor" style="font-size: 30px;"></ion-icon> -->
     </div>
-    <ion-modal mode="md" #openEditJobs trigger="openEditJobs" style="--border-radius: 10px">
-      <ng-template>
-        <div class="column">
-          <ion-text class="blackColor18Medium" style="text-align: center; margin: 20px; margin-bottom: 30px">
-            Editar Registro
-          </ion-text>
-          
-          <div class="margin20" style="margin-top: 10px">
-            <div class="textFieldWrapper">
-              <ion-input mode="ios" placeholder="Titulo de la oferta" class="textField lightColor16Medium"
-                style="min-height: 20px" [(ngModel)]="title">
-              </ion-input>
-            </div>
-            <ion-text color="danger" *ngIf="!title && showErrorMessage">Este campo es obligatorio</ion-text>
-          </div>
 
-          <div class="margin20" style="margin-top: 10px">
-            <div class="textFieldWrapper">
-              <ion-select interface="auto" placeholder="Horario de Trabajo" class="textField blackColor16Medium"
-                style="min-height: 20px" [(ngModel)]="type_time">
-                <ion-select-option value="Tiempo completo">Tiempo completo</ion-select-option>
-                <ion-select-option value="Medio tiempo">Medio tiempo</ion-select-option>
-                <ion-select-option value="Freelance">Freelance</ion-select-option>
-              </ion-select>
-            </div>
-            <ion-text color="danger" *ngIf="!type_time && showErrorMessage">Este campo es obligatorio</ion-text>
-          </div>
-
-          <div class="margin20" style="margin-top: 10px">
-            <div class="textFieldWrapper">
-              <ion-input 
-                mode="ios" 
-                type="text" 
-                placeholder="Salario" 
-                [(ngModel)]="amount"
-                (ionChange)="formatAmount()"
-              ></ion-input>
-            </div>
-            <ion-text color="danger" *ngIf="!amount && showErrorMessage">Este campo es obligatorio</ion-text>
-          </div>
-
-          <div class="margin20" style="margin-top: 10px">
-            <div class="textFieldWrapper">
-              <ion-input 
-                mode="ios" 
-                type="text" 
-                placeholder="Ubicación" 
-                [(ngModel)]="location"
-              ></ion-input>
-            </div>
-          </div>
-
-          <div class="margin20" style="margin-top: 10px">
-            <div class="textFieldWrapper">
-              <ion-input 
-                mode="ios" 
-                type="text" 
-                placeholder="Descripción" 
-                [(ngModel)]="description"
-              ></ion-input>
-            </div>
-          </div>
-
-          <div class="margin20" style="margin-top: 10px">
-            <div class="textFieldWrapper">
-              <ion-input mode="ios" placeholder="Requerimientos" class="textField lightColor16Medium" style="min-height: 20px" [(ngModel)]="newItem" (keyup.enter)="addItemToList()"></ion-input>
-            </div>
-            <ion-chip *ngFor="let item of requeriment">
-              <ion-label>{{ item }}</ion-label>
-              <ion-icon name="close-circle" (click)="removeItem(item)"></ion-icon>
-            </ion-chip>
-          </div>
-
-
-
-          <div class="row">
-            <div (click)="openEditJobs.dismiss()" class="center dialogButton" style="margin-right: 1px">
-              <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-            </div>
-            <div (click)="saveAndCloseModal()" class="center dialogButton" style="margin-left: 1px">
-              <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </ion-modal>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" style="background-color: #121212;">
-  <div style="width: 95%; margin: auto; background-color: #1E1E1E; border-radius: 10px; padding: 20px; position: relative; min-height: 95%; max-height: 95%; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; word-wrap: break-word;">
-    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: -10px;">
-      <ion-text class="textAux" style="color: #FFFFFF; font-size: 20px; flex: 1; -webkit-line-clamp: 1; line-clamp: 1;">
-        {{ dataJobs.title }}
-      </ion-text>
-      <ion-text class="textAux" style="color: #FFFFFF; font-size: 14px;"> Bs {{ dataJobs.amount }}/mes </ion-text>
+<ion-content [fullscreen]="true" class="bg-background" style="--background: hsl(var(--background))">
+  <div class="bg-muted m-auto 
+  w-[95%] h-full max-h-[95%] max-w-[95%] rounded-xl p-5 
+  relative overflow-hidden overflow-y-auto
+  flex flex-col" style="word-wrap: break-word;">
+    <div class="flex justify-between">
+      <div class="flex flex-col gap-1.5 justify-between text-primary-foreground">
+        <ion-text class="text-xl leading-5 font-medium">
+          {{dataJobs.title}}
+        </ion-text>
+        <ion-text class="text-xs text-primary-foreground/90">
+          {{dataJobs.location}}
+        </ion-text>
+      </div>
+      <div class="column">
+        <ion-text class="text-sm text-primary-foreground font-medium">
+          Bs.{{dataJobs.amount}}/mes
+        </ion-text>
+      </div>
     </div>
-    <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 5px;">
-      <ion-text class="textAux" style="color: #FFFFFF; font-size: 12px;">{{ dataJobs.location }}</ion-text>
-    </div>
-    <ion-chip style="background-color: #FFFFFF; margin-top: 20px; padding: 0 20px; max-width: fit-content;">
-      <ion-text class="textAux" style="color: #040A15; font-size: 12px;">{{ dataJobs.type_time }}</ion-text>
+    <ion-chip class="bg-foreground mt-5 py-1 px-7 text-center max-w-fit rounded-full">
+      <ion-text class="text-destructive text-sm">{{ dataJobs.type_time }}</ion-text>
     </ion-chip>
+    <ng-container *ngIf="account == 'COMPANY'">
+      <div class="flex flex-col gap-3 my-5">
+        <ion-text class="text-primary-foreground font-medium text-lg">
+          Postulaciones:
+          <strong>{{ dataJobs.appliedJobs?.length ?? 0 }}</strong></ion-text>
+
+        <ion-chip *ngIf="dataJobs.appliedJobs?.length" id="openModalAppliedJobs"
+          class="bg-primary flex justify-center items-center w-full h-12 rounded-full">
+          <ion-text class="text-primary-foreground text-lg font-medium">Ver candidatos</ion-text>
+        </ion-chip>
+      </div>
+    </ng-container>
     <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 20px;">
       <ion-text class="textAux" style="color: #FFFFFF; font-size: 18px; flex: 1; -webkit-line-clamp: 1; line-clamp: 1;">
         Acerca del empleo
       </ion-text>
     </div>
     <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 20px;">
-      <ion-text class="textAux" style="color: #FFFFFF; font-size: 12px; flex: 1; text-align: justify; word-break: break-word; overflow: hidden; white-space: normal;">
+      <ion-text class="textAux"
+        style="color: #FFFFFF; font-size: 12px; flex: 1; text-align: justify; word-break: break-word; overflow: hidden; white-space: normal;">
         {{ dataJobs.description }}
       </ion-text>
     </div>
@@ -186,16 +76,29 @@
         {{ item }}
       </ion-text>
     </div>
-    <div style="margin-top: auto; display: flex; justify-content: space-between; padding-top: 20px;">
-      <ion-chip id="openModalMessage" style="background-color: #1E1E1E; display: flex; justify-content: center; align-items: center; width: 180px;">
+    <div *ngIf="account == 'PERSON'" class="w-full mt-auto flex justify-between gap-2 pt-5">
+      <ion-chip *ngIf="!enableButton" id="openModalMessage"
+        class="bg-muted flex justify-center items-center w-full h-12">
         <ion-text class="textAux" style="color: white; text-align: center;">Enviar mensaje</ion-text>
       </ion-chip>
-      <ion-chip id="openModal" style="display: flex; justify-content: center; align-items: center; width: 180px;"
-        [ngStyle]="{'background-color': enableButton ? '#FFFFFF' : '#2758BF', 'cursor': enableButton ? 'not-allowed' : 'pointer'}"
-        (click)="!enableButton && applicateJob()"
-      >
-        <ion-text class="textAux" [ngStyle]="{'color': enableButton ? '#2758BF' : '#FFFFFF'}" style="text-align: center;">
+      <ion-chip id="openModal" [class]="utils.cn(
+        'flex justify-center items-center w-full h-12 rounded-3xl',
+        enableButton ? 'bg-foreground/90 cursor-not-allowed': 'bg-primary cursor-pointer' 
+      )" (click)="!enableButton && applicateJob()">
+        <ion-text [class]="utils.cn(
+          'text-[16px] text-center',
+          enableButton ? 'text-primary/90 font-semibold': 'text-primary-foreground'
+        )">
           {{ buttonText }}
+        </ion-text>
+      </ion-chip>
+
+    </div>
+    <div *ngIf="account == 'COMPANY'" class="w-full mt-auto flex justify-between gap-2 pt-5">
+      <ion-chip id="openEditJobs"
+        class="flex justify-center items-center w-full h-12 rounded-3xl bg-primary cursor-pointer">
+        <ion-text class="text-[16px] text-center text-primary-foreground">
+          Editar
         </ion-text>
       </ion-chip>
     </div>
@@ -206,40 +109,216 @@
   <ng-template>
     <div class="column" style="background-color: #2C2C2C;">
       <div class="center column" style="margin: 0 20px; margin-bottom: 0px">
-        <ion-text class="textAux" style="margin-bottom: 20px; text-align: center; margin-top: 20px; font-size: 22px; color:#FFFFFF">
+        <ion-text class="textAux"
+          style="margin-bottom: 20px; text-align: center; margin-top: 20px; font-size: 22px; color:#FFFFFF">
           Enviar mensaje
         </ion-text>
       </div>
       <div class="textFieldWrapper" style="background-color: #2C2C2C;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px"> Mensaje </ion-text>
         <ion-chip class="customChip" style="margin-top: 10px; background-color: #2C2C2C">
-          <ion-input mode="ios" placeholder="Escribe tu mensaje" 
-            class="textAux"
-            placeholder="Escribe tu mensaje aquí..." 
-            rows="1"
+          <ion-input mode="ios" placeholder="Escribe tu mensaje" class="textAux"
+            placeholder="Escribe tu mensaje aquí..."
             style="color: #FFFFFF; font-size: 12px; margin-bottom: 10px; resize: none; width: 100%; max-width: 100%; min-height: 50px;"
             [(ngModel)]="message" inputmode="text">
           </ion-input>
         </ion-chip>
       </div>
-    
+
       <!-- Aquí aplicamos los cambios -->
       <div style="display: flex; justify-content: center; margin:10px">
-        <ion-chip (click)="modal.dismiss()" 
-                  style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 45%; margin-right: 10px;">
+        <ion-chip (click)="modal.dismiss()"
+          style="background-color: #2C2C2C; display: flex; justify-content: center; align-items: center; width: 45%; margin-right: 10px;">
           <ion-text class="textAux" style="color: white; text-align: center;">
             Cancelar
           </ion-text>
         </ion-chip>
-        <ion-chip (click)="sendMessage(message);modal.dismiss()" 
-                  style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 45%; margin-left: 10px;">
+        <ion-chip (click)="sendMessage(message);modal.dismiss()"
+          style="background-color: #2758BF; display: flex; justify-content: center; align-items: center; width: 45%; margin-left: 10px;">
           <ion-text class="textAux" style="color: white; text-align: center;">
             Enviar
           </ion-text>
         </ion-chip>
       </div>
     </div>
-    
+
+  </ng-template>
+</ion-modal>
+
+<!-- <ion-modal mode="md" #openEditJobs trigger="openEditJobs" style="--border-radius: 10px">
+  <ng-template>
+    <div
+      class="w-full bg-muted flex flex-col justify-center items-center rounded-xl px-3 py-5 h-full max-h-full overflow-y-auto">
+      <div class="flex-1 max-h-full overflow-y-auto">
+        <ion-text class="text-primary-foreground text-2xl font-semibold text-center m-5 mb-7">
+          Editar oferta
+        </ion-text>
+
+        <div style="margin-top: 10px;">
+          <div class="textFieldWrapper" style="background-color: #121212;">
+            <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta
+            </ion-text>
+            <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+              <ion-input mode="ios" placeholder="Introduce el título de la oferta" class="textAux"
+                style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="title">
+              </ion-input>
+            </ion-chip>
+            <ion-text color="danger" style="margin-left:20px;" *ngIf="!title && showErrorMessage">Este campo es
+              obligatorio</ion-text>
+          </div>
+        </div>
+
+        <div style="margin-top: -15px">
+          <div class="textFieldWrapper" style="background-color: #121212;">
+            <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Horario de trabajo
+            </ion-text>
+            <ion-chip id="open-work-time-dialog" class="customChip relative"
+              style="margin-top: 10px; background-color: #121212;">
+              <ion-input mode="ios" type="text" placeholder="Horario de trabajo" class="textAux"
+                style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="amount">
+              </ion-input>
+              <span class="material-icons text-primary-foreground absolute top-2/4 -translate-y-2/4 right-1">
+                arrow_drop_down
+              </span>
+            </ion-chip>
+            <ion-text color="danger" style="margin-left:20px;" *ngIf="!type_time && showErrorMessage">Este campo es
+              obligatorio</ion-text>
+          </div>
+        </div>
+
+        <div style="margin-top: -15px">
+          <div class="textFieldWrapper" style="background-color: #121212;">
+            <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Salario de la oferta
+            </ion-text>
+            <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+              <ion-input mode="ios" type="text" placeholder="Salario" class="textAux"
+                style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="amount"
+                (ionChange)="formatAmount()">
+              </ion-input>
+
+            </ion-chip>
+            <ion-text color="danger" style="margin-left:20px;" *ngIf="!amount && showErrorMessage">Este campo es
+              obligatorio</ion-text>
+          </div>
+        </div>
+
+        <div style="margin-top: -15px">
+          <div class="textFieldWrapper" style="background-color: #121212;">
+            <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Ubicación </ion-text>
+            <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+              <ion-input mode="ios" type="text" placeholder="Introduce la ubicación" class="textAux"
+                style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="location">
+              </ion-input>
+            </ion-chip>
+          </div>
+        </div>
+
+        <div style="margin-top: -15px">
+          <div class="textFieldWrapper" style="background-color: #121212;">
+            <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Descripción </ion-text>
+            <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+              <ion-input mode="ios" type="text" placeholder="Introduce la descripción" class="textAux"
+                style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="description">
+              </ion-input>
+            </ion-chip>
+          </div>
+        </div>
+
+        <div style="margin-top: -15px">
+          <div class="textFieldWrapper" style="background-color: #121212;">
+            <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Requerimientos
+            </ion-text>
+            <ion-chip class="customChip" style="margin-top: 10px; background-color: #121212;">
+              <ion-input mode="ios" type="text" placeholder="Introduce los requerimientos" class="textAux"
+                style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="newItem"
+                (keyup.enter)="addItemToList()">
+              </ion-input>
+            </ion-chip>
+          </div>
+          <div style="margin-left: 20px;">
+            <ion-chip style="background-color: #FFFBF7;" *ngFor="let item of requeriment">
+              <ion-label class="textAux" style="color: #121212; font-size: 12px;">{{ item }}</ion-label>
+              <ion-icon name="close-circle" (click)="removeItem(item)" style="color: #2758BF;"></ion-icon>
+            </ion-chip>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div (click)="openEditJobs.dismiss()" class="center dialogButton" style="margin-right: 1px">
+          <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+        </div>
+        <div (click)="saveAndCloseModal()" class="center dialogButton" style="margin-left: 1px">
+          <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal> -->
+
+<ion-modal #workTimeDialog mode="ios" trigger="open-work-time-dialog">
+  <ng-template>
+    <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-4 py-5">
+      <ion-radio-group value="complete-time" class="w-full flex flex-col gap-3 text-primary-foreground">
+        <ion-radio mode="md" value="complete-time" justify="start" labelPlacement="end" aria-label="Complete Time"
+          class="block">Tiempo
+          completo</ion-radio>
+        <ion-radio mode="md" value="part-time" justify="start" labelPlacement="end" aria-label="Part Time"
+          class="block">Medio
+          Tiempo</ion-radio>
+        <ion-radio mode="md" value="freelance" justify="start" labelPlacement="end" aria-label="Freelance"
+          class="block">Freelance</ion-radio>
+      </ion-radio-group>
+
+      <div class="w-full flex gap-2 justify-end items-center">
+        <ion-chip
+          class="text-primary-foreground  text-lg flex justify-center items-center font-medium bg-transparent px-4">
+          <ion-text (click)="workTimeDialog.dismiss()">
+            Cancelar
+          </ion-text>
+        </ion-chip>
+        <ion-chip
+          class="text-primary-foreground bg-primary text-lg h-12 rounded-3xl py-4 px-6 flex justify-center items-center"
+          (click)="workTimeDialog.dismiss()">
+          <ion-text>
+            Seleccionar
+          </ion-text>
+        </ion-chip>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>
+
+<ion-modal mode="md" #modal trigger="openModalAppliedJobs" style="--border-radius: 5px; --background: #2C2C2C;">
+  <ng-template>
+    <div class="flex flex-col gap-4 bg-muted rounded-2xl px-3 py-5">
+      <p class="text-2xl text-primary-foreground font-semibold text-center my-3">
+        candidatos
+      </p>
+
+      <ng-container *ngFor="let candidate of dataJobs.appliedJobs">
+        <div class="w-full flex flex-col gap-4 px-2">
+          <div class="w-full flex gap-2">
+            <img [src]="candidate.user.icon ?? defaultUserIcon" alt="Candidate Icon"
+              class="min-w-[90px] min-h-[90px] size-[90px] rounded-full overflow-hidden" />
+            <div class="flex-1 text-start text-primary-foreground text-lg">
+              <p>{{candidate.user.fullname}}</p>
+              <p class="text-muted text-sm">
+                {{candidate.user.specialization}}
+              </p>
+            </div>
+          </div>
+          <ion-chip
+            class="bg-primary h-12 text-primary-foreground text-lg font-medium rounded-full flex justify-center items-center"
+            (click)="goToDetails('/candidate', candidate)">
+            Ver perfil
+          </ion-chip>
+        </div>
+      </ng-container>
+    </div>
+
   </ng-template>
 </ion-modal>
 

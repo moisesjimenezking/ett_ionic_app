@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, NavController } from '@ionic/angular';
+import { IonContent, NavController, MenuController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
+import { UtilsLib } from 'src/app/lib/utils';
 
 
 @Component({
@@ -14,17 +15,20 @@ export class MessagePage implements OnInit {
   @ViewChild('textArea') textArea: any;
   @ViewChild(IonContent) content: IonContent | undefined;
 
+  utils = new UtilsLib();
+
   userMessages: any;
   dataChat: any;
 
   newMsgRegister: object = {};
-  newMsg='';
+  newMsg = '';
 
   constructor(
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private router: Router,
     private apiMessage: ApiService,
     private cdr: ChangeDetectorRef,
+    private menu: MenuController
   ) { }
 
   ngOnInit() {
@@ -33,16 +37,16 @@ export class MessagePage implements OnInit {
     this.viewsAll()
   }
 
-  details(text: string){
+  details(text: string) {
     const storedItemString = localStorage.getItem('messages');
     if (storedItemString) {
-      if (text === "messages"){
+      if (text === "messages") {
         return JSON.parse(storedItemString)["messages"];
-      }else{
+      } else {
         return JSON.parse(storedItemString);
       }
-      
-    }else{
+
+    } else {
       return {};
     }
   }
@@ -52,14 +56,18 @@ export class MessagePage implements OnInit {
     this.scrollToBottom();
   }
 
-  stablishUrlPic (current: any){
-    let iconItem = current; 
+  async openMenu() {
+    await this.menu.open('app-menu')
+  }
+
+  stablishUrlPic(current: any) {
+    let iconItem = current;
     let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
     return value
   }
 
-  searchIcon(item: any): string{
+  searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
     return newIcon;
   }
@@ -71,45 +79,45 @@ export class MessagePage implements OnInit {
       behavior: 'smooth'
     });
   }
-  
+
   goBack() {
     this.navCtrl.back();
   }
 
-  viewsAll(){
+  viewsAll() {
     const body = {
-      chats_id : this.dataChat.id,
+      chats_id: this.dataChat.id,
     }
 
     this.apiMessage.putViewsAll(body)
-  } 
-  
+  }
+
   goTo(screen: any) {
     this.router.navigateByUrl(screen);
   }
 
   backspace() {
-    this.goTo(localStorage.getItem('accountType') === "PERSON" 
-    ? 'bottom-tab-bar/chats' 
-    : 'bottom-tab-bar-company/chats'
-  );
+    this.goTo(localStorage.getItem('accountType') === "PERSON"
+      ? 'bottom-tab-bar/chats'
+      : 'bottom-tab-bar-company/chats'
+    );
   }
-  
+
   addMessage() {
     if (this.newMsg) {
       const body = {
-        message : this.newMsg,
-        chats_id : this.dataChat.id,
+        message: this.newMsg,
+        chats_id: this.dataChat.id,
       }
 
       this.newMsg = '';
-      
+
       setTimeout(() => {
         this.apiMessage.postMessage(body).subscribe((data: any) => {
-          this.userMessages.push(data);    
+          this.userMessages.push(data);
           this.cdr.detectChanges();
         });
-      }, 50);  
+      }, 50);
     }
   }
 
