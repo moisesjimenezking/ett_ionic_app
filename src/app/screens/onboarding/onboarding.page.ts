@@ -36,7 +36,7 @@ export class OnboardingPage implements OnInit {
     },
   ];
 
-  screenHeight = window.innerHeight;
+  screenHeight = window.screen.height;
 
   constructor(private platform: Platform, private routerOutlet: IonRouterOutlet, private router: Router) { }
 

@@ -81,9 +81,9 @@
 .overlayContent {
   position: absolute;
   top: -200px;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   /* Asegura que ocupe todo el espacio disponible */
   display: flex;
   justify-content: center;
@@ -94,6 +94,8 @@
   /* Asegura que el logo y el texto se ubiquen en columna */
   z-index: 2;
   /* Para asegurar que esté sobre la imagen y la capa oscura */
+  max-width: 480px;
+  margin-inline: auto;
 }
 
 .overlayLogo {
@@ -109,12 +111,10 @@
 .overlayText {
   font-family: 'Poppins', sans-serif;
   /* Aplica la fuente Poppins */
-  font-size: 24px;
+  @apply text-2xl;
   /* Tamaño de la fuente */
   font-weight: 500;
   /* Peso de la fuente */
-  line-height: 36px;
-  /* Altura de línea */
   text-align: center;
   /* Alineación centrada */
   color: white;
@@ -128,16 +128,19 @@
   /* Centra horizontalmente */
   position: absolute;
   bottom: calc(50px + var(--ion-safe-area-bottom));
+  width: auto;
   left: 10px;
+  margin: auto;
   right: 10px;
-  top: 711px;
-  bottom: 66px;
+  max-width: 360px;
+  border-radius: 30px;
   align-items: center;
+  height: 56px;
   z-index: 2;
   /* El botón estará sobre la imagen y la capa oscura */
   font-family: 'Poppins', sans-serif;
   /* Aplica la fuente Poppins */
-  font-size: 14px;
+  font-size: 16px;
   /* Tamaño de la fuente */
   font-weight: 600;
   /* Peso de la fuente */
@@ -152,11 +155,10 @@
 .overlayTextTow {
   font-family: 'Poppins', sans-serif;
   /* Aplica la fuente Poppins */
-  font-size: 14px;
+  @apply text-sm;
+  max-width: 360px;
   /* Tamaño de la fuente */
   font-weight: 400;
-  /* Peso de la fuente */
-  line-height: 36px;
   /* Altura de línea */
   text-align: center;
   /* Alineación centrada */
@@ -172,6 +174,8 @@
   bottom: 0;
   background: #2758BF99;
   z-index: 1;
+
+
   /* Asegura que esté sobre la imagen */
 }
 

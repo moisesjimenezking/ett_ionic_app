@@ -1,18 +1,19 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, IonMenu, AlertController } from '@ionic/angular';
+import { NavController, AlertController, IonModal } from '@ionic/angular';
 import { throwError } from 'rxjs';
 
-import { ApiService } from '../../service/api.service';
+import { ApiService } from '@/service/api.service';
 
 
 @Component({
-  selector: 'app-new-jobs',
-  templateUrl: './new-jobs.page.html',
-  styleUrls: ['./new-jobs.page.scss'],
+  selector: 'app-edit-job-detail',
+  templateUrl: './edit-job-detail.component.html',
+  styleUrls: ['./edit-job-detail.component.scss'],
 })
-export class NewJobsPage implements OnInit {
-  @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
+export class EditJobDetailComponent implements OnInit, OnChanges {
+  @ViewChild('openEditJobs', { read: IonModal }) modal!: IonModal;
+  @Input({ required: true }) job: any;
 
   title: string = '';
   type_time: string = '';
@@ -26,15 +27,33 @@ export class NewJobsPage implements OnInit {
   closeModal: boolean = false;
   showErrorMessage: boolean = false;
 
+  presentingElement: HTMLDivElement | null = null;
+  isWorktypeTimeModalOpen = false;
+
   constructor(
     private router: Router,
     private navCtrl: NavController,
     private alertController: AlertController,
-    private apiServiceNewJobs: ApiService,
+    private apiService: ApiService,
 
   ) { }
 
   ngOnInit() {
+
+    this.title = this.job.title;
+    this.type_time = this.job.type_time;
+    this.description = this.job.description;
+    this.location = this.job.location;
+    this.requeriment = this.job.requeriment;
+    this.amount = this.job.amount;
+
+    this.presentingElement = document.getElementById('edit-job-modal') as HTMLDivElement | null;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['job']) {
+      console.log("Job ", changes['job']);
+    }
   }
 
   goTo(screen: any) {
@@ -45,15 +64,6 @@ export class NewJobsPage implements OnInit {
     this.navCtrl.back()
   }
 
-  closeMenu() {
-    if (this.menu) {
-      this.menu.close();
-    }
-  }
-
-  logout() {
-    this.closeMenu();
-  }
 
   addItemToList() {
     if (this.newItem.trim() !== '') {
@@ -66,7 +76,12 @@ export class NewJobsPage implements OnInit {
     this.requeriment = this.requeriment.filter(i => i !== item);
   }
 
+  openModalWorktypeTime() {
+    this.isWorktypeTimeModalOpen = true;
+  }
+
   setWorktypeTime(value: string) {
+    console.log("Select value type time", value);
     this.type_time = value;
   }
 
@@ -104,8 +119,24 @@ export class NewJobsPage implements OnInit {
     }
   }
 
+  saveAndCloseModal() {
+    this.saveNewRecord()
+    if (this.closeModal) {
+      this.modal?.dismiss();
+      setTimeout(() => {
+        this.apiService.allJobsApi({ id: this.job.id }).subscribe((data: any) => {
+          let result = data[0];
+          localStorage.setItem('jobs', JSON.stringify(result));
+
+        });
+      }, 1000);
+    }
+  }
+
   saveNewRecord() {
-    this.amount = this.amount.replace(/[^0-9]/g, '');
+
+    this.amount = this.amount.replace(/[^0-9.]/g, '');
+
     if (!this.title || !this.type_time || !this.amount || this.amount === '') {
       this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
@@ -117,30 +148,22 @@ export class NewJobsPage implements OnInit {
     this.showErrorMessage = false;
     this.closeModal = true;
 
-    const body: { [key: string]: any } = {
-      user_id: localStorage.getItem('user_id'),
+    const body = {
+      id: this.job.id,
       title: this.title,
       type_time: this.type_time,
       amount: this.amount,
+      description: this.description,
+      location: this.location,
+      requeriment: this.requeriment
     };
 
-    if (this.description) {
-      body["description"] = this.description
-    }
-
-    if (this.location) {
-      body["location"] = this.location
-    }
-
-    if (this.requeriment) {
-      body["requeriment"] = this.requeriment
-    }
-
     let fin = false
-    if (this.apiServiceNewJobs.postJobs(body)) {
+    if (this.apiService.putJobs(body)) {
       fin = true;
-      this.presentAlertSuccess("Nueva oferta creada.");
     }
     return fin;
   }
+
+
 }

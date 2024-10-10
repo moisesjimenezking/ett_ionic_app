@@ -1,13 +1,13 @@
 <ion-content [fullscreen]="true" scrollY="false">
   <div class="column relative h-full max-h-full">
-    <div style="height: 100%; position: relative" *ngIf="showMainImage">
+    <div class="relative h-full" *ngIf="showMainImage">
       <ion-img class="bgImage" src="../../../assets/images/small-business.png"></ion-img>
       <div class="darkOverlay"></div>
 
-      <div class="overlayContent">
+      <div class="overlayContent px-5">
         <ion-img src="../../../assets/images/ett-logo.png" class="overlayLogo"></ion-img>
 
-        <ion-text class="overlayText">Haz que tu búsqueda de empleo sea efectiva</ion-text>
+        <ion-text class="overlayText mb-4">Haz que tu búsqueda de empleo sea efectiva</ion-text>
         <ion-text class="overlayTextTow">Ett, una app creada para venezolanos en busca de empleo.</ion-text>
       </div>
 
@@ -16,7 +16,7 @@
     </div>
 
     <!-- Carrusel que se muestra al continuar -->
-    <div class="swiperPosition" *ngIf="!showMainImage">
+    <div class="swiperPosition h-full" *ngIf="!showMainImage">
       <swiper-container class="h-auto" #swiper (slidechange)="slideChangeCall();"
         [autoplay]="{autoplay:true,disableOnInteraction:false,delay:2800}">
         <swiper-slide *ngFor="let item of onboardingScreenList; let i = index">
@@ -25,8 +25,8 @@
               <ion-img [src]="item.onboardingImage" class="bgImage"></ion-img>
               <div class="blueOverlay"></div>
               <div class="overlayContent">
-                <ion-text class="overlayTextThree">{{item.onboardingTitle}}</ion-text>
-                <ion-text class="overlayTextfour">{{item.onboardingDescription}}</ion-text>
+                <ion-text class="overlayTextThree text-center">{{item.onboardingTitle}}</ion-text>
+                <ion-text class="overlayTextfour md:text-lg">{{item.onboardingDescription}}</ion-text>
               </div>
             </div>
           </div>

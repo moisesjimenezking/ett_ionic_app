@@ -1,7 +1,11 @@
 <ion-app>
+  <!-- <ng-container *ngIf="showSidebar"> -->
   <app-menu />
-  <ion-router-outlet id="main-content"></ion-router-outlet>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- </ng-container> -->
+  <div class="ion-page bg-background">
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <ion-router-outlet></ion-router-outlet>
+  </div>
   <div *ngIf="tap===1" class="exitWrapper">
     <ion-text class="whiteColor14Medium exitText">
       Press Back Once Again To Exit!

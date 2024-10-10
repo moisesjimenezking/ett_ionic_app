@@ -30,15 +30,9 @@
 @import "material-icons/iconfont/material-icons.css";
 
 
-@font-face {
-  font-family: 'SF-Compact-Display';
-  src: url('./assets/fonts/SF-Compact-Display-Semibold.ttf') format('truetype');
-  font-weight: 600;
-}
-
 html {
-  --ion-default-font: "CompactDisplay", sans-serif;
-  font-family: "CompactDisplay", sans-serif;
+  --ion-default-font: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body,
@@ -163,8 +157,14 @@ ion-modal {
   }
 }
 
+ion-modal.md {
+  &::part(content) {
+    max-width: 480px;
+  }
+}
+
 .textFieldWrapper {
-  background-color: var(--extraLightGrayColor);
+  // background-color: var(--extraLightGrayColor);
   padding: 15px 12px;
   border-radius: 10px;
   margin-top: 10px;
@@ -294,7 +294,7 @@ ion-radio.ios::part(container) {
   /* Espaciado interno */
   display: flex;
 
-  height: 40px;
+  height: 48px;
 
   position: relative;
 
@@ -302,7 +302,7 @@ ion-radio.ios::part(container) {
   ion-input {
     height: 100% !important;
     min-height: 100% !important;
-    font-size: 16px;
+    font-size: 14.5px;
     color: hsl(var(--primary-foreground));
   }
 }

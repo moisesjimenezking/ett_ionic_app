@@ -18,11 +18,17 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private location: Location,
+    public location: Location,
     private navCtrl: NavController,
   ) {
     this.intializeApp();
     this.backButtonEvent();
+  }
+
+  get showSidebar() {
+    return !this.location.path().endsWith('onboarding')
+      && this.location.path().endsWith('login')
+      && this.location.path().endsWith('register');
   }
 
   backButtonEvent() {

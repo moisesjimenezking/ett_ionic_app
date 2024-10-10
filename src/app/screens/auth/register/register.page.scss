@@ -1,29 +1,37 @@
 .footer {
   padding: 20px;
-  justify-content: center;
-  background-color: black;
-  display: flex;
 }
 
 .customChipTow {
-  background-color: black; /* Color de fondo de la chip */
-  border-radius: 30px; /* Bordes redondeados */
-  padding: 10; /* Sin padding para el contenedor */
+  background-color: black;
+  /* Color de fondo de la chip */
+  border-radius: 30px;
+  /* Bordes redondeados */
+  padding: 10;
+  /* Sin padding para el contenedor */
   border: 1px solid white;
 }
 
 ion-segment {
-  --background: transparent; /* Fondo transparente */
-  width: 99%; /* Ocupa todo el ancho del contenedor */
-  border-radius: 0px; /* Bordes redondeados */
-  margin: 0; /* Sin márgenes para llenar el contenedor */
+  --background: transparent;
+  /* Fondo transparente */
+  border-radius: 0px;
+  /* Bordes redondeados */
+  margin: 0;
+  padding: .5px;
+  min-height: 46px;
+  /* Sin márgenes para llenar el contenedor */
 }
 
 ion-segment-button {
-  --background: transparent; /* Fondo transparente para los botones */
-  --color: white; /* Color del texto */
-  padding: 5px 10px; /* Espaciado interno para los botones */
-  border-radius: 0; /* Sin bordes redondeados en los botones */
+  --background: transparent;
+  /* Fondo transparente para los botones */
+  --color: white;
+  /* Color del texto */
+  padding: 5px 10px;
+  /* Espaciado interno para los botones */
+  border-radius: 0;
+  /* Sin bordes redondeados en los botones */
   display: flex;
   align-items: center;
 }
@@ -64,20 +72,22 @@ ion-segment-button.ios::part(indicator-background) {
 //   font-size: 20px; /* Tamaño del icono, ajusta según sea necesario */
 // }
 
-.textFieldWrapperNew{
+.textFieldWrapperNew {
   padding: 15px 12px;
   border-radius: 10px;
   margin-top: 10px;
 }
 
 .textTitle {
-  margin-top: 20% !important;
   font-family: 'Poppins', sans-serif !important;
   font-size: 30.91px !important;
-  font-weight: 700 !important;
-  line-height: 46.36px !important;
+  @apply font-bold;
   text-align: center !important;
-  color: white !important;
+  color: hsl(var(--primary-foreground)) !important;
+  margin-block: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .textAux {
@@ -86,11 +96,15 @@ ion-segment-button.ios::part(indicator-background) {
 }
 
 .customChip {
-  background-color: black; /* Color de fondo del chip */
-  border-radius: 100px; /* Bordes redondeados */
+  background-color: black;
+  /* Color de fondo del chip */
+  border-radius: 100px;
+  /* Bordes redondeados */
   border: 1px solid white;
-  padding: 1px 20px; /* Espaciado interno */
-  display: flex; /* Flex para centrar contenido */
+  padding: 1px 20px;
+  /* Espaciado interno */
+  display: flex;
+  /* Flex para centrar contenido */
   margin-left: 0%;
   margin-right: 0%;
   height: 40px;
