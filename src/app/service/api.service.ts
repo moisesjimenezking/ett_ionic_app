@@ -5,7 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { catchError, throwError, finalize } from 'rxjs';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+
 import { NgZone } from '@angular/core';
 
 
@@ -15,7 +15,7 @@ import { NgZone } from '@angular/core';
 
 export class ApiService {
   // private apiUrl = 'http://172.20.0.1:1263';
-  private apiUrl = "https://d6dsddk6-1263.use2.devtunnels.ms";
+  private apiUrl = "https://ettapi.com";
   // private apiUrl = 'http://149.50.141.62:1263/'
   // private apiUrl = 'https://api-tunnel.flippoapp.com/proxy/';
   // private apiUrl = 'http://app.ettvenezuela.com:1263/';

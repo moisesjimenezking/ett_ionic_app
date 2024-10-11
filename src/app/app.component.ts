@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { App } from '@capacitor/app';
 import { StatusBar } from '@capacitor/status-bar';
 import { NavController, Platform } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { register } from 'swiper/element/bundle';
 // import { BuildCircleIcon } from '@mui/icons-material/BuildCircle';
 
@@ -21,6 +22,7 @@ export class AppComponent {
     public location: Location,
     private navCtrl: NavController,
   ) {
+    this.showSplashScreen
     this.intializeApp();
     this.backButtonEvent();
   }
@@ -29,6 +31,13 @@ export class AppComponent {
     return !this.location.path().endsWith('onboarding')
       && this.location.path().endsWith('login')
       && this.location.path().endsWith('register');
+  }
+
+  async showSplashScreen() {
+    await SplashScreen.show({
+      showDuration: 2000,
+      autoHide: true,
+    });
   }
 
   backButtonEvent() {

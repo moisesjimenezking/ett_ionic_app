@@ -222,8 +222,10 @@ ion-menu-button {
 
 /* CUSTOM SCROLLBAR */
 
+
 ::-webkit-scrollbar {
-  width: 12px;
+  display: none !important;
+  width: 0 !important;
 }
 
 ::-webkit-scrollbar-track {
@@ -243,10 +245,20 @@ ion-menu-button {
 
 .overflow-y-auto,
 .overflow-y-scroll,
-.scroll-y,
-::part(scroll) {
+.scroll-y {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--muted)) hsl(var(--destructive));
+
+  ::part(scroll) {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) hsl(var(--destructive));
+  }
+}
+
+html.plt-android {
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
 }
 
 /*   */

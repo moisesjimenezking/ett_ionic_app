@@ -93,23 +93,6 @@
         </div>
       </div>
 
-      <!-- <div class="my-[20px] bg-destructive rounded-xl p-3">
-      <div class="rowAlignCenter flex-1">
-        <span class="material-icons text-primary-foreground/80 text-lg">business_center</span>
-        <ion-text class="text-primary-foreground/80 font-medium text-ellipsis ml-[5px] flex-1 line-clamp-1">
-          {{ experienceYear ?? 0}} + Años de experiencia
-        </ion-text>
-      </div>
-      <div class="rowAlignCenter" style="flex: 1">
-        <span class="material-icons text-primary-foreground/80 text-lg">
-          location_pin
-        </span>
-        <ion-text class="grayColor15Medium flex-1 ml-[5px] line-clamp-1 text-primary-foreground/80">
-          {{ location }}
-        </ion-text>
-      </div>
-    </div> -->
-
       <div>
         <div class="my-[20px] bg-destructive rounded-xl p-3">
           <ion-text class="text-ellipsis font-semibold text-primary-foreground" style="flex: 1; -webkit-line-clamp: 1">
@@ -135,7 +118,7 @@
           <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
             Información del contacto
           </ion-text>
-          <ion-icon (click)="goTo('edit-contact')" name="create-outline"
+          <ion-icon id="open-edit-profile-modal" name="create-outline"
             class="text-[22px] text-primary-foreground"></ion-icon>
         </div>
 
@@ -163,8 +146,8 @@
   </div>
 
 
-
-  <!-- <div class="divider"></div> -->
+  <!-- EDIT PROFILE MODAL -->
+  <app-edit-profile />
 
   <!-- CHANGE PROFILE IMAGE MODAL -->
   <ion-modal #changePicSheet mode="ios" [isOpen]="isModalOpen" (didDismiss)="closeModal()"

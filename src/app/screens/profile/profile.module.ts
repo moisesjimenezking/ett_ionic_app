@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 import { ProfilePage } from './profile.page';
 import { HttpClientModule } from '@angular/common/http';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     HttpClientModule
   ],
-  declarations: [ProfilePage],
+  declarations: [ProfilePage, EditProfileComponent],
   providers: [ApiService]
 })
-export class ProfilePageModule {}
+export class ProfilePageModule { }

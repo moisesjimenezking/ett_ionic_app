@@ -98,6 +98,13 @@
   margin-inline: auto;
 }
 
+.overlayContent.custom {
+  margin-top: 320px;
+  bottom: 250px;
+  max-width: 320px;
+  top: 0;
+}
+
 .overlayLogo {
   gap: 0px;
   opacity: 0px;
@@ -209,7 +216,8 @@
 }
 
 .overlayTextThree {
-  margin-top: 350px;
+  // margin-top: 350px;
+  margin-bottom: 100px;
   font-family: 'Poppins', sans-serif;
   font-size: 30px;
   font-weight: 600;
@@ -219,11 +227,31 @@
 }
 
 .overlayTextfour {
-  margin-top: 150px;
+  // margin-top: 150px;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
   text-align: center;
   color: white;
+}
+
+@media (min-width: 768px) {
+  .overlayContent.custom {
+    max-width: 576px;
+  }
+
+  .overlayText {
+    @apply text-4xl;
+  }
+
+  .overlayTextThree {
+    font-size: 42px;
+
+  }
+
+  .overlayTextfour,
+  .overlayTextTow {
+    font-size: 18px;
+  }
 }
