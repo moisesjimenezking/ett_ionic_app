@@ -8,6 +8,7 @@ import { JobDetailPageRoutingModule } from './job-detail-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { JobDetailPage } from './job-detail.page';
 import { SharedModule } from "../../shared/shared.module";
+import { EditJobDetailComponent } from './components/edit-job-detail/edit-job-detail.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { SharedModule } from "../../shared/shared.module";
     HttpClientModule,
     SharedModule
   ],
-  declarations: [JobDetailPage],
+  declarations: [JobDetailPage, EditJobDetailComponent],
   providers: [ApiService]
 })
 export class JobDetailPageModule { }

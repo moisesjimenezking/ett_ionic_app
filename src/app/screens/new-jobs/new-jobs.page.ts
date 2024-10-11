@@ -1,9 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { IonMenu, IonModal } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { Observable, throwError } from 'rxjs';
+import { NavController, IonMenu, AlertController } from '@ionic/angular';
+import { throwError } from 'rxjs';
+
 import { ApiService } from '../../service/api.service';
 
 
@@ -29,7 +28,7 @@ export class NewJobsPage implements OnInit {
 
   constructor(
     private router: Router,
-    private navCtrl: NavController, 
+    private navCtrl: NavController,
     private alertController: AlertController,
     private apiServiceNewJobs: ApiService,
 
@@ -62,9 +61,13 @@ export class NewJobsPage implements OnInit {
       this.newItem = '';
     }
   }
-  
+
   removeItem(item: string) {
     this.requeriment = this.requeriment.filter(i => i !== item);
+  }
+
+  setWorktypeTime(value: string) {
+    this.type_time = value;
   }
 
   async presentAlert(message: string) {
@@ -73,7 +76,7 @@ export class NewJobsPage implements OnInit {
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 
@@ -90,10 +93,10 @@ export class NewJobsPage implements OnInit {
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
-  
+
   formatAmount() {
     this.amount = this.amount.replace(/[^0-9$]/g, '');
     if (!this.amount.startsWith('Bs ')) {
@@ -101,17 +104,17 @@ export class NewJobsPage implements OnInit {
     }
   }
 
-  saveNewRecord(){
+  saveNewRecord() {
     this.amount = this.amount.replace(/[^0-9]/g, '');
     if (!this.title || !this.type_time || !this.amount || this.amount === '') {
-      this.showErrorMessage = true; 
+      this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
       this.closeModal = false;
       this.presentAlert(errorMessage);
       return throwError(() => new Error(errorMessage));
     }
 
-    this.showErrorMessage = false; 
+    this.showErrorMessage = false;
     this.closeModal = true;
 
     const body: { [key: string]: any } = {
@@ -121,20 +124,20 @@ export class NewJobsPage implements OnInit {
       amount: this.amount,
     };
 
-    if(this.description){
+    if (this.description) {
       body["description"] = this.description
     }
-    
-    if(this.location){
+
+    if (this.location) {
       body["location"] = this.location
     }
 
-    if(this.requeriment){
+    if (this.requeriment) {
       body["requeriment"] = this.requeriment
     }
 
     let fin = false
-    if(this.apiServiceNewJobs.postJobs(body)){
+    if (this.apiServiceNewJobs.postJobs(body)) {
       fin = true;
       this.presentAlertSuccess("Nueva oferta creada.");
     }

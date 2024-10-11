@@ -5,7 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { catchError, throwError, finalize } from 'rxjs';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+
 import { NgZone } from '@angular/core';
 
 
