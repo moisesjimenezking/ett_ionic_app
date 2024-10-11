@@ -8,7 +8,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['CompactDisplay', ...defaultTheme.fontFamily.sans]
+        sans: ['Poppins', ...defaultTheme.fontFamily.sans]
+
+      },
+      fontSize: {
+        'md': ['16px', {
+          lineHeight: '24px',
+          fontWeight: '400',
+        }]
 
       },
       colors: {

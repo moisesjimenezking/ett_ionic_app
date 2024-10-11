@@ -60,8 +60,8 @@
       </ion-text>
     </div>
     <div class="rowAlignCenter" style="justify-content: space-between; margin-top: 20px;">
-      <ion-text class="textAux"
-        style="color: #FFFFFF; font-size: 12px; flex: 1; text-align: justify; word-break: break-word; overflow: hidden; white-space: normal;">
+      <ion-text class="textAux text-pretty"
+        style="color: #FFFFFF; font-size: 12px; flex: 1; word-break: break-word; overflow: hidden; white-space: normal;">
         {{ dataJobs.description }}
       </ion-text>
     </div>
@@ -76,28 +76,27 @@
         {{ item }}
       </ion-text>
     </div>
-    <div *ngIf="account == 'PERSON'" class="w-full mt-auto flex justify-between gap-2 pt-5">
-      <ion-chip *ngIf="!enableButton" id="openModalMessage"
-        class="bg-muted flex justify-center items-center w-full h-12">
-        <ion-text class="textAux" style="color: white; text-align: center;">Enviar mensaje</ion-text>
+    <div *ngIf="!isAccountCompany" class="w-full mt-auto flex justify-between gap-2 pt-5">
+      <ion-chip *ngIf="!applied" id="openModalMessage" class="bg-muted flex justify-center items-center w-full h-12">
+        <ion-text class="text-primary-foreground text-sm font-medium">Enviar mensaje</ion-text>
       </ion-chip>
       <ion-chip id="openModal" [class]="utils.cn(
         'flex justify-center items-center w-full h-12 rounded-3xl',
-        enableButton ? 'bg-foreground/90 cursor-not-allowed': 'bg-primary cursor-pointer' 
-      )" (click)="!enableButton && applicateJob()">
+        applied ? 'bg-foreground/90 cursor-not-allowed': 'bg-primary cursor-pointer' 
+      )" (click)="!applied && applicateJob()">
         <ion-text [class]="utils.cn(
-          'text-[16px] text-center',
-          enableButton ? 'text-primary/90 font-semibold': 'text-primary-foreground'
+          'text-md font-medium text-center',
+          applied ? 'text-primary/90 font-semibold': 'text-primary-foreground'
         )">
-          {{ buttonText }}
+          {{ isApplying ? 'Aplicando...': applyButton }}
         </ion-text>
       </ion-chip>
 
     </div>
-    <div *ngIf="account == 'COMPANY'" class="w-full mt-auto flex justify-between gap-2 pt-5">
+    <div *ngIf="isAccountCompany" class="w-full mt-auto flex justify-between gap-2 pt-5">
       <ion-chip id="openEditJobs"
         class="flex justify-center items-center w-full h-12 rounded-3xl bg-primary cursor-pointer">
-        <ion-text class="text-[16px] text-center text-primary-foreground">
+        <ion-text class="text-md font-medium text-center text-primary-foreground">
           Editar
         </ion-text>
       </ion-chip>
@@ -145,6 +144,7 @@
   </ng-template>
 </ion-modal>
 
+<!-- CANDIDATES MODAL -->
 <ion-modal mode="md" #modal trigger="openModalAppliedJobs" style="--border-radius: 5px; --background: #2C2C2C;">
   <ng-template>
     <div class="flex flex-col gap-4 bg-muted rounded-2xl px-3 py-5">
@@ -179,20 +179,3 @@
 <ng-container *ngIf="account == 'COMPANY'">
   <app-edit-job-detail [job]="dataJobs" />
 </ng-container>
-
-<!-- <ion-footer mode="ios" style="background-color: var(--whiteColor)">
-  <div *ngIf="account === 'PERSON'">
-    <div id="openModal" class="center button" [ngStyle]="{'background-color': enableButton ? '#cccccc' : '#2758BF'}" (click)="!enableButton && applicateJob()" [attr.disabled]="enableButton ? true : null">
-        <ion-text class="whiteColor18SemiBold"> {{ buttonText }} </ion-text>
-    </div>
-    <div id="openModalMessage" class="center button" style="background-color:#2758BF">
-      <ion-text class="whiteColor18SemiBold"> Enviar un mensaje </ion-text>
-    </div>
-  </div>
-  <div *ngIf="account === 'COMPANY'">
-    <div id="openListUser" class="center button" [ngStyle]="{'background-color': dataJobs.appliedJobs.length === 0 ? '#cccccc' : '#2758BF'}" [attr.disabled]="dataJobs.appliedJobs.length === 0 ? true : null">
-        <ion-text class="whiteColor18SemiBold"> Ver candidatos </ion-text>
-    </div>
-  </div>
-
-</ion-footer> -->

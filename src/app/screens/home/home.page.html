@@ -33,50 +33,13 @@
 </ion-header>
 <ion-content style="background-color: #121212;">
   <div>
-    <ion-list style="background-color: #121212;">
+    <ion-list style="background-color: #121212;" class="p-5 space-y-4">
       <div *ngFor="let item of jobList;let i=index;">
-        <div class="row jobCard"
-          style="margin-top: 0; background-color: #1E1E1E; display: flex; flex-direction: column; min-height: 200px;">
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-1.5 justify-between text-primary-foreground">
-              <ion-text class="text-lg leading-5 font-medium">
-                {{item.title}}
-              </ion-text>
-              <ion-text class="text-xs text-primary-foreground/90">
-                {{item.location}}
-              </ion-text>
-            </div>
-            <div class="column">
-              <ion-text class="text-sm text-primary-foreground font-medium">
-                Bs.{{item.amount}}/mes
-              </ion-text>
-            </div>
-          </div>
-          <div class="w-full mt-5">
-            <ion-text class="text-sm text-foreground/90 line-clamp-3 text-ellipsis">
-              {{item.description}}
-            </ion-text>
-          </div>
-          <div class="flex justify-end mt-4">
-            <ion-text (click)="goToDetails('job-detail', item)" class="textAux cursor-pointer"
-              style="color: white; font-size: 12">
-              Ver oferta
-            </ion-text>
-          </div>
-          <div *ngIf="!accountType" class="w-full mt-6">
-            <ion-chip class="bg-primary flex justify-center items-center w-full h-12 rounded-full">
-              <ion-text class="text-primary-foreground text-center text-[16px] font-medium">
-                Postularme
-              </ion-text>
-            </ion-chip>
-          </div>
-        </div>
-
+        <app-job-card [job]="item" (onSeeDetails)="goToDetails('job-detail', $event)" />
       </div>
       <ng-container *ngIf="isLoadingJobList">
-        <div class="row jobCard animate-pulse h-[200px]" *ngFor="let item of [1,2,3,4,5]"
-          style="background-color: hsl(var(--muted));">
-
+        <div class="bg-destructive py-5 px-[15px] rounded-xl min-h-[200px] animate-pulse h-[200px]"
+          *ngFor="let item of [1,2,3,4,5]" style="background-color: hsl(var(--muted));">
         </div>
       </ng-container>
     </ion-list>

@@ -7,6 +7,7 @@ import { HomePage } from './home.page';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
 import { SharedModule } from '../../shared/shared.module';
+import { JobCardComponent } from './components/job-card/job-card.component';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { SharedModule } from '../../shared/shared.module';
     HttpClientModule,
     SharedModule,
   ],
-  declarations: [HomePage],
+  declarations: [HomePage, JobCardComponent],
   providers: [ApiService]
 })
-export class HomePageModule {}
+export class HomePageModule { }

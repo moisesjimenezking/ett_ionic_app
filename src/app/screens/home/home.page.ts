@@ -1,10 +1,12 @@
 import { Component, OnInit, ElementRef, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ApiService } from '../../service/api.service';
-import { Observable, throwError } from 'rxjs';
-import { AlertController } from '@ionic/angular';
-import { IonMenu, IonModal } from '@ionic/angular';
+import { AlertController, IonMenu, IonModal } from '@ionic/angular';
+
+import { ApiService } from '@/service/api.service';
+import { JobModel } from '@/types';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -34,7 +36,7 @@ export class HomePage implements OnInit {
   closeModal: boolean = false;
 
 
-  jobList: any[] = [];
+  jobList: JobModel[] = [];
   isLoadingJobList = false;
 
   selectedJobTypeIndex = 0;
@@ -78,13 +80,16 @@ export class HomePage implements OnInit {
 
     this.ionViewWillEnter();
 
-    let tab = this.accountType ? '/bottom-tab-bar-company' : '/bottom-tab-bar'
-    this.router.navigateByUrl(`${tab}/${screen}`);
+    let tab = this.accountType ? '/bottom-tab-bar-company' : '/bottom-tab-bar';
     let itemAux = this.details();
 
     if (itemAux.id !== item.id) {
+      console.log("Set new job", item);
       localStorage.setItem('jobs', JSON.stringify(item));
     }
+
+    this.router.navigateByUrl(`${tab}/${screen}`);
+
   }
 
   details() {

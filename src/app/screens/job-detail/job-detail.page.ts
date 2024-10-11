@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../service/api.service';
-import { ModalController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { throwError } from 'rxjs';
-import { IonMenu, IonModal } from '@ionic/angular';
+import { NavController, ModalController, AlertController, IonMenu, IonModal } from '@ionic/angular';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
+
+import { ApiService } from '@/service/api.service';
 import { UtilsLib } from 'src/app/lib/utils';
+import { JobModel } from '@/types';
 
 
 @Component({
@@ -20,15 +18,18 @@ export class JobDetailPage implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialog', { read: IonModal }) logoutDialog!: IonModal;
 
-  dataJobs = this.details();
-  enableButton = this.dataJobs.appliedUser;
-  buttonText = this.enableButton
+  dataJobs = this.details()!;
+
+  isApplying = false;
+  applied: boolean = this.dataJobs.appliedUser;
+  applyButton = this.applied
     ? "Ya has aplicado a esta oferta"
     : "Aplicar ahora";
 
   utils = new UtilsLib();
 
-  account = localStorage.getItem('accountType')
+  account = localStorage.getItem('accountType');
+  isAccountCompany = this.account == 'COMPANY';
 
   isProcessing = false;
 
@@ -40,7 +41,6 @@ export class JobDetailPage implements OnInit {
   amount = this.dataJobs.amount;
 
 
-  defaultUserIcon = '../../../../assets/images/users/iconHuman.jpg';
   newItem: string = '';
   itemList: string[] = [];
   closeModal: boolean = false;
@@ -50,7 +50,6 @@ export class JobDetailPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private router: Router,
-    private route: ActivatedRoute,
     private apiJobsService: ApiService,
     private cdr: ChangeDetectorRef,
     private modalController: ModalController,
@@ -58,20 +57,19 @@ export class JobDetailPage implements OnInit {
 
   ) { }
 
-  details() {
+  details(): JobModel | null {
     const storedItemString = localStorage.getItem('jobs');
     if (storedItemString) {
-      console.log("Job ", JSON.parse(storedItemString).appliedJobs);
       return JSON.parse(storedItemString);
     } else {
-      return {};
+      return null;
     }
   }
 
   ngOnInit() {
-    this.dataJobs = this.details();
-    this.enableButton = this.dataJobs.appliedUser;
-    this.buttonText = this.enableButton
+    this.dataJobs = this.details()!;
+    this.applied = this.dataJobs.appliedUser;
+    this.applyButton = this.applied
       ? "Ya has aplicado a esta oferta"
       : "Aplicar ahora";
 
@@ -94,26 +92,36 @@ export class JobDetailPage implements OnInit {
   }
 
   applicateJob() {
-    if (this.enableButton === false) {
+    if (!this.applied) {
       const body = {
         "jobs_id": this.dataJobs.id
       }
 
-      this.apiJobsService.postJobsApplied(body);
+      this.apiJobsService.postJobsApplied(body)
+        .pipe(
+          tap(() => { this.isApplying = false }),
+          catchError((error) => {
+            this.isApplying = false;
+            return error;
+          }),
+          switchMap(() => this.apiJobsService.allJobsApi({ id: this.dataJobs.id }))
+        )
+        .subscribe({
+          next: (jobs) => {
+            const job = jobs.find(j => j.id == this.dataJobs.id)!;
+            localStorage.setItem('jobs', JSON.stringify(job));
+            this.dataJobs = job;
 
-      setTimeout(() => {
-        this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data: any) => {
-          let result = data[0];
-          localStorage.setItem('jobs', JSON.stringify(result));
-          this.dataJobs = this.details();
-          this.enableButton = this.dataJobs.appliedUser;
-          this.buttonText = this.enableButton
-            ? "Ya has aplicado a esta oferta"
-            : "Aplicar ahora";
-          this.cerrarModal();
-          this.cdr.detectChanges();
+            this.applied = this.dataJobs.appliedUser;
+            this.applyButton = this.applied
+              ? "Ya has aplicado a esta oferta"
+              : "Aplicar ahora";
+            this.cerrarModal();
+            this.cdr.detectChanges();
+          }
         });
-      }, 1000);
+
+
     }
   }
 
@@ -131,21 +139,16 @@ export class JobDetailPage implements OnInit {
 
   cerrarModal() {
     this.modalController.dismiss();
-    // this.goBack();
-    // this.goTo(localStorage.getItem('accountType') === "PERSON" 
-    //   ? 'bottom-tab-bar/home' 
-    //   : 'bottom-tab-bar-company/home'
-    // );
   }
 
   modalDidPresent() {
-    this.dataJobs = this.details();
-    this.enableButton = this.dataJobs.appliedUser;
-    this.buttonText = this.enableButton
+    this.dataJobs = this.details()!;
+    this.applied = this.dataJobs.appliedUser;
+    this.applyButton = this.applied
       ? "Ya has aplicado a esta oferta"
       : "Aplicar ahora";
 
-    let result = this.enableButton ? false : true;
+    let result = this.applied ? false : true;
     this.cdr.detectChanges();
     return result;
   }
@@ -154,10 +157,10 @@ export class JobDetailPage implements OnInit {
     this.saveNewRecord()
     if (this.closeModal) {
       setTimeout(() => {
-        this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data: any) => {
-          let result = data[0];
-          localStorage.setItem('jobs', JSON.stringify(result));
-          this.dataJobs = this.details();
+        this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data) => {
+          const job = data.find(j => j.id == this.dataJobs.id)!;
+          localStorage.setItem('jobs', JSON.stringify(job));
+          this.dataJobs = job;
           this.cdr.detectChanges();
         });
       }, 1000);

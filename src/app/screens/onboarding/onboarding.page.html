@@ -38,7 +38,7 @@
           [ngClass]="{'active': i === currentIndex}">
         </div>
       </div>
-      <ion-chip class="centeredButton" (click)="handleButtonPress()" style="background-color: white; color: #2758BF;">
+      <ion-chip class="centeredButton bg-primary text-primary-foreground" (click)="handleButtonPress()">
         {{currentIndex < 2 ? 'Siguiente' : 'Comenzar' }}</ion-chip>
     </div>
   </div>
