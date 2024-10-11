@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.apiService.getData())
+    this.apiService.getData()
   }
 
   ionViewWillEnter() {

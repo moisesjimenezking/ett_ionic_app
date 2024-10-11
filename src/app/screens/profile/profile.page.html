@@ -1,46 +1,79 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border relative">
+  <!-- <div class="absolute top-0 w-full bottom-0 bg-primary -z-10">
+  </div> -->
+  <ion-toolbar color="false" class="bg-transparent">
+    <div class="rowAlignCenter">
+      <span (click)="goBack()" class="material-icons text-[36px] text-primary-foreground rounded-full"
+        [style.background]="'hsl(0 0% 7% / .15)'">
+        chevron_left
+      </span>
+      <ion-text class="whiteColor20Bold ellipseText"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
+
+      <ion-text class="rounded-full h-[36px] w-[36px]"
+        style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0; background: hsl(0 0% 7% / .15);">
+        <ion-menu-button menu="app-menu" class="menu-button-custom rounded-full" color="whiteColor"
+          style="font-size: 30px;"></ion-menu-button>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+
+</ion-header>
+
 <ion-content [fullscreen]="true">
-
-  <ion-header mode="ios" [translucent]="true" class="ion-no-border h-[30%] relative">
-    <div class="absolute top-0 w-full h-[75%] bg-primary">
-
-    </div>
-    <ion-toolbar color="false" class="bg-background">
-      <div class="rowAlignCenter" style="justify-content: space-between; margin: 10px 0px 20px 10px">
-        <span (click)="goBack()" class="material-icons text-[36px] text-primary-foreground">
-          chevron_left
-        </span>
-        <ion-text class="whiteColor20Bold ellipseText"
-          style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
-
-        <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
-          <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
-            style="font-size: 30px"></ion-menu-button>
-        </ion-text>
+  <div class="relative -top-[50px] min-h-[230px] h-[230px]">
+    <ng-container *ngIf="isProfileLoaded; else ProfileImageFrontLoadingState">
+      <ion-img [src]="iconFront" class="imageOverflow w-full h-full relative z-10"
+        (click)="openModal('front')"></ion-img>
+    </ng-container>
+    <ng-template #ProfileImageFrontLoadingState>
+      <div class="imageOverflow bg-muted/80">
+        <div class="animate-pulse imageOverflowNew w-full min-h-full bg-muted">
+        </div>
       </div>
-    </ion-toolbar>
+    </ng-template>
     <div class="column imageOverlay">
-      <div
-        class="flex items-center image-container absolute w-[150px] h-[150px] -bottom-3  sm:-bottom-1 md:bottom-1 z-10">
-        <ion-img [src]="icon" class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full"
-          style="width: 110px; height: 110px;" (click)="openModal(icon)" />
+      <div class="flex items-center image-container absolute max-w-max h-[150px] mt-[140px] z-10">
+        <ng-container *ngIf="isProfileLoaded;else ProfileImageLoadingState">
+          <ion-img [src]="icon" class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full"
+            style="width: 110px; height: 110px;" (click)="openModal('profile')" />
+        </ng-container>
+        <ng-template #ProfileImageLoadingState>
+          <div class="bg-destructive/90 rounded-full">
+            <div class="animate-pulse imageOverflowNew min-w-[110px] min-h-[110px] bg-destructive rounded-full">
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
-  </ion-header>
-
-
-  <div class="px-4">
-    <ion-text
-      class="blackColor16SemiBold text-3xl capitalize font-bold ellipseText text-primary-foreground line-clamp-1"
-      style="flex: 4;margin-top: 10px;">
-      {{ fullName }}
-    </ion-text>
-    <ion-text class="capitalize text-sm text-ellipsis text-primary-foreground line-clamp-1 mb-[10px]">
-      {{ specialization }}
-    </ion-text>
-    <ion-text class="text-ellipsis text-sm text-primary-foreground/80 line-clamp-1 capitalize">
-      {{ location.replace('null','') }}
-    </ion-text>
   </div>
+
+  <ng-container *ngIf="isProfileLoaded; else ProfileUserInfoLoadingState">
+    <div class="px-4">
+      <ion-text
+        class="blackColor16SemiBold text-3xl capitalize font-bold ellipseText text-primary-foreground line-clamp-1"
+        style="flex: 4;margin-top: 10px;">
+        {{ fullName }}
+      </ion-text>
+      <ion-text class="capitalize text-sm text-ellipsis text-primary-foreground line-clamp-1 mb-[10px]">
+        {{ specialization }}
+      </ion-text>
+      <ion-text class="text-ellipsis text-sm text-primary-foreground/80 line-clamp-1 capitalize">
+        {{ location.replace('null','') }}
+      </ion-text>
+    </div>
+  </ng-container>
+  <ng-template #ProfileUserInfoLoadingState>
+    <div class="px-4 mt-[10px]">
+      <div class="animate-pulse h-5 w-36 rounded-lg bg-destructive mb-2">
+      </div>
+      <div class="animate-pulse h-3.5 w-20 rounded-lg bg-destructive mb-3">
+
+      </div>
+      <div class="animate-pulse h-3.5 w-20 rounded-lg bg-destructive">
+      </div>
+    </div>
+  </ng-template>
 
   <!-- ABOUT ME -->
   <div class="px-4">
@@ -112,14 +145,19 @@
 
       </div>
     </ng-template>
-    <div>
-      <div class="my-[20px] bg-destructive rounded-xl p-3">
+    <ng-container *ngIf="isProfileLoaded; else ProfileUserContactLoadingState">
+
+      <div class="my-5 bg-destructive rounded-xl p-3">
         <div class="flex items-center justify-between">
           <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
             Información del contacto
           </ion-text>
-          <ion-icon id="open-edit-profile-modal" name="create-outline"
-            class="text-[22px] text-primary-foreground"></ion-icon>
+          <button id="open-edit-profile-modal"
+            class="bg-transparent outline-none max-w-max max-h-max border-none shadow-none">
+            <ion-icon name="create-outline" class="text-[22px] text-primary-foreground"></ion-icon>
+          </button>
+          <!-- EDIT PROFILE MODAL -->
+          <app-edit-profile />
         </div>
 
         <div class="flex flex-col gap-1.5 my-6">
@@ -142,29 +180,32 @@
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #ProfileUserContactLoadingState>
+      <div class="min-h-[200px] bg-destructive rounded-xl my-5"></div>
+    </ng-template>
   </div>
 
 
-  <!-- EDIT PROFILE MODAL -->
-  <app-edit-profile />
+
 
   <!-- CHANGE PROFILE IMAGE MODAL -->
   <ion-modal #changePicSheet mode="ios" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
     style="--height: auto; --width: 100%;">
     <ng-template>
       <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
-        <ion-img [src]="stablishUrlPic(modalValue)" class="min-w-[110px] min-h-[110px] rounded-full overflow-hidden"
-          style="width: 110px; height: 110px;" (click)="openModal(icon)" />
+        <ion-img [src]="modalValue == 'profile' ? icon: iconFront"
+          class="min-w-[110px] min-h-[110px] rounded-full overflow-hidden object-cover"
+          style="width: 110px; height: 110px;" />
         <div class="w-full flex gap-2 justify-between items-center">
           <ion-chip
-            class="text-primary-foreground  text-lg flex justify-center items-center font-medium bg-transparent w-full">
+            class="text-primary-foreground  text-md flex justify-center items-center font-medium bg-transparent w-full">
             <ion-text (click)="changePicSheet.dismiss(); deletePic()">
               Eliminar foto
             </ion-text>
           </ion-chip>
           <ion-chip
-            class="text-primary-foreground bg-primary text-lg w-full h-12 rounded-3xl py-4 flex justify-center items-center"
+            class="text-primary-foreground bg-primary text-md font-medium w-full h-12 rounded-3xl py-4 flex justify-center items-center"
             (click)="fileInput.click()">
             <ion-text>
               <input type="file" accept=".jpg, .jpeg, .png" style="display: none;" #fileInput

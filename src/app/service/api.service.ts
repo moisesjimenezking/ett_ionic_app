@@ -7,6 +7,7 @@ import { catchError, throwError, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { NgZone } from '@angular/core';
+import { JobModel } from '@/types';
 
 
 @Injectable({
@@ -244,21 +245,20 @@ export class ApiService {
   }
 
   allJobsApi(data: any) {
-    const request = this.http.get<any[]>(`${this.apiUrl}/jobs`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
+    const request = this.http.get<JobModel[]>(`${this.apiUrl}/jobs`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
 
-    request.subscribe({
-      error: (error) => {
+
+    return request.pipe(
+      catchError((error) => {
         let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 200 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
 
         this.presentAlert(errorMessage);
-      },
-      complete: () => { }
-    });
-
-    return request;
+        return throwError(() => error);
+      },)
+    );
   }
 
 
@@ -381,19 +381,19 @@ export class ApiService {
   postJobsApplied(data: any) {
     const request = this.http.post(`${this.apiUrl}/applied_jobs`, data, this.options);
 
-    request.subscribe({
-      error: (error) => {
+
+    return request.pipe(
+      catchError((error) => {
         let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
 
         this.presentAlert(errorMessage);
+        return throwError(() => error);
       },
-      complete: () => { }
-    });
-
-    return request
+      )
+    )
   }
 
   getWallet() {
