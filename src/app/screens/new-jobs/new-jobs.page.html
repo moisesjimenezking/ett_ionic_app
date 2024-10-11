@@ -1,11 +1,11 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false">
-    <div class="rowAlignCenter margin20 center" style="position: relative">
+  <ion-toolbar color="false" class="mt-4 mb-8 bg-background">
+    <div class="w-full flex justify-between mb-[20xp]">
       <!-- <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
         keyboard_backspace
       </span> -->
-      <ion-text class="text-primary-foreground text-2xl text-ellipsis line-clamp-1 font-semibold text-center">
-        Crear nueva oferta
+      <ion-text class="flex-1 text-primary-foreground text-2xl text-ellipsis line-clamp-1 font-semibold text-center">
+        Nueva oferta
       </ion-text>
       <!-- <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
         <ion-menu-button menu="sidebarMenuCourses" class="menu-button-custom" color="whiteColor" style="font-size: 30px"></ion-menu-button>
@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="w-full h-full px-5 py-6 max-h-full overflow-y-auto">
+  <div class="w-full h-full px-5 max-h-full overflow-y-auto">
     <div style="margin-top: 10px;">
       <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta
@@ -36,8 +36,9 @@
         </ion-text>
         <ion-chip id="open-work-time-dialog" class="customChip relative"
           style="margin-top: 10px; background-color: #121212;">
-          <ion-input mode="ios" type="text" placeholder="Horario de trabajo" class="textAux"
-            style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;" [(ngModel)]="amount">
+          <ion-input [readonly]="true" mode="ios" type="text" placeholder="Horario de trabajo"
+            class="textAux cursor-pointer" style="color: #FFFBF7; margin: 0; padding-left: 10px; font-size: 12px;"
+            [(ngModel)]="type_time">
           </ion-input>
           <span class="material-icons text-primary-foreground absolute top-2/4 -translate-y-2/4 right-1">
             arrow_drop_down
@@ -108,15 +109,16 @@
 
   <ion-modal #workTimeDialog mode="ios" trigger="open-work-time-dialog" style="--height: auto; --width: 100%;">
     <ng-template>
-      <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-4 py-5">
-        <ion-radio-group value="complete-time" class="w-full flex flex-col gap-3 text-primary-foreground">
-          <ion-radio mode="md" value="complete-time" justify="start" labelPlacement="end" aria-label="Complete Time"
+      <div class="bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-4 py-5 mx-4">
+        <ion-radio-group value="Tiempo completo" class="w-full flex flex-col gap-3 text-primary-foreground"
+          (ionChange)="setWorktypeTime($event.detail.value)">
+          <ion-radio mode="md" value="Tiempo completo" justify="start" labelPlacement="end" aria-label="Complete Time"
             class="block">Tiempo
             completo</ion-radio>
-          <ion-radio mode="md" value="part-time" justify="start" labelPlacement="end" aria-label="Part Time"
+          <ion-radio mode="md" value="Medio tiempo" justify="start" labelPlacement="end" aria-label="Part Time"
             class="block">Medio
             Tiempo</ion-radio>
-          <ion-radio mode="md" value="freelance" justify="start" labelPlacement="end" aria-label="Freelance"
+          <ion-radio mode="md" value="Freelance" justify="start" labelPlacement="end" aria-label="Freelance"
             class="block">Freelance</ion-radio>
         </ion-radio-group>
 
@@ -145,8 +147,4 @@
     style="background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
     <ion-text class="textAux" style="font-size: 16px;">Guardar </ion-text>
   </ion-chip>
-
-  <!-- <div class="center button" style="background-color: #2758BF" (click)="saveNewRecord()">
-      <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
-  </div> -->
 </ion-footer>

@@ -110,8 +110,8 @@
         <ion-text class="text-ellipsis font-semibold text-primary-foreground" style="flex: 1; -webkit-line-clamp: 1">
           Habilidades
         </ion-text>
-        <div class="horizontalScroll" style="padding: 0 13px; margin-top: 10px">
-          <ion-chip *ngFor="let item of currentSkill" style="display: inline-block">
+        <div class="flex flex-wrap gap-1 px-2 mt-2">
+          <ion-chip *ngFor="let item of currentSkill" class="text-primary-foreground px-4 text-sm">
             <ion-label>{{ item }}</ion-label>
           </ion-chip>
         </div>

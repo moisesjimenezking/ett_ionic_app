@@ -1,0 +1,134 @@
+<ion-modal mode="md" #openEditJobs trigger="openEditJobs" style="--border-radius: 16px">
+  <ng-template>
+    <div id="edit-job-modal"
+      class="my-2 bg-muted flex flex-col justify-center items-center rounded-xl px-3 py-5 h-full max-h-full overflow-y-auto">
+
+      <ion-text class="text-primary-foreground text-2xl font-semibold text-center mb-7">
+        Editar oferta
+      </ion-text>
+      <div class="w-full flex-1 flex flex-col gap-4 max-h-full overflow-y-auto text-center">
+        <div class="w-full flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Título de la oferta
+          </ion-text>
+          <ion-chip class="field">
+            <ion-input mode="ios" placeholder="Introduce el título de la oferta" [(ngModel)]="title">
+            </ion-input>
+          </ion-chip>
+          <ion-text color="danger" style="margin-left:20px;" *ngIf="!title && showErrorMessage">Este campo es
+            obligatorio</ion-text>
+        </div>
+
+        <div class="flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Horario de trabajo
+          </ion-text>
+          <ion-chip class="field cursor-pointer" (click)="openModalWorktypeTime()">
+            <ion-input [readonly]="true" mode="ios" type="text" placeholder="Horario de trabajo" class="cursor-pointer"
+              [(ngModel)]="type_time">
+            </ion-input>
+            <span class="material-icons text-primary-foreground absolute top-2/4 -translate-y-2/4 right-1">
+              arrow_drop_down
+            </span>
+          </ion-chip>
+          <ion-text color="danger" style="margin-left:20px;" *ngIf="!type_time && showErrorMessage">Este campo es
+            obligatorio</ion-text>
+        </div>
+
+        <div class="flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Salario de la oferta
+          </ion-text>
+          <ion-chip class="field">
+            <ion-input mode="ios" type="text" placeholder="Salario" [(ngModel)]="amount" (ionChange)="formatAmount()">
+            </ion-input>
+
+          </ion-chip>
+          <ion-text color="danger" style="margin-left:20px;" *ngIf="!amount && showErrorMessage">Este campo es
+            obligatorio</ion-text>
+        </div>
+
+        <div class="flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Ubicación </ion-text>
+          <ion-chip class="field">
+            <ion-input mode="ios" type="text" placeholder="Introduce la ubicación" [(ngModel)]="location">
+            </ion-input>
+          </ion-chip>
+        </div>
+
+        <div class="flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Descripción </ion-text>
+          <ion-chip class="field">
+            <ion-input mode="ios" type="text" placeholder="Introduce la descripción" [(ngModel)]="description">
+            </ion-input>
+          </ion-chip>
+        </div>
+
+        <div class="flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Requerimientos
+          </ion-text>
+          <ion-chip class="field">
+            <ion-input mode="ios" type="text" placeholder="Introduce los requerimientos" [(ngModel)]="newItem"
+              (keyup.enter)="addItemToList()">
+            </ion-input>
+          </ion-chip>
+
+          <div class="px-3 flex flex-wrap gap-1">
+            <ion-chip class="bg-foreground flex items-center gap-1 max-w-max" *ngFor="let item of requeriment">
+              <ion-label class="text-destructive text-sm">{{ item }}</ion-label>
+              <ion-icon name="close-circle" (click)="removeItem(item)" class="text-primary"></ion-icon>
+            </ion-chip>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="w-full flex items-center gap-2 mt-5">
+        <div (click)="openEditJobs.dismiss()"
+          class="w-full flex justify-center items-center bg-transparent h-12 text-lg font-medium"
+          style="margin-right: 1px">
+          <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
+        </div>
+        <div (click)="openEditJobs.dismiss()"
+          class="w-full flex justify-center items-center bg-primary h-12 rounded-full text-lg font-medium"
+          style="margin-left: 1px">
+          <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</ion-modal>
+
+<ion-modal #workTimeDialog mode="ios" [isOpen]="isWorktypeTimeModalOpen"
+  (ionModalWillDismiss)="isWorktypeTimeModalOpen=false" style="--backdrop-opacity: .45">
+  <ng-template>
+    <div class="bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-4 py-5 mx-4">
+      <ion-radio-group value="Tiempo completo" class="w-full flex flex-col gap-3 text-primary-foreground"
+        (ionChange)="setWorktypeTime($event.detail.value)">
+        <ion-radio mode="md" value="Tiempo completo" justify="start" labelPlacement="end" aria-label="Complete Time"
+          class="block">Tiempo
+          completo</ion-radio>
+        <ion-radio mode="md" value="Medio tiempo" justify="start" labelPlacement="end" aria-label="Part Time"
+          class="block">Medio
+          Tiempo</ion-radio>
+        <ion-radio mode="md" value="Freelance" justify="start" labelPlacement="end" aria-label="Freelance"
+          class="block">Freelance</ion-radio>
+      </ion-radio-group>
+
+      <div class="w-full flex gap-2 justify-end items-center">
+        <ion-chip
+          class="text-primary-foreground  text-lg flex justify-center items-center font-medium bg-transparent px-4">
+          <ion-text (click)="workTimeDialog.dismiss()">
+            Cancelar
+          </ion-text>
+        </ion-chip>
+        <ion-chip
+          class="text-primary-foreground bg-primary text-lg h-12 rounded-3xl py-4 px-6 flex justify-center items-center"
+          (click)="workTimeDialog.dismiss()">
+          <ion-text>
+            Seleccionar
+          </ion-text>
+        </ion-chip>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

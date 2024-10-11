@@ -9,6 +9,19 @@ const config: CapacitorConfig = {
     androidScheme: 'https',
     cleartext: true,
   },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 0,
+      launchFadeOutDuration: 3000,
+      backgroundColor: "#2757be",
+      androidSplashResourceName: "splash",
+      androidScaleType: "CENTER_CROP",
+      androidSpinnerStyle: "large",
+      splashFullScreen: true,
+      splashImmersive: true,
+      layoutName: "launch_screen",
+    }
+  }
 
 };
 

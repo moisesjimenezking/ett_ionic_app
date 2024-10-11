@@ -17,7 +17,6 @@ import { UtilsLib } from 'src/app/lib/utils';
 })
 export class JobDetailPage implements OnInit {
   @ViewChild('modal') modal: any;
-  @ViewChild('openEditJobs') openEditJobs: any;
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialog', { read: IonModal }) logoutDialog!: IonModal;
 
@@ -154,7 +153,6 @@ export class JobDetailPage implements OnInit {
   saveAndCloseModal() {
     this.saveNewRecord()
     if (this.closeModal) {
-      this.openEditJobs.dismiss();
       setTimeout(() => {
         this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data: any) => {
           let result = data[0];
