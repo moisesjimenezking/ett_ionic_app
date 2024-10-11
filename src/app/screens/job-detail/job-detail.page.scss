@@ -27,11 +27,13 @@
   padding: 20px;
   margin: 10px 20px;
 }
+
 .dialogButton {
   flex: 1;
   background-color: #2758BF;
   padding: 12px;
 }
+
 .dialogHeader {
   display: flex;
   justify-content: center;
@@ -40,7 +42,8 @@
 }
 
 .custom-background {
-  --background: #2758BF; /* Nuevo color de fondo */
+  --background: #2758BF;
+  /* Nuevo color de fondo */
 }
 
 /* Add styles for other classes accordingly */
@@ -59,19 +62,28 @@
 }
 
 ion-content {
-  --background: #121212; /* Establecer el fondo del ion-content */
-  --ion-color-background: #121212; /* Asegurarte de que el color de fondo se aplique */
-  margin: 0; /* Eliminar márgenes */
-  padding: 0; /* Eliminar relleno */
-  border: none; /* Eliminar bordes */
+  --background: #121212;
+  /* Establecer el fondo del ion-content */
+  --ion-color-background: #121212;
+  /* Asegurarte de que el color de fondo se aplique */
+  margin: 0;
+  /* Eliminar márgenes */
+  padding: 0;
+  /* Eliminar relleno */
+  border: none;
+  /* Eliminar bordes */
 }
 
 .customChip {
-  background-color: black; /* Color de fondo del chip */
-  border-radius: 100px; /* Bordes redondeados */
+  background-color: black;
+  /* Color de fondo del chip */
+  border-radius: 100px;
+  /* Bordes redondeados */
   border: 1px solid white;
-  padding: 1px 20px; /* Espaciado interno */
-  display: flex; /* Flex para centrar contenido */
+  padding: 1px 20px;
+  /* Espaciado interno */
+  display: flex;
+  /* Flex para centrar contenido */
   margin-left: 0%;
   margin-right: 0%;
   height: 40px;
@@ -80,4 +92,8 @@ ion-content {
 .textAux {
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
+}
+
+.applied.chip-disabled {
+  opacity: 1 !important;
 }

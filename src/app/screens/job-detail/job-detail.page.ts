@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, ModalController, AlertController, IonMenu, IonModal } from '@ionic/angular';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from 'src/app/lib/utils';
@@ -68,6 +68,7 @@ export class JobDetailPage implements OnInit {
 
   ngOnInit() {
     this.dataJobs = this.details()!;
+
     this.applied = this.dataJobs.appliedUser;
     this.applyButton = this.applied
       ? "Ya has aplicado a esta oferta"
@@ -97,9 +98,9 @@ export class JobDetailPage implements OnInit {
         "jobs_id": this.dataJobs.id
       }
 
+      this.isApplying = true;
       this.apiJobsService.postJobsApplied(body)
         .pipe(
-          tap(() => { this.isApplying = false }),
           catchError((error) => {
             this.isApplying = false;
             return error;
@@ -116,8 +117,12 @@ export class JobDetailPage implements OnInit {
             this.applyButton = this.applied
               ? "Ya has aplicado a esta oferta"
               : "Aplicar ahora";
+            this.isApplying = false;
             this.cerrarModal();
             this.cdr.detectChanges();
+          },
+          error: () => {
+            this.isApplying = false;
           }
         });
 
@@ -221,7 +226,7 @@ export class JobDetailPage implements OnInit {
     if (!this.amount.startsWith('$')) {
       this.amount = '$' + this.amount;
     }
-    console.log(this.amount)
+
   }
 
   removeItem(item: string) {

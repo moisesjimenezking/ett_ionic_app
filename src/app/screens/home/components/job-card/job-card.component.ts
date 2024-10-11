@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { catchError, switchMap, tap } from 'rxjs';
+import { catchError, switchMap } from 'rxjs';
 
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
@@ -12,7 +12,7 @@ import { JobModel } from '@/types';
 })
 export class JobCardComponent implements OnInit {
   @Input({ required: true }) job!: JobModel;
-  @Output() onSeeDetails = new EventEmitter<any>();
+  @Output() onSeeDetails = new EventEmitter<JobModel>();
 
   readonly fullName = localStorage.getItem('fullname')
   readonly isCompanyAccount = localStorage.getItem('accountType') === "COMPANY" ? true : false;
@@ -57,7 +57,7 @@ export class JobCardComponent implements OnInit {
       this.isApplying = true;
       this.apiService.postJobsApplied(body)
         .pipe(
-          tap(() => { this.isApplying = false }),
+
           catchError((error) => {
             this.isApplying = false;
             return error;
@@ -75,7 +75,11 @@ export class JobCardComponent implements OnInit {
             this.applyButton = this.applied
               ? "Postulación enviada"
               : "Postularme";
+            this.isApplying = false;
 
+          },
+          error: () => {
+            this.isApplying = false;
           }
         });
     }

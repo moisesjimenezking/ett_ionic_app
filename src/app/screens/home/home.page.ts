@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AlertController, IonMenu, IonModal } from '@ionic/angular';
 
 import { ApiService } from '@/service/api.service';
@@ -18,18 +17,12 @@ export class HomePage implements OnInit {
   @ViewChild('logoutDialog', { read: IonModal }) logoutDialog!: IonModal;
 
   fullName = localStorage.getItem('fullname')
-  accountType = localStorage.getItem('accountType') === "COMPANY" ? true : false;
+  isAccountCompany = localStorage.getItem('accountType') === "COMPANY";
   icon = "";
   temporalIcon = "";
 
   showErrorMessage: boolean = false;
 
-  title: string = '';
-  type_time: string = '';
-  description: string = '';
-  location: string = '';
-  requeriment: string[] = [];
-  amount: string = '';
 
   newItem: string = '';
   itemList: string[] = [];
@@ -49,7 +42,6 @@ export class HomePage implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private apiService: ApiService,
     private elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
@@ -76,15 +68,14 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  goToDetails(screen: any, item: any) {
+  goToDetails(screen: string, item: JobModel) {
 
     this.ionViewWillEnter();
 
-    let tab = this.accountType ? '/bottom-tab-bar-company' : '/bottom-tab-bar';
+    let tab = this.isAccountCompany ? '/bottom-tab-bar-company' : '/bottom-tab-bar';
     let itemAux = this.details();
 
-    if (itemAux.id !== item.id) {
-      console.log("Set new job", item);
+    if (itemAux?.id !== item.id) {
       localStorage.setItem('jobs', JSON.stringify(item));
     }
 
@@ -92,18 +83,18 @@ export class HomePage implements OnInit {
 
   }
 
-  details() {
+  details(): JobModel | null {
     const storedItemString = localStorage.getItem('jobs');
     if (storedItemString) {
       return JSON.parse(storedItemString);
     } else {
-      return {};
+      return null
     }
   }
 
   ionViewWillEnter() {
     const body: { [key: string]: any } = {};
-    if (this.accountType) {
+    if (this.isAccountCompany) {
       body["user_id"] = localStorage.getItem('user_id')
     }
 
@@ -151,7 +142,7 @@ export class HomePage implements OnInit {
       requeriment: searchText
     }
 
-    if (this.accountType) {
+    if (this.isAccountCompany) {
       body["user_id"] = localStorage.getItem('user_id')
     }
 
@@ -161,21 +152,6 @@ export class HomePage implements OnInit {
     });
   }
 
-  saveAndCloseModal() {
-    this.saveNewRecord()
-    if (this.closeModal) {
-      this.openNewJob.dismiss();
-      const search = {
-        user_id: localStorage.getItem('user_id')
-      }
-      setTimeout(() => {
-        this.apiService.allJobsApi(search).subscribe((data) => {
-          this.jobList = data;
-          this.cdr.detectChanges();
-        });
-      }, 1000);
-    }
-  }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
@@ -187,62 +163,6 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  formatAmount() {
-    this.amount = this.amount.replace(/[^0-9$]/g, '');
-    if (!this.amount.startsWith('$')) {
-      this.amount = '$' + this.amount;
-    }
-  }
-
-  saveNewRecord() {
-    this.amount = this.amount.replace(/[^0-9]/g, '');
-    if (!this.title || !this.type_time || !this.amount || this.amount === '') {
-      this.showErrorMessage = true;
-      let errorMessage = 'Por favor completa todos los campos';
-      this.closeModal = false;
-      this.presentAlert(errorMessage);
-      return throwError(() => new Error(errorMessage));
-    }
-
-    this.showErrorMessage = false;
-    this.closeModal = true;
-
-    const body: { [key: string]: any } = {
-      user_id: localStorage.getItem('user_id'),
-      title: this.title,
-      type_time: this.type_time,
-      amount: this.amount,
-    };
-
-    if (this.description) {
-      body["description"] = this.description
-    }
-
-    if (this.location) {
-      body["location"] = this.location
-    }
-
-    if (this.requeriment) {
-      body["requeriment"] = this.requeriment
-    }
-
-    let fin = false
-    if (this.apiService.postJobs(body)) {
-      fin = true;
-    }
-    return fin;
-  }
-
-  addItemToList() {
-    if (this.newItem.trim() !== '') {
-      this.requeriment.push(this.newItem);
-      this.newItem = '';
-    }
-  }
-
-  removeItem(item: string) {
-    this.requeriment = this.requeriment.filter(i => i !== item);
-  }
 
   closeMenu() {
     if (this.menu) {

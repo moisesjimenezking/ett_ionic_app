@@ -4,11 +4,11 @@
       <div class="rowAlignCenter" style="flex: 1">
         <div class="column" style="flex: 2; margin-left: 0px">
           <ion-text class="ellipseText" style="-webkit-line-clamp: 4; color: white; font-size: 24px"
-            *ngIf="accountType">
+            *ngIf="isAccountCompany">
             {{ fullName }}
           </ion-text>
           <ion-text class="ellipseText" style="-webkit-line-clamp: 1; color: white; font-size: 24px"
-            *ngIf="!accountType">
+            *ngIf="!isAccountCompany">
             Hola, {{ fullName }}
           </ion-text>
         </div>
@@ -31,9 +31,9 @@
     </ion-chip>
   </ion-toolbar>
 </ion-header>
-<ion-content style="background-color: #121212;">
+<ion-content class="bg-background">
   <div>
-    <ion-list style="background-color: #121212;" class="p-5 space-y-4">
+    <ion-list class="p-5 space-y-4">
       <div *ngFor="let item of jobList;let i=index;">
         <app-job-card [job]="item" (onSeeDetails)="goToDetails('job-detail', $event)" />
       </div>

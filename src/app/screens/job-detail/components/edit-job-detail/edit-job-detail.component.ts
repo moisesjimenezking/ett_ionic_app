@@ -52,7 +52,7 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['job']) {
-      console.log("Job ", changes['job']);
+
     }
   }
 
@@ -81,7 +81,7 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
   }
 
   setWorktypeTime(value: string) {
-    console.log("Select value type time", value);
+
     this.type_time = value;
   }
 

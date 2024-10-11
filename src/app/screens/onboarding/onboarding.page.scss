@@ -1,257 +1,232 @@
-// .bgImage {
-//   top: 0;
-//   right: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 50%;
-//   object-fit: fill;
-// }
+ .imageWrapper {
+   height: 100%;
+   width: 100%;
+   justify-content: center;
+   display: flex;
+   align-items: flex-end;
+ }
 
-.imageWrapper {
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  display: flex;
-  align-items: flex-end;
-}
+ .swiperPosition {
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+ }
 
-.swiperPosition {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
+ .onboarding-description {
+   padding: 10px 20px; // Añade un poco de espacio alrededor del texto
+   font-size: 16px; // Ajusta esto según tus necesidades
+   line-height: 1.5; // Mejora la legibilidad
+   overflow-wrap: break-word; // Asegura que las palabras se rompan correctamente al final de la línea
+   word-wrap: break-word; // Alternativa a overflow-wrap para navegadores más antiguos
+   hyphens: auto; // Permite la división de palabras al final de la línea en navegadores que lo soporten
+ }
 
-.onboarding-description {
-  padding: 10px 20px; // Añade un poco de espacio alrededor del texto
-  font-size: 16px; // Ajusta esto según tus necesidades
-  line-height: 1.5; // Mejora la legibilidad
-  overflow-wrap: break-word; // Asegura que las palabras se rompan correctamente al final de la línea
-  word-wrap: break-word; // Alternativa a overflow-wrap para navegadores más antiguos
-  hyphens: auto; // Permite la división de palabras al final de la línea en navegadores que lo soporten
-}
+ .textWrapper {
+   width: 100%; // Ocupa todo el ancho disponible
+   padding: 20px; // Añade espacio alrededor del texto
+   display: flex;
+   flex-direction: column;
+   justify-content: center; // Centra el contenido verticalmente
+ }
 
-.textWrapper {
-  width: 100%; // Ocupa todo el ancho disponible
-  padding: 20px; // Añade espacio alrededor del texto
-  display: flex;
-  flex-direction: column;
-  justify-content: center; // Centra el contenido verticalmente
-}
+ .bgImage {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   object-fit: cover;
+ }
 
-// .bgImage {
-//   background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
-//   width: 100%;
-//   height: 100%;
-//   position: absolute;
-// }
+ .darkOverlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: #121212BF;
+   z-index: 1;
+   /* Asegura que esté sobre la imagen */
+ }
 
-// .centeredButton {
-//   position: absolute;
-//   bottom: 50px;
-//   left: 0;
-//   right: 0;
-//   text-align: center;
-//   z-index: 1; /* El botón estará sobre la imagen */
-// }
+ .overlayContent {
+   position: absolute;
+   top: -200px;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   /* Asegura que ocupe todo el espacio disponible */
+   display: flex;
+   justify-content: center;
+   /* Centra horizontalmente */
+   align-items: center;
+   /* Centra verticalmente */
+   flex-direction: column;
+   /* Asegura que el logo y el texto se ubiquen en columna */
+   z-index: 2;
+   /* Para asegurar que esté sobre la imagen y la capa oscura */
+   max-width: 480px;
+   margin-inline: auto;
+ }
 
-.bgImage {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  object-fit: cover;
-}
+ .overlayContent.custom {
+   margin-top: 320px;
+   bottom: 250px;
+   max-width: 320px;
+   top: 0;
+ }
 
-.darkOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #121212BF;
-  z-index: 1;
-  /* Asegura que esté sobre la imagen */
-}
+ .overlayLogo {
+   gap: 0px;
+   opacity: 0px;
+   margin-top: 0px;
+   width: 140px;
+   /* Tamaño del logo, ajustable */
+   height: 150px;
+   margin-bottom: 20px;
+ }
 
-.overlayContent {
-  position: absolute;
-  top: -200px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  /* Asegura que ocupe todo el espacio disponible */
-  display: flex;
-  justify-content: center;
-  /* Centra horizontalmente */
-  align-items: center;
-  /* Centra verticalmente */
-  flex-direction: column;
-  /* Asegura que el logo y el texto se ubiquen en columna */
-  z-index: 2;
-  /* Para asegurar que esté sobre la imagen y la capa oscura */
-  max-width: 480px;
-  margin-inline: auto;
-}
+ .overlayText {
+   font-family: 'Poppins', sans-serif;
+   /* Aplica la fuente Poppins */
+   @apply text-2xl;
+   /* Tamaño de la fuente */
+   font-weight: 500;
+   /* Peso de la fuente */
+   text-align: center;
+   /* Alineación centrada */
+   color: white;
+   /* Cambia el color según sea necesario */
+ }
 
-.overlayContent.custom {
-  margin-top: 320px;
-  bottom: 250px;
-  max-width: 320px;
-  top: 0;
-}
+ .centeredButton {
+   display: flex;
+   /* Utiliza Flexbox para centrar */
+   justify-content: center;
+   /* Centra horizontalmente */
+   position: absolute;
+   bottom: calc(50px + var(--ion-safe-area-bottom));
+   width: auto;
+   left: 10px;
+   margin: auto;
+   right: 10px;
+   max-width: 360px;
+   border-radius: 30px;
+   align-items: center;
+   height: 56px;
+   z-index: 2;
+   /* El botón estará sobre la imagen y la capa oscura */
+   font-family: 'Poppins', sans-serif;
+   /* Aplica la fuente Poppins */
+   font-size: 16px;
+   /* Tamaño de la fuente */
+   font-weight: 600;
+   /* Peso de la fuente */
+   line-height: 21px;
+   /* Altura de línea */
+   text-align: center;
+   /* Alineación centrada */
+   color: white;
+   /* Cambia el color según sea necesario */
+ }
 
-.overlayLogo {
-  gap: 0px;
-  opacity: 0px;
-  margin-top: 0px;
-  width: 140px;
-  /* Tamaño del logo, ajustable */
-  height: 150px;
-  margin-bottom: 20px;
-}
+ .overlayTextTow {
+   font-family: 'Poppins', sans-serif;
+   /* Aplica la fuente Poppins */
+   @apply text-sm;
+   max-width: 360px;
+   /* Tamaño de la fuente */
+   font-weight: 400;
+   /* Altura de línea */
+   text-align: center;
+   /* Alineación centrada */
+   color: white;
+   /* Cambia el color según sea necesario */
+ }
 
-.overlayText {
-  font-family: 'Poppins', sans-serif;
-  /* Aplica la fuente Poppins */
-  @apply text-2xl;
-  /* Tamaño de la fuente */
-  font-weight: 500;
-  /* Peso de la fuente */
-  text-align: center;
-  /* Alineación centrada */
-  color: white;
-  /* Cambia el color según sea necesario */
-}
-
-.centeredButton {
-  display: flex;
-  /* Utiliza Flexbox para centrar */
-  justify-content: center;
-  /* Centra horizontalmente */
-  position: absolute;
-  bottom: calc(50px + var(--ion-safe-area-bottom));
-  width: auto;
-  left: 10px;
-  margin: auto;
-  right: 10px;
-  max-width: 360px;
-  border-radius: 30px;
-  align-items: center;
-  height: 56px;
-  z-index: 2;
-  /* El botón estará sobre la imagen y la capa oscura */
-  font-family: 'Poppins', sans-serif;
-  /* Aplica la fuente Poppins */
-  font-size: 16px;
-  /* Tamaño de la fuente */
-  font-weight: 600;
-  /* Peso de la fuente */
-  line-height: 21px;
-  /* Altura de línea */
-  text-align: center;
-  /* Alineación centrada */
-  color: white;
-  /* Cambia el color según sea necesario */
-}
-
-.overlayTextTow {
-  font-family: 'Poppins', sans-serif;
-  /* Aplica la fuente Poppins */
-  @apply text-sm;
-  max-width: 360px;
-  /* Tamaño de la fuente */
-  font-weight: 400;
-  /* Altura de línea */
-  text-align: center;
-  /* Alineación centrada */
-  color: white;
-  /* Cambia el color según sea necesario */
-}
-
-.blueOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #2758BF99;
-  z-index: 1;
+ .blueOverlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: #2758BF99;
+   z-index: 1;
 
 
-  /* Asegura que esté sobre la imagen */
-}
+   /* Asegura que esté sobre la imagen */
+ }
 
-.indicators {
-  position: absolute;
-  top: 80%;
-  /* Ajusta este valor según la posición deseada */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  z-index: 2
-}
+ .indicators {
+   position: absolute;
+   top: 80%;
+   /* Ajusta este valor según la posición deseada */
+   left: 50%;
+   transform: translateX(-50%);
+   display: flex;
+   z-index: 2
+ }
 
-.indicator {
-  width: 24px;
-  /* Ajusta el tamaño según lo necesites */
-  height: 8px;
-  /* Ajusta el tamaño según lo necesites */
-  border-radius: 100px;
-  /* Para hacer los indicadores redondeados */
-  background-color: white;
-  /* Color por defecto */
-  margin: 0 5px;
-  /* Espaciado entre indicadores */
+ .indicator {
+   width: 24px;
+   /* Ajusta el tamaño según lo necesites */
+   height: 8px;
+   /* Ajusta el tamaño según lo necesites */
+   border-radius: 100px;
+   /* Para hacer los indicadores redondeados */
+   background-color: white;
+   /* Color por defecto */
+   margin: 0 5px;
+   /* Espaciado entre indicadores */
 
-}
+ }
 
-.indicator.active {
-  background-color: #040A15;
-  /* Color del indicador activo */
-}
+ .indicator.active {
+   background-color: #040A15;
+   /* Color del indicador activo */
+ }
 
-.overlayTextThree {
-  // margin-top: 350px;
-  margin-bottom: 100px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 30px;
-  font-weight: 600;
-  line-height: 45px;
-  text-align: center;
-  color: white;
-}
+ .overlayTextThree {
+   // margin-top: 350px;
+   margin-bottom: 100px;
+   font-family: 'Poppins', sans-serif;
+   font-size: 30px;
+   font-weight: 600;
+   line-height: 45px;
+   text-align: center;
+   color: white;
+ }
 
-.overlayTextfour {
-  // margin-top: 150px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 21px;
-  text-align: center;
-  color: white;
-}
+ .overlayTextfour {
+   // margin-top: 150px;
+   font-family: 'Poppins', sans-serif;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 21px;
+   text-align: center;
+   color: white;
+ }
 
-@media (min-width: 768px) {
-  .overlayContent.custom {
-    max-width: 576px;
-  }
+ @media (min-width: 768px) {
+   .overlayContent.custom {
+     max-width: 576px;
+   }
 
-  .overlayText {
-    @apply text-4xl;
-  }
+   .overlayText {
+     @apply text-4xl;
+   }
 
-  .overlayTextThree {
-    font-size: 42px;
+   .overlayTextThree {
+     font-size: 42px;
 
-  }
+   }
 
-  .overlayTextfour,
-  .overlayTextTow {
-    font-size: 18px;
-  }
-}
+   .overlayTextfour,
+   .overlayTextTow {
+     font-size: 18px;
+   }
+ }
