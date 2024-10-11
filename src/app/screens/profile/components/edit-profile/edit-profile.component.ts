@@ -1,9 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { ApiService } from '@/service/api.service';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { IonModal, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { UtilsLib } from 'src/app/lib/utils';
 
+import { ApiService } from '@/service/api.service';
+import { UtilsLib } from '@/lib/utils';
+
+export type EditProfileEvent = {
+  fullname: string,
+  email: string,
+  phone: string,
+  social_link: any,
+  specialization: any
+};
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,6 +19,11 @@ import { UtilsLib } from 'src/app/lib/utils';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
+  @ViewChild('editProfileModal', { read: IonModal }) modal!: IonModal;
+
+  @Output() onChange = new EventEmitter<EditProfileEvent>();
+
+
   emailVerified: boolean = true;
   fullName: any = '';
   specialization: any = '';
@@ -130,11 +143,16 @@ export class EditProfileComponent implements OnInit {
           localStorage.setItem('social_link', JSON.stringify(data.social_link));
           localStorage.setItem('specialization', data.specialization);
 
+          this.onChange.emit({
+            fullname: data.fullname,
+            email: data.email,
+            phone: data.phone,
+            social_link: data.social_link,
+            specialization: data.specialization
+          });
+
           this.cdr.detectChanges();
-          this.goTo(localStorage.getItem('accountType') === "PERSON"
-            ? 'bottom-tab-bar/profile'
-            : 'bottom-tab-bar-company/profile'
-          );
+          this.modal.dismiss();
         },
         error: () => {
           this.isSubmitting = false;

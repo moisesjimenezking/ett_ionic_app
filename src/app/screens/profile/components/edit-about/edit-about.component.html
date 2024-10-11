@@ -1,0 +1,90 @@
+<ion-modal #editAboutProfileModal mode="md" [canDismiss]="isSubmitting?false:true"
+  trigger="open-edit-about-profile-modal" style="--border-radius: 16px">
+  <ng-template>
+    <div
+      class="my-2 bg-muted flex flex-col justify-center items-center rounded-xl px-3 py-5 h-full max-h-[720px] overflow-y-auto">
+      <ion-text class="text-primary-foreground text-2xl font-semibold text-center mb-7">
+        Editar biografía
+      </ion-text>
+      <div class="w-full flex-1 flex flex-col gap-4 max-h-full overflow-y-auto text-center">
+        <div class="w-full flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground">
+            Resumen
+          </ion-text>
+          <div class="field textarea">
+            <ion-textarea mode="ios" [(ngModel)]="about" inputmode="text" rows="4"
+              placeholder="*Puedes escribir sobre tu trabajo, experiencia o habilidades. La gente también habla de sus logros."
+              autoGrow="true">
+            </ion-textarea>
+          </div>
+        </div>
+
+        <div class="w-full flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground">Experiencia </ion-text>
+          <div id="yearsSheet" class="field flex items-center justify-between text-primary-foreground">
+            <ion-text class="line-clamp-1 text-ellipsis">
+              {{experienceYear}} años
+            </ion-text>
+            <span class="material-icons" style="color: var(--blackColor); font-size: 24px">
+              arrow_drop_down
+            </span>
+          </div>
+        </div>
+
+        <div class="w-full flex flex-col gap-2 text-start">
+          <ion-text class="text-sm ml-5 text-primary-foreground"> Ubicación </ion-text>
+          <div id="locationSheet" class="field" style="justify-content: space-between">
+            <ion-input mode="ios" placeholder="Donde te ubicas" [(ngModel)]="location" inputmode="text">
+            </ion-input>
+          </div>
+        </div>
+
+        <ion-modal mode="md" [initialBreakpoint]=".7" [breakpoints]="[0,0.7, 1]"
+          style="--height: auto; --width: 100%; --border-radius: 0px" trigger="yearsSheet" #yearsModal>
+          <ng-template>
+            <div
+              class="my-2 bg-muted flex flex-col justify-center items-center rounded-t-xl px-3 py-5 h-full max-h-[720px] overflow-y-auto">
+              <ion-text class="text-primary-foreground text-2xl font-semibold text-center mb-7">
+                Experiencia
+              </ion-text>
+              <div class="w-full flex-1 flex flex-col gap-4 max-h-full overflow-y-auto text-start">
+                <ng-container *ngFor="let item of yearsList">
+                  <div class="flex items-center gap-1 justify-between p-2"
+                    (click)="experienceYear=item;yearsModal.dismiss()">
+                    <ion-text [class]="utils.cn(
+                      'text-primary-foreground/80 line-clamp-1 flex-1 text-ellipsis',
+                      experienceYear == item && 'text-primary-foreground'
+                    )">
+                      {{item}} &nbsp; años
+                    </ion-text>
+                    <span *ngIf="experienceYear===item" class="material-icons text-primary text-[22px]">
+                      check
+                    </span>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-template>
+        </ion-modal>
+
+        <div class="w-full flex gap-2 justify-end items-center mt-5">
+          <ion-chip [disabled]="isSubmitting"
+            class="text-primary-foreground  text-md flex justify-center items-center font-medium bg-transparent px-4">
+            <ion-text (click)="editAboutProfileModal.dismiss()">
+              Cancelar
+            </ion-text>
+          </ion-chip>
+          <ion-chip [disabled]="isSubmitting"
+            class="text-primary-foreground bg-primary text-md font-medium h-12 rounded-3xl py-4 px-6 flex justify-center items-center"
+            (click)="updateUser()">
+            <ion-text>
+              {{isSubmitting ? 'Guardando...': 'Guardar'}}
+            </ion-text>
+          </ion-chip>
+        </div>
+      </div>
+    </div>
+
+
+  </ng-template>
+</ion-modal>
