@@ -80,7 +80,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   validateEmail() {
-    console.log(this.email);
+
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
     if (this.email && !emailRegex.test(this.email)) {

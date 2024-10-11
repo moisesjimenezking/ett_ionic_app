@@ -21,7 +21,8 @@ export class ProfilePage implements OnInit {
   identificacionPdf: string | null = null;
   conducirPdf: string | null = null;
 
-  account = localStorage.getItem('accountType')
+  account = localStorage.getItem('accountType');
+  isProfileLoaded = false;
   fullName: any = '';
   specialization = localStorage.getItem('specialization') === 'null' ? '' : localStorage.getItem('specialization');;
   email: any = '';
@@ -81,6 +82,7 @@ export class ProfilePage implements OnInit {
   }
 
   defineData() {
+    this.isProfileLoaded = false;
     setTimeout(() => {
       this.fullName = localStorage.getItem('fullname');
       this.email = localStorage.getItem('email');
@@ -99,6 +101,7 @@ export class ProfilePage implements OnInit {
       if (listCurrentSkill) {
         this.currentSkill = JSON.parse(listCurrentSkill);
       }
+      this.isProfileLoaded = true;
       this.cdr.detectChanges();
     }, 1000);
   }
@@ -130,42 +133,72 @@ export class ProfilePage implements OnInit {
 
   deletePic() {
     const body: { [key: string]: any } = {}
+    let iconBeforeChange = this.icon;
     if (this.modalValue === "profile") {
+      this.icon = this.stablishUrlPic("");
       body["icon"] = "";
     } else {
+      iconBeforeChange = this.iconFront;
+      this.iconFront = this.stablishUrlPic("");
       body["icon_front"] = "";
     }
 
     setTimeout(() => {
-      this.apService.putUser(body).subscribe((data: any) => {
-        this.icon = this.stablishUrlPic(data.icon);
-        this.iconFront = this.stablishUrlPic(data.icon_front);
-        localStorage.setItem('icon_profile', data.icon);
-        localStorage.setItem('icon_front', data.icon_front);
+      this.apService.putUser(body).subscribe({
+        next: (data: any) => {
+          this.icon = this.stablishUrlPic(data.icon);
+          this.iconFront = this.stablishUrlPic(data.icon_front);
+          localStorage.setItem('icon_profile', data.icon);
+          localStorage.setItem('icon_front', data.icon_front);
 
-        this.cdr.detectChanges();
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          if (this.modalValue === "profile") {
+            this.icon = iconBeforeChange;
+          } else {
+            this.iconFront = iconBeforeChange;
+
+          }
+
+        }
       });
     }, 50);
   }
 
   updatePic(base64String: string) {
     const body: { [key: string]: any } = {}
+    let iconBeforeChange = this.icon;
     if (this.modalValue === "profile") {
+      this.icon = base64String;
       body["icon"] = base64String;
     } else {
+      iconBeforeChange = this.iconFront;
+      this.iconFront = base64String;
       body["icon_front"] = base64String;
     }
 
     setTimeout(() => {
-      this.apService.putUser(body).subscribe((data: any) => {
-        this.icon = this.stablishUrlPic(data.icon);
-        this.iconFront = this.stablishUrlPic(data.icon_front);
+      this.apService.putUser(body).subscribe({
+        next: (data: any) => {
 
-        localStorage.setItem('icon_profile', data.icon);
-        localStorage.setItem('icon_front', data.icon_front);
+          this.icon = this.stablishUrlPic(data.icon);
+          this.iconFront = this.stablishUrlPic(data.icon_front);
 
-        this.cdr.detectChanges();
-      });
+          localStorage.setItem('icon_profile', data.icon);
+          localStorage.setItem('icon_front', data.icon_front);
+
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          if (this.modalValue === "profile") {
+            this.icon = iconBeforeChange;
+          } else {
+            this.iconFront = iconBeforeChange;
+          }
+        }
+      }
+      );
     }, 50);
   }
 
@@ -175,7 +208,7 @@ export class ProfilePage implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result as string;
-        console.log(base64String);
+
         this.updatePic(base64String);
       };
       reader.readAsDataURL(file);

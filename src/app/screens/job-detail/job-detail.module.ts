@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { JobDetailPage } from './job-detail.page';
 import { SharedModule } from "../../shared/shared.module";
 import { EditJobDetailComponent } from './components/edit-job-detail/edit-job-detail.component';
+import { CandidatesComponent } from './components/candidates/candidates.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { EditJobDetailComponent } from './components/edit-job-detail/edit-job-de
     HttpClientModule,
     SharedModule
   ],
-  declarations: [JobDetailPage, EditJobDetailComponent],
+  declarations: [JobDetailPage, EditJobDetailComponent, CandidatesComponent],
   providers: [ApiService]
 })
 export class JobDetailPageModule { }

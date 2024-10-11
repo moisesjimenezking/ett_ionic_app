@@ -30,7 +30,7 @@ export class EditExperiencePage implements OnInit {
   constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
-    console.log(new Date(2023, 2, 20));
+
   }
 
   changeStartDate() {
@@ -41,7 +41,7 @@ export class EditExperiencePage implements OnInit {
       this.pastStartDate = moment(this.startDate).utc().format('MMM YYYY')
   }
 
-  changeEndDate(){
+  changeEndDate() {
     this.dateSelectionFor === 'present'
       ?
       this.presentEndDate = moment(this.endDate).utc().format('MMM YYYY')

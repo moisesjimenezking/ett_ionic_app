@@ -1,0 +1,32 @@
+export interface UserModel {
+    about: null;
+    account: string;
+    address: null;
+    allergies: null;
+    birthdate: null;
+    blood_type: null;
+    civil_status: null;
+    datetime: string;
+    datetime_update: string;
+    email: string;
+    experience: null;
+    family_responsibilities: number;
+    fullname: string;
+    icon: string;
+    icon_front: string;
+    id: number;
+    identification: string;
+    identification_text: null;
+    level_study: null;
+    license: null;
+    location: null;
+    passwd: string;
+    phone: string;
+    rif: string;
+    rif_text: null;
+    sex: null;
+    skills: any[];
+    social_link: any[];
+    specialization: null;
+    verified_email: boolean;
+}
