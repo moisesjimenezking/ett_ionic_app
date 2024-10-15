@@ -101,6 +101,7 @@ export class HomePage implements OnInit {
     this.isLoadingJobList = true;
     this.apiService.allJobsApi(body).subscribe({
       next: (data) => {
+        console.log("ListJob", data);
         this.jobList = data;
         this.isLoadingJobList = false;
       },

@@ -12,13 +12,11 @@ import { ChatMessage } from 'src/app/types/chat-messages';
   styleUrls: ['./chats.page.scss'],
 })
 export class ChatsPage implements OnInit {
-  @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
 
   chatsList: ChatMessage[] = [
   ];
   isLoadingChatList = false;
-  // conversation: Message | null = null;
 
   constructor(
     private navCtrl: NavController,
@@ -30,17 +28,14 @@ export class ChatsPage implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    this.allChats();
-  }
 
   ionViewWillEnter() {
     this.allChats();
   }
 
-  goToDetails(screen: any, item: any) {
-    this.router.navigateByUrl(screen);
+  goToDetails(screen: string, item: ChatMessage) {
     localStorage.setItem('messages', JSON.stringify(item));
+    this.router.navigateByUrl(screen);
   }
 
   goTo(screen: any) {
@@ -72,15 +67,6 @@ export class ChatsPage implements OnInit {
     // this.conversation = message;
   }
 
-  closeMenu() {
-    if (this.menu) {
-      this.menu.close();
-    }
-  }
-
-  logout() {
-    this.closeMenu();
-  }
 
   stablishUrlPic(current: any) {
     let iconItem = current;
