@@ -1,0 +1,10 @@
+<div [style.width]="width" [style.height]="isLoad ? (heightAfterLoaded??height) : height" [class]="utils.cn(
+  'overflow-hidden',
+  !isLoad ||isError && 'bg-destructive animate-pulse',
+  isLoad && 'animate-fade animate-delay-75 animate-duration-700',
+  className
+)">
+  <ion-img [src]="src" (ionImgWillLoad)="load($event)" (ionImgDidLoad)="loaded($event)" (ionError)="error($event)"
+    class="w-full h-full object-cover" [style.opacity]="isLoad ? '1': '0'" [alt]="alt"></ion-img>
+
+</div>

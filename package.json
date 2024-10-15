@@ -42,6 +42,7 @@
     "rxjs": "~7.8.0",
     "swiper": "^10.0.4",
     "tailwind-merge": "^2.5.2",
+    "tailwindcss-animated": "^1.1.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },

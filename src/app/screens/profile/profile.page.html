@@ -23,8 +23,8 @@
 <ion-content [fullscreen]="true">
   <div class="relative -top-[50px] min-h-[230px] h-[230px]">
     <ng-container *ngIf="isProfileLoaded; else ProfileImageFrontLoadingState">
-      <ion-img [src]="iconFront" class="imageOverflow w-full h-full relative z-10"
-        (click)="openModal('front')"></ion-img>
+      <ng-image [src]="iconFront" width="100%" height="230px" class="imageOverflow w-full h-full relative z-10"
+        (click)="openModal('front')" />
     </ng-container>
     <ng-template #ProfileImageFrontLoadingState>
       <div class="imageOverflow bg-muted/80">
@@ -35,8 +35,9 @@
     <div class="column imageOverlay">
       <div class="flex items-center image-container absolute max-w-max h-[150px] mt-[140px] z-10">
         <ng-container *ngIf="isProfileLoaded;else ProfileImageLoadingState">
-          <ion-img [src]="icon" class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full"
-            style="width: 110px; height: 110px;" (click)="openModal('profile')" />
+
+          <ng-image [src]="icon" width="110px" height="110px"
+            class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full" (click)="openModal('profile')" />
         </ng-container>
         <ng-template #ProfileImageLoadingState>
           <div class="bg-destructive/90 rounded-full">
@@ -196,7 +197,7 @@
   <ion-modal #changePicSheet mode="ios" [keepContentsMounted]="true" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
     style="--height: auto; --width: 100%;">
     <ng-template>
-      <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
+      <div class="mx-3 bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
         <ion-img [src]="modalValue == 'profile' ? icon: iconFront"
           class="min-w-[110px] min-h-[110px] rounded-full overflow-hidden object-cover"
           style="width: 110px; height: 110px;" />

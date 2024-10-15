@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
-import { catchError, throwError, finalize} from 'rxjs';
-import { AlertController } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
-import { ApiService } from '../../../service/api.service';
+import { throwError } from 'rxjs';
+import { NavController, Platform, AlertController } from '@ionic/angular';
+
+
+import { ApiService } from '@/service/api.service';
 
 
 @Component({
@@ -15,10 +14,10 @@ import { ApiService } from '../../../service/api.service';
 })
 export class RegisterPage implements OnInit {
 
-  name:string='';
-  email:string='';
-  mobileNo='';
-  password:string='';
+  name: string = '';
+  email: string = '';
+  mobileNo = '';
+  password: string = '';
   securePassword: boolean = true;
   alertMessageEmail: string = '';
   showErrorMessage: boolean = false;
@@ -26,11 +25,9 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    public platform:Platform,
-    private router:Router, 
-    private http: HttpClient,
+    public platform: Platform,
+    private router: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController,
     private apiService: ApiService
   ) { }
 
@@ -51,32 +48,21 @@ export class RegisterPage implements OnInit {
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 
-  async showSpinner() {
-    const loading = await this.loadingController.create({
-      message: 'Cargando...'
-    });
-    await loading.present();
-  }
-  
-  async hideSpinner() {
-    await this.loadingController.dismiss();
-  }
-
-  validateEmail(){
+  validateEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
     if (this.email && !emailRegex.test(this.email)) {
       this.alertMessageEmail = 'Por favor ingresa un correo electrónico válido';
       return false
-    } 
+    }
 
-    return this.apiService.getVerificEmailFalse({email:this.email});
+    return this.apiService.getVerificEmailFalse({ email: this.email });
   }
-  
+
   seleccionarTipoCuenta(event: any) {
     this.accountType = event.detail.value;
   }
@@ -84,13 +70,13 @@ export class RegisterPage implements OnInit {
   crearCuenta() {
     this.accountType = this.accountType || "PERSON"
     if (!this.name || !this.email || !this.mobileNo || !this.password || !this.accountType) {
-      this.showErrorMessage = true; 
+      this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
       this.presentAlert(errorMessage);
       return throwError(() => new Error(errorMessage));
     }
 
-    this.showErrorMessage = false; 
+    this.showErrorMessage = false;
 
     const body = {
       fullname: this.name,

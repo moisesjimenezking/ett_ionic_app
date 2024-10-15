@@ -10,7 +10,7 @@
         <ng-container *ngFor="let candidate of candidates">
           <div class="w-full flex items-center gap-2 px-2">
             <div class="bg-destructive rounded-full size-[90px]">
-              <ion-img [src]="stablishUrlPic(candidate.user.icon)" alt="Candidate Icon"
+              <ng-image width="90px" height="90px" [src]="stablishUrlPic(candidate.user.icon)" alt="Candidate Icon"
                 class="min-w-[90px] min-h-[90px] size-[90px] object-cover rounded-full overflow-hidden" />
             </div>
             <div class="flex-1 text-start text-primary-foreground text-lg">

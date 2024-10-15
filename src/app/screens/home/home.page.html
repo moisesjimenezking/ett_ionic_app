@@ -34,12 +34,15 @@
 <ion-content class="bg-background">
   <div>
     <div class="px-4">
-      <ion-img [src]="homeBannerImage" class="w-auto h-auto rounded-xl" />
+      <ng-image width="100%" heightAfterLoaded="auto" [src]="homeBannerImage" class="w-auto h-auto rounded-xl"
+        alt="Banner home" />
     </div>
-    <ion-list class="p-4 space-y-4">
+    <div class="px-4 mt-6 mb-4">
       <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-bold">
         {{isAccountCompany ? 'Tus ofertas actuales': 'Últimas ofertas publicadas'}}
       </ion-text>
+    </div>
+    <ion-list class="p-4 space-y-4">
       <div *ngFor="let item of jobList;let i=index;">
         <app-job-card [job]="item" (onSeeDetails)="goToDetails('job-detail', $event)" />
       </div>
