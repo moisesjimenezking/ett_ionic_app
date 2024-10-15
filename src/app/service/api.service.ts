@@ -7,7 +7,7 @@ import { catchError, throwError, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { NgZone } from '@angular/core';
-import { JobModel } from '@/types';
+import { ChatMessage, JobModel } from '@/types';
 
 
 @Injectable({
@@ -263,7 +263,7 @@ export class ApiService {
 
 
   getChat(data: any) {
-    return this.http.get(`${this.apiUrl}/chats`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
+    return this.http.get<ChatMessage | ChatMessage[]>(`${this.apiUrl}/chats`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
   }
 
   postJobs(data: any) {
