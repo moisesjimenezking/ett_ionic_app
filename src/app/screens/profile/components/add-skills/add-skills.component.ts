@@ -40,7 +40,7 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
 
   isSubmitting = false;
 
-  utils = new UtilsLib();
+  protected readonly utils = new UtilsLib();
 
   constructor(
     private navCtrl: NavController,
