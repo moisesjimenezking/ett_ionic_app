@@ -4,6 +4,7 @@ import { IonMenu, IonModal, NavController } from '@ionic/angular';
 
 import { ApiService } from '../../service/api.service';
 import { ChatMessage } from 'src/app/types/chat-messages';
+import { UtilsLib } from '@/lib/utils';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { ChatMessage } from 'src/app/types/chat-messages';
 })
 export class ChatsPage implements OnInit {
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
+
+  protected readonly utils = new UtilsLib();
 
   chatsList: ChatMessage[] = [
   ];
@@ -68,12 +71,10 @@ export class ChatsPage implements OnInit {
   }
 
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)

@@ -1,0 +1,63 @@
+ion-alert {
+    --background: hsl(var(--muted)) !important;
+    --backdrop-opacity: 0.7 !important;
+
+    .alert-wrapper {
+        border-radius: 15px !important;
+
+        .alert-head {
+            .alert-title {
+                color: hsl(var(--primary-foreground)) !important;
+            }
+        }
+
+        .alert-message {
+            color: hsl(var(--primary-foreground)/.90) !important;
+        }
+
+        .alert-button-group {
+            .alert-button {
+                border: none !important;
+                border-radius: 7.5px;
+
+                span {
+                    color: hsl(var(--primary-foreground)) !important;
+                }
+            }
+
+            .alert-button.alert-button-role-cancel {
+                span {
+                    color: hsl(var(--primary-foreground)/.80) !important;
+                }
+            }
+        }
+    }
+}
+
+.alert-button-group {
+    padding: 8px;
+}
+
+button.alert-button.alert-button-confirm {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+}
+
+.md button.alert-button.alert-button-confirm {
+    border-radius: 4px;
+}
+
+.ios button.alert-button {
+    border: 0.55px solid hsl(var(--foreground));
+}
+
+.ios button.alert-button.alert-button-cancel {
+    border-right: 0;
+    border-bottom-left-radius: 13px;
+    border-top-left-radius: 13px;
+}
+
+.ios button.alert-button.alert-button-confirm {
+    border-bottom-right-radius: 13px;
+    border-top-right-radius: 13px;
+}

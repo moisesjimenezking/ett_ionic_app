@@ -3,11 +3,11 @@
     <div class="rowAlignCenter margin20" style="justify-content: space-between">
       <div class="rowAlignCenter" style="flex: 1">
         <div class="column" style="flex: 2; margin-left: 0px">
-          <ion-text class="ellipseText" style="-webkit-line-clamp: 4; color: white; font-size: 24px"
+          <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-semibold"
             *ngIf="isAccountCompany">
             {{ fullName }}
           </ion-text>
-          <ion-text class="ellipseText" style="-webkit-line-clamp: 1; color: white; font-size: 24px"
+          <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-semibold"
             *ngIf="!isAccountCompany">
             Hola, {{ fullName }}
           </ion-text>
@@ -33,7 +33,14 @@
 </ion-header>
 <ion-content class="bg-background">
   <div>
-    <ion-list class="p-5 space-y-4">
+    <div class="px-4 min-h-[220px]">
+      <ion-img [src]="homeBannerImage" class="w-auto min-h-[220px] h-auto rounded-xl" />
+    </div>
+    <ion-list class="p-4 space-y-4">
+      <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-semibold"
+        *ngIf="isAccountCompany">
+        Tus ofertas actuales
+      </ion-text>
       <div *ngFor="let item of jobList;let i=index;">
         <app-job-card [job]="item" (onSeeDetails)="goToDetails('job-detail', $event)" />
       </div>
@@ -41,6 +48,9 @@
         <div class="bg-destructive py-5 px-[15px] rounded-xl min-h-[200px] animate-pulse h-[200px]"
           *ngFor="let item of [1,2,3,4,5]" style="background-color: hsl(var(--muted));">
         </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoadingJobList && jobList.length==0">
+        <app-company-empty-state />
       </ng-container>
     </ion-list>
     <ion-toast #toast [isOpen]="showToast" mode="ios" [message]="toastMsg" [duration]="1000"

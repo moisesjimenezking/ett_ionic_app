@@ -21,7 +21,7 @@ export class JobCardComponent implements OnInit {
   applied: boolean = false;
   applyButton = 'Postularme';
 
-  readonly utils = new UtilsLib();
+  protected readonly utils = new UtilsLib();
 
   constructor(
     private readonly apiService: ApiService,

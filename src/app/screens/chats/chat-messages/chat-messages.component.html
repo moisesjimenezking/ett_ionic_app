@@ -2,8 +2,7 @@
   <ion-list class="bg-muted rounded-lg divide-y-[.25px] divide-destructive-foreground px-5">
     <ng-container *ngFor="let item of messages;let i=index;">
       <div class="flex items-center gap-4 py-5" (click)="onMessageSelected.emit(item)">
-        <img [src]="item.sourceImage ?? '../../../../assets/images/users/iconHuman.jpg'"
-          class="min-w-14 size-14 rounded-full" />
+        <img [src]="item.sourceImage ?? iconHumanAsset" class="min-w-14 size-14 rounded-full" />
         <div class="flex flex-1 flex-col justify-center gap-1 text-primary-foreground">
           <p class="text-primary-foreground text-xl">{{item.sourceName}}</p>
           <div class="flex justify-between items-center gap-1 text-sm">
