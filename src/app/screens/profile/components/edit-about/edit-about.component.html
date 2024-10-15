@@ -1,4 +1,4 @@
-<ion-modal #editAboutProfileModal mode="md" [canDismiss]="isSubmitting?false:true"
+<ion-modal #editAboutProfileModal mode="md" [keepContentsMounted]="true" [canDismiss]="isSubmitting?false:true"
   trigger="open-edit-about-profile-modal" style="--border-radius: 16px">
   <ng-template>
     <div
@@ -76,7 +76,7 @@
           </ion-chip>
           <ion-chip [disabled]="isSubmitting"
             class="text-primary-foreground bg-primary text-md font-medium h-12 rounded-3xl py-4 px-6 flex justify-center items-center"
-            (click)="updateUser()">
+            (click)="updateUser(editAboutProfileModal)">
             <ion-text>
               {{isSubmitting ? 'Guardando...': 'Guardar'}}
             </ion-text>

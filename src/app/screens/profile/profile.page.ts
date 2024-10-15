@@ -5,6 +5,7 @@ import { ApiService } from '../../service/api.service';
 import { IonMenu, IonModal } from '@ionic/angular';
 import { EditProfileEvent } from './components/edit-profile/edit-profile.component';
 import { AddSkillsEvent } from './components/add-skills/add-skills.component';
+import { EditAboutEvent } from './components/edit-about/edit-about.component';
 
 @Component({
   selector: 'app-profile',
@@ -276,8 +277,16 @@ export class ProfilePage implements OnInit {
     this.websitesList = social_link;
   }
 
+  onChangeEditAbout(event: EditAboutEvent) {
+    const { about, experienceYear, location } = event;
+
+    this.location = location;
+    this.experienceYear = experienceYear;
+    this.about = about;
+  }
+
   onChangeAddSkillsEvent(event: AddSkillsEvent) {
     const { skills } = event;
-    this.currentSkill = skills;
+    this.currentSkill = [...skills];
   }
 }

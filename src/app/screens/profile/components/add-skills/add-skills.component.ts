@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -15,8 +15,7 @@ export type AddSkillsEvent = {
   templateUrl: './add-skills.component.html',
   styleUrls: ['./add-skills.component.scss'],
 })
-export class AddSkillsComponent implements OnInit {
-  @ViewChild('addSkillModal', { read: IonModal }) modal!: IonModal;
+export class AddSkillsComponent implements OnInit, AfterViewInit {
 
   @Output() onChange = new EventEmitter<AddSkillsEvent>();
 
@@ -63,6 +62,12 @@ export class AddSkillsComponent implements OnInit {
         isSelected: this.currentSkill.includes(skill)
       };
     });
+
+
+
+  }
+
+  ngAfterViewInit(): void {
   }
 
   goBack() {
@@ -73,7 +78,7 @@ export class AddSkillsComponent implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  updateUser() {
+  updateUser(modal: IonModal) {
     this.selectedSkills = this.recommendedList
       .filter(item => item.isSelected)
       .map(item => item.skill);
@@ -85,23 +90,20 @@ export class AddSkillsComponent implements OnInit {
 
 
     this.isSubmitting = true;
-    setTimeout(() => {
-      this.skillApi.putUser(body).subscribe({
-        next: (data: any) => {
 
-          this.currentSkill = data.skills;
-          localStorage.setItem('skills', JSON.stringify(data.skills));
-          this.isSubmitting = false;
-          this.onChange.emit({ skills: data.skills });
-          this.cdr.detectChanges();
-          this.modal.dismiss();
-        },
-        error: () => {
-          this.isSubmitting = false;
-        }
+    this.skillApi.putUser(body).subscribe({
+      next: (data: any) => {
+        this.currentSkill = data.skills;
+        localStorage.setItem('skills', JSON.stringify(data.skills));
+        this.isSubmitting = false;
+        this.onChange.emit({ skills: data.skills });
+        modal?.dismiss();
+      },
+      error: () => {
+        this.isSubmitting = false;
       }
-      );
-    }, 1000);
+    }
+    );
   }
 
 }

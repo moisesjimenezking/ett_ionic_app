@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { IonModal, NavController } from '@ionic/angular';
+import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonModal, NavController } from '@ionic/angular';
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
 
@@ -17,7 +17,6 @@ export type EditAboutEvent = {
   styleUrls: ['./edit-about.component.scss'],
 })
 export class EditAboutComponent implements OnInit {
-  @ViewChild('editAboutProfileModal', { read: IonModal }) modal!: IonModal;
 
   @Output() onChange = new EventEmitter<EditAboutEvent>();
 
@@ -53,7 +52,7 @@ export class EditAboutComponent implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  updateUser() {
+  updateUser(modal: IonModal) {
     const body: { [key: string]: any } = {};
     if (this.location) {
       body["location"] = this.location
@@ -69,33 +68,31 @@ export class EditAboutComponent implements OnInit {
 
     this.isSubmitting = true;
 
-    setTimeout(() => {
-      this.apiAbout.putUser(body).subscribe({
-        next: (data: any) => {
-          this.location = data.location;
-          this.experienceYear = data.experience;
-          this.about = data.about;
+    this.apiAbout.putUser(body).subscribe({
+      next: (data: any) => {
+        this.location = data.location;
+        this.experienceYear = data.experience;
+        this.about = data.about;
 
-          localStorage.setItem('location', data.location);
-          localStorage.setItem('experienceYear', data.experience);
-          localStorage.setItem('about', data.about);
+        localStorage.setItem('location', data.location);
+        localStorage.setItem('experienceYear', data.experience);
+        localStorage.setItem('about', data.about);
 
-          this.isSubmitting = false;
+        this.isSubmitting = false;
 
-          this.onChange.emit({
-            location: this.location,
-            experienceYear: this.experienceYear,
-            about: this.about
-          });
-          this.cdr.detectChanges();
-          this.modal.dismiss();
+        this.onChange.emit({
+          location: this.location,
+          experienceYear: this.experienceYear,
+          about: this.about
+        });
+        this.cdr.detectChanges();
+        modal.dismiss();
 
-        },
-        error: () => {
-          this.isSubmitting = false;
-        }
-      });
-    }, 50);
+      },
+      error: () => {
+        this.isSubmitting = false;
+      }
+    });
   }
 
 

@@ -340,23 +340,22 @@ export class ApiService {
   putUser(data: any) {
     const request = this.http.put(`${this.apiUrl}/user`, data, this.options);
 
-    request.subscribe({
-      error: (error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-        if (error.status !== 201 && error.error && error.error.message) {
-          errorMessage = error.error.message;
+    return request.
+      pipe(
+        catchError((error) => {
+          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          if (error.status !== 201 && error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+
+          if (error.status === 304) {
+            errorMessage = "Sin cambios."
+          }
+
+          this.presentAlert(errorMessage);
+          return throwError(() => error);
         }
-
-        if (error.status === 304) {
-          errorMessage = "Sin cambios."
-        }
-
-        this.presentAlert(errorMessage);
-      },
-      complete: () => { }
-    });
-
-    return request
+        ));
   }
 
   getUser() {

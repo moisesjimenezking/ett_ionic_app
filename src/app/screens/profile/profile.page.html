@@ -98,8 +98,8 @@
         </div> -->
         </div>
 
-        <app-edit-about />
-        <app-add-skills />
+        <app-edit-about (onChange)="onChangeEditAbout($event)" />
+
       </div>
 
       <!-- EXPERIENCE -->
@@ -145,7 +145,7 @@
           </div>
         </div>
 
-
+        <app-add-skills (onChange)="onChangeAddSkillsEvent($event)" />
       </div>
     </ng-container>
     <ng-container *ngIf="isProfileLoaded; else ProfileUserContactLoadingState">
@@ -160,7 +160,7 @@
             <ion-icon name="create-outline" class="text-[22px] text-primary-foreground"></ion-icon>
           </button>
           <!-- EDIT PROFILE MODAL -->
-          <app-edit-profile />
+          <app-edit-profile (onChange)="onChangeEditProfile($event)" />
         </div>
 
         <div class="flex flex-col gap-1.5 my-6">
@@ -193,7 +193,7 @@
 
 
   <!-- CHANGE PROFILE IMAGE MODAL -->
-  <ion-modal #changePicSheet mode="ios" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
+  <ion-modal #changePicSheet mode="ios" [keepContentsMounted]="true" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
     style="--height: auto; --width: 100%;">
     <ng-template>
       <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">

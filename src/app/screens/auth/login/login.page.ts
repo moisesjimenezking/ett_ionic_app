@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonRouterOutlet, Platform } from '@ionic/angular';
-import { catchError, throwError, finalize } from 'rxjs';
-import { AlertController } from '@ionic/angular';
-import { ApiService } from '../../../service/api.service';
-import { IonMenu, IonModal } from '@ionic/angular';
+import { throwError } from 'rxjs';
+import { IonRouterOutlet, Platform, AlertController, IonModal } from '@ionic/angular';
+import { ApiService } from '@/service/api.service';
+
 
 @Component({
   selector: 'app-login',
