@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { IonMenu, IonModal } from '@ionic/angular';
+import { EditProfileEvent } from './components/edit-profile/edit-profile.component';
+import { AddSkillsEvent } from './components/add-skills/add-skills.component';
+import { EditAboutEvent } from './components/edit-about/edit-about.component';
 
 @Component({
   selector: 'app-profile',
@@ -70,6 +73,7 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.defineData();
   }
 
@@ -262,4 +266,27 @@ export class ProfilePage implements OnInit {
     input.click(); // Simula un clic en el input de tipo file
   }
 
+
+  onChangeEditProfile(event: EditProfileEvent) {
+    const { email, fullname, phone, social_link, specialization } = event;
+
+    this.email = email;
+    this.fullName = fullname;
+    this.phone = phone;
+    this.specialization = specialization;
+    this.websitesList = social_link;
+  }
+
+  onChangeEditAbout(event: EditAboutEvent) {
+    const { about, experienceYear, location } = event;
+
+    this.location = location;
+    this.experienceYear = experienceYear;
+    this.about = about;
+  }
+
+  onChangeAddSkillsEvent(event: AddSkillsEvent) {
+    const { skills } = event;
+    this.currentSkill = [...skills];
+  }
 }

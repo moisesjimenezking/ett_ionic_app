@@ -1,9 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { ApiService } from '@/service/api.service';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { IonModal, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { UtilsLib } from 'src/app/lib/utils';
 
+import { ApiService } from '@/service/api.service';
+import { UtilsLib } from '@/lib/utils';
+
+export type EditProfileEvent = {
+  fullname: string,
+  email: string,
+  phone: string,
+  social_link: any,
+  specialization: any
+};
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,6 +19,10 @@ import { UtilsLib } from 'src/app/lib/utils';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
+
+  @Output() onChange = new EventEmitter<EditProfileEvent>();
+
+
   emailVerified: boolean = true;
   fullName: any = '';
   specialization: any = '';
@@ -91,7 +103,7 @@ export class EditProfileComponent implements OnInit {
     return this.apiServic.getVerificEmailFalse({ email: this.email });
   }
 
-  updateUser() {
+  updateUser(modal: IonModal) {
     const body: { [key: string]: any } = {};
     if (this.fullName) {
       body["fullname"] = this.fullName
@@ -113,34 +125,37 @@ export class EditProfileComponent implements OnInit {
       body["social_link"] = this.websitesList
     }
 
-    setTimeout(() => {
-      this.isSubmitting = true;
-      this.apiServic.putUser(body).subscribe({
-        next: (data: any) => {
-          this.fullName = data.fullname;
-          this.email = data.email;
-          this.mobile = data.phone;
-          this.specialization = data.specialization;
-          this.websitesList = data.social_link;
-          this.isSubmitting = false;
+    this.isSubmitting = true;
+    this.apiServic.putUser(body).subscribe({
+      next: (data: any) => {
+        this.fullName = data.fullname;
+        this.email = data.email;
+        this.mobile = data.phone;
+        this.specialization = data.specialization;
+        this.websitesList = data.social_link;
+        this.isSubmitting = false;
 
-          localStorage.setItem('fullname', data.fullname);
-          localStorage.setItem('email', data.email);
-          localStorage.setItem('phone', data.phone);
-          localStorage.setItem('social_link', JSON.stringify(data.social_link));
-          localStorage.setItem('specialization', data.specialization);
+        localStorage.setItem('fullname', data.fullname);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('phone', data.phone);
+        localStorage.setItem('social_link', JSON.stringify(data.social_link));
+        localStorage.setItem('specialization', data.specialization);
 
-          this.cdr.detectChanges();
-          this.goTo(localStorage.getItem('accountType') === "PERSON"
-            ? 'bottom-tab-bar/profile'
-            : 'bottom-tab-bar-company/profile'
-          );
-        },
-        error: () => {
-          this.isSubmitting = false;
-        }
-      });
-    }, 50);
+        this.onChange.emit({
+          fullname: data.fullname,
+          email: data.email,
+          phone: data.phone,
+          social_link: data.social_link,
+          specialization: data.specialization
+        });
+
+        this.cdr.detectChanges();
+        modal.dismiss();
+      },
+      error: () => {
+        this.isSubmitting = false;
+      }
+    });
   }
 
   onFileChange(event: any) {

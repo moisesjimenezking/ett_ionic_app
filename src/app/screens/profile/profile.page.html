@@ -77,14 +77,14 @@
 
   <!-- ABOUT ME -->
   <div class="px-4">
-    <ng-template *ngIf="account === 'PERSON'">
+    <ng-container *ngIf="account === 'PERSON'">
       <div class="my-[20px] bg-destructive rounded-xl p-3">
         <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
           <ion-text class="blackColor19SemiBold ellipseText text-primary-foreground"
             style="flex: 1; -webkit-line-clamp: 1">
             Acerca de mí
           </ion-text>
-          <ion-icon (click)="goTo('edit-about')" name="create-outline" style="font-size: 22px"></ion-icon>
+          <ion-icon id="open-edit-about-profile-modal" name="create-outline" style="font-size: 22px"></ion-icon>
         </div>
 
         <div>
@@ -97,6 +97,9 @@
           </ion-text>
         </div> -->
         </div>
+
+        <app-edit-about (onChange)="onChangeEditAbout($event)" />
+
       </div>
 
       <!-- EXPERIENCE -->
@@ -131,7 +134,7 @@
           <ion-text class="text-ellipsis font-semibold text-primary-foreground" style="flex: 1; -webkit-line-clamp: 1">
             Habilidades
           </ion-text>
-          <div (click)="goTo('add-skills')" class="center square18 mt-1">
+          <div id="open-add-skills-profile-modal" class=" center square18 mt-1">
             <ion-icon name="add" class="text-[24px] text-primary-foreground"></ion-icon>
           </div>
 
@@ -142,9 +145,9 @@
           </div>
         </div>
 
-
+        <app-add-skills (onChange)="onChangeAddSkillsEvent($event)" />
       </div>
-    </ng-template>
+    </ng-container>
     <ng-container *ngIf="isProfileLoaded; else ProfileUserContactLoadingState">
 
       <div class="my-5 bg-destructive rounded-xl p-3">
@@ -157,7 +160,7 @@
             <ion-icon name="create-outline" class="text-[22px] text-primary-foreground"></ion-icon>
           </button>
           <!-- EDIT PROFILE MODAL -->
-          <app-edit-profile />
+          <app-edit-profile (onChange)="onChangeEditProfile($event)" />
         </div>
 
         <div class="flex flex-col gap-1.5 my-6">
@@ -190,7 +193,7 @@
 
 
   <!-- CHANGE PROFILE IMAGE MODAL -->
-  <ion-modal #changePicSheet mode="ios" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
+  <ion-modal #changePicSheet mode="ios" [keepContentsMounted]="true" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
     style="--height: auto; --width: 100%;">
     <ng-template>
       <div class="w-full bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
