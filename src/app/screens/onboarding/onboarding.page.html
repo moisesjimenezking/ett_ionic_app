@@ -1,11 +1,11 @@
 <ion-content [fullscreen]="true" scrollY="false">
   <div class="column relative h-full max-h-full">
     <div class="relative h-full" *ngIf="showMainImage">
-      <ion-img class="bgImage" src="../../../assets/images/small-business.png"></ion-img>
+      <ion-img class="bgImage" [src]="smallBusinessAsset"></ion-img>
       <div class="darkOverlay"></div>
 
       <div class="overlayContent px-5">
-        <ion-img src="../../../assets/images/ett-logo.png" class="overlayLogo"></ion-img>
+        <ion-img [src]="ettLogoAsset" class="overlayLogo"></ion-img>
 
         <ion-text class="overlayText mb-4">Haz que tu búsqueda de empleo sea efectiva</ion-text>
         <ion-text class="overlayTextTow">Ett, una app creada para venezolanos en busca de empleo.</ion-text>

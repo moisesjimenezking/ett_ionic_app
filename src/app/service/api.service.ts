@@ -7,7 +7,7 @@ import { catchError, throwError, finalize } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { NgZone } from '@angular/core';
-import { JobModel } from '@/types';
+import { ChatMessage, JobModel } from '@/types';
 
 
 @Injectable({
@@ -263,7 +263,7 @@ export class ApiService {
 
 
   getChat(data: any) {
-    return this.http.get(`${this.apiUrl}/chats`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
+    return this.http.get<ChatMessage | ChatMessage[]>(`${this.apiUrl}/chats`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
   }
 
   postJobs(data: any) {
@@ -340,23 +340,22 @@ export class ApiService {
   putUser(data: any) {
     const request = this.http.put(`${this.apiUrl}/user`, data, this.options);
 
-    request.subscribe({
-      error: (error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-        if (error.status !== 201 && error.error && error.error.message) {
-          errorMessage = error.error.message;
+    return request.
+      pipe(
+        catchError((error) => {
+          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          if (error.status !== 201 && error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+
+          if (error.status === 304) {
+            errorMessage = "Sin cambios."
+          }
+
+          this.presentAlert(errorMessage);
+          return throwError(() => error);
         }
-
-        if (error.status === 304) {
-          errorMessage = "Sin cambios."
-        }
-
-        this.presentAlert(errorMessage);
-      },
-      complete: () => { }
-    });
-
-    return request
+        ));
   }
 
   getUser() {

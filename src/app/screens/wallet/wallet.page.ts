@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
 import { NavController } from '@ionic/angular';
 import { IonMenu, IonModal } from '@ionic/angular';
+import { UtilsLib } from '@/lib/utils';
 
 
 @Component({
@@ -22,7 +23,9 @@ export class WalletPage implements OnInit {
   balanceAvailable: string = '';
   balanceLocked: string = '';
   walletCode: string = '';
-  listTransaction: any[] = [{amount:10}];
+  listTransaction: any[] = [{ amount: 10 }];
+
+  protected readonly utils = new UtilsLib();
 
   constructor(
     private router: Router,
@@ -33,19 +36,17 @@ export class WalletPage implements OnInit {
 
   ngOnInit() {
     this.apiWallet.getWallet().subscribe((data: any) => {
-      this.walletId         = data.id;
+      this.walletId = data.id;
       this.balanceAvailable = data.balance;
-      this.balanceLocked    = data.balance_locked;
-      this.walletCode       = data.account_code;
+      this.balanceLocked = data.balance_locked;
+      this.walletCode = data.account_code;
     });
   }
 
-  stablishUrlPic (current: any){
-    let iconItem = current; 
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   goBack() {
     this.navCtrl.back()

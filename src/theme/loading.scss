@@ -1,0 +1,19 @@
+ion-loading {
+    --background: hsl(var(--muted)) !important;
+    --backdrop-opacity: 0.7 !important;
+
+    .loading-wrapper {
+        border-radius: 15px !important;
+
+        .loading-spinner {
+            ion-spinner {
+                --color: hsl(var(--primary)) !important;
+                color: hsl(var(--primary)) !important;
+            }
+        }
+
+        .loading-content {
+            color: hsl(var(--primary-foreground)) !important;
+        }
+    }
+}

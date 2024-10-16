@@ -26,7 +26,7 @@ export class JobDetailPage implements OnInit {
     ? "Ya has aplicado a esta oferta"
     : "Aplicar ahora";
 
-  utils = new UtilsLib();
+
 
   account = localStorage.getItem('accountType');
   isAccountCompany = this.account == 'COMPANY';
@@ -47,6 +47,10 @@ export class JobDetailPage implements OnInit {
 
   showErrorMessage: boolean = false;
   message: string = '';
+
+  protected readonly utils = new UtilsLib();
+
+
   constructor(
     private navCtrl: NavController,
     private router: Router,
@@ -130,12 +134,11 @@ export class JobDetailPage implements OnInit {
     }
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)

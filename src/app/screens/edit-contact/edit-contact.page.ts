@@ -24,7 +24,7 @@ export class EditContactPage implements OnInit {
   identificationValue: string = '';
   selectedFile: File | null = null;
 
-  utils = new UtilsLib();
+  protected readonly utils = new UtilsLib();
 
   websiteTypesList = [
     "Personal",

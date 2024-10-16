@@ -3,6 +3,11 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { IonMenu, IonModal } from '@ionic/angular';
+import { EditProfileEvent } from './components/edit-profile/edit-profile.component';
+import { AddSkillsEvent } from './components/add-skills/add-skills.component';
+import { EditAboutEvent } from './components/edit-about/edit-about.component';
+import { assetsPath } from '@/lib/constanst/assets';
+import { UtilsLib } from '@/lib/utils';
 
 @Component({
   selector: 'app-profile',
@@ -44,14 +49,14 @@ export class ProfilePage implements OnInit {
   workExperiencesList = [
     {
       id: "1",
-      serviceLogo: "../../../assets/images/jobs/job6.png",
+      serviceLogo: `${assetsPath}/images/jobs/job6.png`,
       post: "Sr. UI/UX Designer (Team Lead)",
       serviceProvider: "Infosys Technologies",
       experience: "2019 Dec - Present (2y, 4m)",
     },
     {
       id: "2",
-      serviceLogo: "../../../assets/images/jobs/job5.png",
+      serviceLogo: `${assetsPath}/images/jobs/job5.png`,
       post: "Jr. UI/UX Designer",
       serviceProvider: "Android",
       experience: "2018 Aug - 2019 Dec  (1y, 6m)",
@@ -62,6 +67,8 @@ export class ProfilePage implements OnInit {
   experienceYear: any = '';
   about: any = '';
 
+  protected readonly utils = new UtilsLib();
+
   constructor(
     private router: Router,
     private navCtrl: NavController,
@@ -70,6 +77,7 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.defineData();
   }
 
@@ -106,12 +114,10 @@ export class ProfilePage implements OnInit {
     }, 1000);
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   goTo(screen: any) {
     this.router.navigateByUrl(screen);
@@ -262,4 +268,27 @@ export class ProfilePage implements OnInit {
     input.click(); // Simula un clic en el input de tipo file
   }
 
+
+  onChangeEditProfile(event: EditProfileEvent) {
+    const { email, fullname, phone, social_link, specialization } = event;
+
+    this.email = email;
+    this.fullName = fullname;
+    this.phone = phone;
+    this.specialization = specialization;
+    this.websitesList = social_link;
+  }
+
+  onChangeEditAbout(event: EditAboutEvent) {
+    const { about, experienceYear, location } = event;
+
+    this.location = location;
+    this.experienceYear = experienceYear;
+    this.about = about;
+  }
+
+  onChangeAddSkillsEvent(event: AddSkillsEvent) {
+    const { skills } = event;
+    this.currentSkill = [...skills];
+  }
 }

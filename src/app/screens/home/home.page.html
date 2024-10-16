@@ -3,13 +3,13 @@
     <div class="rowAlignCenter margin20" style="justify-content: space-between">
       <div class="rowAlignCenter" style="flex: 1">
         <div class="column" style="flex: 2; margin-left: 0px">
-          <ion-text class="ellipseText" style="-webkit-line-clamp: 4; color: white; font-size: 24px"
+          <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-bold"
             *ngIf="isAccountCompany">
             {{ fullName }}
           </ion-text>
-          <ion-text class="ellipseText" style="-webkit-line-clamp: 1; color: white; font-size: 24px"
+          <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-bold"
             *ngIf="!isAccountCompany">
-            Hola, {{ fullName }}
+            Hola, {{ fullName }} 👋
           </ion-text>
         </div>
       </div>
@@ -33,7 +33,16 @@
 </ion-header>
 <ion-content class="bg-background">
   <div>
-    <ion-list class="p-5 space-y-4">
+    <div class="px-4">
+      <ng-image width="100%" heightAfterLoaded="auto" [src]="homeBannerImage" class="w-auto h-auto rounded-xl"
+        alt="Banner home" />
+    </div>
+    <div class="px-4 mt-6 mb-4">
+      <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-bold">
+        {{isAccountCompany ? 'Tus ofertas actuales': 'Últimas ofertas publicadas'}}
+      </ion-text>
+    </div>
+    <ion-list class="p-4 space-y-4">
       <div *ngFor="let item of jobList;let i=index;">
         <app-job-card [job]="item" (onSeeDetails)="goToDetails('job-detail', $event)" />
       </div>
@@ -41,6 +50,9 @@
         <div class="bg-destructive py-5 px-[15px] rounded-xl min-h-[200px] animate-pulse h-[200px]"
           *ngFor="let item of [1,2,3,4,5]" style="background-color: hsl(var(--muted));">
         </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoadingJobList && jobList.length==0">
+        <app-company-empty-state />
       </ng-container>
     </ion-list>
     <ion-toast #toast [isOpen]="showToast" mode="ios" [message]="toastMsg" [duration]="1000"

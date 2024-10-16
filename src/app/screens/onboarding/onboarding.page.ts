@@ -1,3 +1,4 @@
+import { assetsPath, ettLogoAsset, smallBusinessAsset } from '@/lib/constanst/assets';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StatusBar, Style } from '@capacitor/status-bar';
@@ -15,28 +16,33 @@ export class OnboardingPage implements OnInit {
   showMainImage = true;
   currentIndex = 0;
 
+  ettLogoAsset = ettLogoAsset;
+  smallBusinessAsset = smallBusinessAsset;
+
   onboardingScreenList = [
     {
       id: "1",
-      onboardingImage: "../../../assets/images/person-working-1.png",
+      onboardingImage: `${assetsPath}/images/person-working-1.png`,
       onboardingTitle: "Encuentra tu trabajo ideal",
       onboardingDescription: 'La primera plataforma pensada para profesionales en búsqueda de nuevas oportunidaes laborales.',
     },
     {
       id: "2",
-      onboardingImage: "../../../assets/images/woman-worker.png",
+      onboardingImage: `${assetsPath}/images/woman-worker.png`,
       onboardingTitle: "Para todas las áreas laborales",
       onboardingDescription: 'Desarrolla tus habilidades y talentos al máximo con nuestras ofertas.',
     },
     {
       id: "3",
-      onboardingImage: "../../../assets/images/woman-worker-2.png",
+      onboardingImage: `${assetsPath}/images/woman-worker-2.png`,
       onboardingTitle: "Pública tus ofertas con nosotros",
       onboardingDescription: 'Si eres dueño de una empresa y necesitas personal, nosotros tenemos los mejores.',
     },
   ];
 
   screenHeight = window.screen.height;
+
+
 
   constructor(private platform: Platform, private routerOutlet: IonRouterOutlet, private router: Router) { }
 

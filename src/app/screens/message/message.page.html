@@ -8,7 +8,7 @@
         <!-- <ion-img [src]="searchIcon(dataChat.sourceImage)" class="imageOverflow sourceLogo"></ion-img> -->
         <div class="column" style="flex: 1">
           <ion-text class="text-[20px] text-primary-foreground text-center font-semibold text-ellipsis line-clamp-1">
-            {{ dataChat.sourceName }}
+            {{ dataChat?.sourceName }}
           </ion-text>
         </div>
         <ion-text class="absolute right-1">
@@ -23,36 +23,50 @@
 <ion-content [fullscreen]="true" class="bg-background">
   <div class="px-2">
     <div #scrollContainer class="w-full h-full max-h-full flex flex-col gap-4 pt-[20px] overflow-y-auto">
-      <div [class]="utils.cn(message.isSender? 'pl-5': 'pr-5')" *ngFor="let message of userMessages">
+      <div [class]="utils.cn(message.isSender? 'pl-5': 'pr-5')"
+        *ngFor="let message of userMessages; trackBy:trackMessagesIndex">
         <div [class]="utils.cn(
           'flex items-center gap-4 py-2 rounded-3xl max-w-max px-4 text-sm',
           message.isSender ? 'bg-primary rounded-tr-none ml-auto': 'bg-muted rounded-tl-none')">
-          <p class="text-primary-foreground text-xl">{{message.message}}</p>
+          <p class="text-primary-foreground text-lg">{{message.message}}</p>
 
         </div>
       </div>
-      <!-- <div *ngFor="let item of userMessages" class="column" style="margin: 10px 10px; margin-bottom: 20px;"
-        [style.align-items]="item.isSender?'flex-end':'flex-start'">
-        <div style="padding: 10px; border-radius: 10px; max-width: 85%"
-          [style.background]="item.isSender?'#2758BF':'var(--extraLightGrayColor)'">
-          <ion-text [class]="item.isSender?'whiteColor16Regular':'grayColor16Regular'" style="white-space: pre-line">
-            {{item.message}}
-          </ion-text>
+      <ng-container *ngIf="isWritting">
+        <div class="pr-5">
+          <div class="flex items-center gap-4 py-2 rounded-3xl max-w-max px-4 
+            h-[72px] min-w-[250px]
+            bg-muted rounded-tl-none animate-pulse">
+          </div>
         </div>
-      </div> -->
-
+      </ng-container>
+      <ng-container *ngIf="isSending">
+        <div class="pl-5">
+          <div class="flex items-center gap-4 py-2 rounded-3xl max-w-max px-4 
+                  bg-primary rounded-tr-none ml-auto">
+            <p class="text-primary-foreground text-lg">
+              {{messageSending}}
+            </p>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </ion-content>
 
 <ion-footer mode="ios" class="bg-background">
   <div class="footer px-2" style="background-color: hsl(var(--muted));">
-    <ion-textarea #textArea [(ngModel)]="newMsg" [ngModelOptions]="{standalone: true}" mode="ios"
+    <ion-textarea [disabled]="isSending" #textArea [(ngModel)]="newMsg" [ngModelOptions]="{standalone: true}" mode="ios"
       placeholder="Escribe un mensaje" class="whiteColor14Regular" rows="1"
       style="--placeholder-color: var(--grayColor); --placeholder-opacity: 1; --color: hsl(var(--primary-foreground));"></ion-textarea>
 
     <div class="center circle40">
-      <ion-icon name="send" style="font-size: 20px; color:#2758BF" (click)="addMessage()"></ion-icon>
+      <ng-container *ngIf="!isSending; else SendingState">
+        <ion-icon name="send" class="text-primary text-xl" (click)="addMessage()"></ion-icon>
+      </ng-container>
+      <ng-template #SendingState>
+        <ion-spinner name="lines-sharp-small" class="text-primary text-xl" />
+      </ng-template>
     </div>
   </div>
 </ion-footer>

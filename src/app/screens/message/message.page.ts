@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IonContent, NavController, MenuController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { UtilsLib } from 'src/app/lib/utils';
+import { Message } from '@/types';
 
 
 @Component({
@@ -15,13 +16,18 @@ export class MessagePage implements OnInit {
   @ViewChild('textArea') textArea: any;
   @ViewChild(IonContent) content: IonContent | undefined;
 
-  utils = new UtilsLib();
 
   userMessages: any;
   dataChat: any;
 
   newMsgRegister: object = {};
   newMsg = '';
+
+  isSending = false;
+  messageSending = '';
+  isWritting = false;
+
+  protected readonly utils = new UtilsLib();
 
   constructor(
     private navCtrl: NavController,
@@ -32,9 +38,14 @@ export class MessagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userMessages = this.details("messages")
-    this.dataChat = this.details("all")
-    this.viewsAll()
+  }
+
+  ionViewWillEnter() {
+    this.userMessages = this.details("messages");
+
+    this.dataChat = this.details("all");
+
+    this.viewsAll();
   }
 
   details(text: string) {
@@ -56,16 +67,18 @@ export class MessagePage implements OnInit {
     this.scrollToBottom();
   }
 
+  trackMessagesIndex(_: number, item: Message) {
+    return item.id;
+  }
+
   async openMenu() {
     await this.menu.open('app-menu')
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
@@ -110,15 +123,51 @@ export class MessagePage implements OnInit {
         chats_id: this.dataChat.id,
       }
 
-      this.newMsg = '';
-
+      this.messageSending = this.newMsg;
       setTimeout(() => {
-        this.apiMessage.postMessage(body).subscribe((data: any) => {
+        this.scrollToBottom();
+      }, 300);
+      this.newMsg = '';
+      this.isSending = true
+      this.apiMessage.postMessage(body).subscribe({
+        next: (data: any) => {
+          this.isSending = false;
           this.userMessages.push(data);
-          this.cdr.detectChanges();
-        });
-      }, 50);
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 300);
+          this.getAllMessages();
+        },
+        error: () => {
+          this.isSending = false;
+        }
+      });
     }
+  }
+
+  getAllMessages() {
+    this.isWritting = true;
+    this.apiMessage.getChat({}).subscribe({
+      next: (data) => {
+        if (Array.isArray(data)) {
+          const messages = data.find(d => d.id == this.dataChat.id);
+          this.userMessages = messages!.messages;
+          localStorage.setItem('messages', JSON.stringify(messages))
+        } else if (data?.id == this.dataChat.id) {
+          this.userMessages = data.messages;
+          localStorage.setItem('messages', JSON.stringify(data))
+        }
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 300);
+        this.messageSending = '';
+        this.isWritting = false;
+      },
+      error: (_) => {
+        this.messageSending = '';
+        this.isWritting = false;
+      }
+    });
   }
 
 }

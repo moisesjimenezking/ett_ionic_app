@@ -4,6 +4,7 @@ import { IonMenu, IonModal, NavController } from '@ionic/angular';
 
 import { ApiService } from '../../service/api.service';
 import { ChatMessage } from 'src/app/types/chat-messages';
+import { UtilsLib } from '@/lib/utils';
 
 
 @Component({
@@ -12,13 +13,13 @@ import { ChatMessage } from 'src/app/types/chat-messages';
   styleUrls: ['./chats.page.scss'],
 })
 export class ChatsPage implements OnInit {
-  @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
+
+  protected readonly utils = new UtilsLib();
 
   chatsList: ChatMessage[] = [
   ];
   isLoadingChatList = false;
-  // conversation: Message | null = null;
 
   constructor(
     private navCtrl: NavController,
@@ -30,17 +31,14 @@ export class ChatsPage implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    this.allChats();
-  }
 
   ionViewWillEnter() {
     this.allChats();
   }
 
-  goToDetails(screen: any, item: any) {
-    this.router.navigateByUrl(screen);
+  goToDetails(screen: string, item: ChatMessage) {
     localStorage.setItem('messages', JSON.stringify(item));
+    this.router.navigateByUrl(screen);
   }
 
   goTo(screen: any) {
@@ -72,22 +70,11 @@ export class ChatsPage implements OnInit {
     // this.conversation = message;
   }
 
-  closeMenu() {
-    if (this.menu) {
-      this.menu.close();
-    }
+
+  stablishUrlPic(url: string) {
+    return this.utils.stablishUrlPic(url);
   }
 
-  logout() {
-    this.closeMenu();
-  }
-
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
-  }
 
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
