@@ -1,6 +1,6 @@
 <div [style.width]="width" [style.height]="isLoad ? (heightAfterLoaded??height) : height" [class]="utils.cn(
   'overflow-hidden',
-  !isLoad ||isError && 'bg-destructive animate-pulse',
+  !isLoad ||isError && 'bg-muted animate-pulse',
   isLoad && 'animate-fade animate-delay-75 animate-duration-700',
   className
 )">
