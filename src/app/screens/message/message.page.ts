@@ -16,7 +16,6 @@ export class MessagePage implements OnInit {
   @ViewChild('textArea') textArea: any;
   @ViewChild(IonContent) content: IonContent | undefined;
 
-  utils = new UtilsLib();
 
   userMessages: any;
   dataChat: any;
@@ -27,6 +26,8 @@ export class MessagePage implements OnInit {
   isSending = false;
   messageSending = '';
   isWritting = false;
+
+  protected readonly utils = new UtilsLib();
 
   constructor(
     private navCtrl: NavController,
@@ -74,12 +75,10 @@ export class MessagePage implements OnInit {
     await this.menu.open('app-menu')
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)

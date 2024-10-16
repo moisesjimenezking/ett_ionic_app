@@ -32,11 +32,16 @@ export class EditProfileComponent implements OnInit {
   newWebsite: string = '';
   websitesList: string[] = [];
   isModalOpen = false;
+
   rifValue: string = '';
+
   identificationValue: string = '';
+
+  licenceValue: string = '';
+
   selectedFile: File | null = null;
 
-  utils = new UtilsLib();
+  protected readonly utils = new UtilsLib();
 
   websiteTypesList = [
     "Personal",
@@ -70,6 +75,9 @@ export class EditProfileComponent implements OnInit {
     if (listWeb) {
       this.websitesList = JSON.parse(listWeb);
     }
+    this.rifValue = localStorage.getItem('rif')?.replace('null', '') ?? "";
+    this.identificationValue = localStorage.getItem('identification')?.replace('null', '') ?? "";
+    this.licenceValue = localStorage.getItem('licence')?.replace('null', '') ?? "";
   }
 
   goBack() {
@@ -125,6 +133,20 @@ export class EditProfileComponent implements OnInit {
       body["social_link"] = this.websitesList
     }
 
+    if (this.rifValue) {
+
+      body['rif'] = this.rifValue;
+    }
+
+
+    if (this.identificationValue) {
+      body['identification'] = this.identificationValue;
+    }
+
+    if (this.licenceValue) {
+      body['licence'] = this.licenceValue;
+    }
+
     this.isSubmitting = true;
     this.apiServic.putUser(body).subscribe({
       next: (data: any) => {
@@ -134,12 +156,18 @@ export class EditProfileComponent implements OnInit {
         this.specialization = data.specialization;
         this.websitesList = data.social_link;
         this.isSubmitting = false;
+        this.rifValue = data.rif;
+        this.identificationValue = data.identification;
+        this.licenceValue = data.licence;
 
         localStorage.setItem('fullname', data.fullname);
         localStorage.setItem('email', data.email);
         localStorage.setItem('phone', data.phone);
         localStorage.setItem('social_link', JSON.stringify(data.social_link));
         localStorage.setItem('specialization', data.specialization);
+        localStorage.setItem('rif', data.rif);
+        localStorage.setItem('identification', data.identification);
+        localStorage.setItem('licence', data.licence);
 
         this.onChange.emit({
           fullname: data.fullname,
@@ -149,7 +177,7 @@ export class EditProfileComponent implements OnInit {
           specialization: data.specialization
         });
 
-        this.cdr.detectChanges();
+
         modal.dismiss();
       },
       error: () => {
@@ -158,9 +186,47 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  onFileChange(event: any) {
-    this.selectedFile = event.target.files[0];
-    // Handle the selected file here, e.g., upload it to a server
+
+  isBase64(value: string) {
+    return this.utils.isBase64(value);
   }
 
+  onFileChange(event: Event, type: 'rif' | 'identification' | 'licence') {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        if (type === 'rif') {
+          this.rifValue = e.target.result;
+          return;
+        }
+        if (type === 'identification') {
+          this.identificationValue = e.target.result; // Guarda la URL del archivo
+          return;
+        }
+
+        this.licenceValue = e.target.result;
+
+      };
+      reader.readAsDataURL(file); // Lee el archivo como URL
+    }
+  }
+
+  onRemoveFile(type: 'rif' | 'identification' | 'licence') {
+    if (type == 'rif') {
+      this.rifValue = '';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (type == 'identification') {
+      this.identificationValue = '';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.licenceValue = '';
+    this.cdr.detectChanges();
+  }
 }

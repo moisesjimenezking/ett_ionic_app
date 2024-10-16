@@ -25,7 +25,7 @@ export class EditAboutComponent implements OnInit {
   experienceYear: any = '';
   about: any = '';
 
-  utils = new UtilsLib();
+  protected readonly utils = new UtilsLib();
 
   isSubmitting = false;
 

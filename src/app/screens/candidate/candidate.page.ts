@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonMenu } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { UtilsLib } from '@/lib/utils';
 
 @Component({
   selector: 'app-candidate',
@@ -18,6 +19,8 @@ export class CandidatePage implements OnInit {
   iconFront = '';
 
   showMore = false;
+
+  protected readonly utils = new UtilsLib();
 
   constructor(
     private navCtrl: NavController,
@@ -47,11 +50,8 @@ export class CandidatePage implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string) {
+    return this.utils.stablishUrlPic(url);
   }
 
   logout() {

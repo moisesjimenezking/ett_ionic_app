@@ -5,6 +5,8 @@ import { AlertController, IonMenu, IonModal } from '@ionic/angular';
 
 import { ApiService } from '@/service/api.service';
 import { JobModel } from '@/types';
+import { homeBannerCompanyAsset, homeBannerPersonAsset } from '@/lib/constanst/assets';
+import { UtilsLib } from '@/lib/utils';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +17,8 @@ export class HomePage implements OnInit {
   @ViewChild('openNewJob') openNewJob: any;
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
   @ViewChild('logoutDialog', { read: IonModal }) logoutDialog!: IonModal;
+
+  homeBannerImage = '';
 
   fullName = localStorage.getItem('fullname')
   isAccountCompany = localStorage.getItem('accountType') === "COMPANY";
@@ -40,6 +44,8 @@ export class HomePage implements OnInit {
   doneTypingInterval = 1000; // 1 segundo
 
 
+  protected readonly utils = new UtilsLib();
+
   constructor(
     private router: Router,
     private apiService: ApiService,
@@ -50,14 +56,14 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.icon = this.stablishUrlPic(localStorage.getItem('icon_profile'));
+    this.homeBannerImage = this.isAccountCompany ? homeBannerCompanyAsset :
+      homeBannerPersonAsset;
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
-
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
+
 
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
@@ -101,7 +107,6 @@ export class HomePage implements OnInit {
     this.isLoadingJobList = true;
     this.apiService.allJobsApi(body).subscribe({
       next: (data) => {
-        console.log("ListJob", data);
         this.jobList = data;
         this.isLoadingJobList = false;
       },

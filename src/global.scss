@@ -27,6 +27,8 @@
 @import "./theme/fonts.scss";
 @import "./theme/styles.scss";
 @import "./theme/tailwind.scss";
+@import "./theme/alert.scss";
+@import "./theme/loading.scss";
 @import "material-icons/iconfont/material-icons.css";
 
 
@@ -211,13 +213,13 @@ ion-menu-button {
   background: transparent !important;
 }
 
-::part(scroll) {
-  // display: flex;
-  // flex-direction: column;
-  // max-height: 100%;
-  // flex: 1;
-  // row-gap: .25rem;
-}
+// ::part(scroll) {
+//   // display: flex;
+//   // flex-direction: column;
+//   // max-height: 100%;
+//   // flex: 1;
+//   // row-gap: .25rem;
+// }
 
 
 /* CUSTOM SCROLLBAR */
@@ -299,7 +301,7 @@ ion-radio.ios::part(container) {
 .field {
   background-color: transparent;
   /* Color de fondo del chip */
-  border-radius: 100px;
+  border-radius: 30px;
   /* Bordes redondeados */
   border: 1px solid hsl(var(--foreground));
   padding: 1px 20px;

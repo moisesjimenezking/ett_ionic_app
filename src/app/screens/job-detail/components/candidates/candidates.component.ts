@@ -1,3 +1,4 @@
+import { UtilsLib } from '@/lib/utils';
 import { CandidateModel } from '@/types';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
@@ -11,6 +12,8 @@ export class CandidatesComponent implements OnInit {
   @Output() onSeeDetails = new EventEmitter<CandidateModel>();
 
 
+  protected readonly utils = new UtilsLib();
+
   constructor() { }
 
   ngOnInit() { }
@@ -19,11 +22,9 @@ export class CandidatesComponent implements OnInit {
     this.onSeeDetails.emit(candidate);
   }
 
-  stablishUrlPic(current: any) {
-    let iconItem = current;
-    let value = (iconItem === null || iconItem === '' || iconItem === 'null') ? `${localStorage.getItem('rute')}/img/iconHuman.jpg` : `${localStorage.getItem('rute')}/img/${iconItem}`;
 
-    return value
+  stablishUrlPic(url: string | null) {
+    return this.utils.stablishUrlPic(url);
   }
 
 }

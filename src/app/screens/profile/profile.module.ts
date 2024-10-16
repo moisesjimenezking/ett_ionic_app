@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { EditAboutComponent } from './components/edit-about/edit-about.component';
 import { AddSkillsComponent } from './components/add-skills/add-skills.component';
+import { FileItemLoaderComponent } from './components/file-item-loader/file-item-loader.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { AddSkillsComponent } from './components/add-skills/add-skills.component
     SharedModule,
     HttpClientModule
   ],
-  declarations: [ProfilePage, EditProfileComponent, EditAboutComponent, AddSkillsComponent],
+  declarations: [ProfilePage, EditProfileComponent, EditAboutComponent, AddSkillsComponent, FileItemLoaderComponent],
   providers: [ApiService]
 })
 export class ProfilePageModule { }
