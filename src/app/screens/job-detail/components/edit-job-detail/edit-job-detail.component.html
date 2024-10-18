@@ -82,23 +82,25 @@
 
 
       <div class="w-full flex items-center gap-2 mt-5">
-        <div (click)="openEditJobs.dismiss()"
+        <ion-chip [disabled]="isSubmitting" (click)="openEditJobs.dismiss()"
           class="w-full flex justify-center items-center bg-transparent h-12 text-md font-medium"
           style="margin-right: 1px">
           <ion-text class="whiteColor18SemiBold"> Cancelar </ion-text>
-        </div>
-        <div (click)="openEditJobs.dismiss()"
+        </ion-chip>
+        <ion-chip [disabled]="isSubmitting" (click)="saveNewRecord()"
           class="w-full flex justify-center items-center bg-primary h-12 rounded-full text-md font-medium"
           style="margin-left: 1px">
-          <ion-text class="whiteColor18SemiBold"> Guardar </ion-text>
-        </div>
+          <ion-text class="whiteColor18SemiBold">
+            {{isSubmitting ? 'Guardando...': 'Guardar'}}
+          </ion-text>
+        </ion-chip>
       </div>
     </div>
 
   </ng-template>
 </ion-modal>
 
-<ion-modal #workTimeDialog mode="ios" [isOpen]="isWorktypeTimeModalOpen"
+<ion-modal #workTimeDialog mode="ios" [canDismiss]="isSubmitting?false:true" [isOpen]="isWorktypeTimeModalOpen"
   (ionModalWillDismiss)="isWorktypeTimeModalOpen=false" style="--backdrop-opacity: .45">
   <ng-template>
     <div class="bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-4 py-5 mx-4">

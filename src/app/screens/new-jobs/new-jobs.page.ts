@@ -26,6 +26,9 @@ export class NewJobsPage implements OnInit {
   closeModal: boolean = false;
   showErrorMessage: boolean = false;
 
+  isSubmitting = false;
+  isAccountCompany = localStorage.getItem('accountType') == 'COMPANY';
+
   constructor(
     private router: Router,
     private navCtrl: NavController,
@@ -111,7 +114,7 @@ export class NewJobsPage implements OnInit {
       let errorMessage = 'Por favor completa todos los campos';
       this.closeModal = false;
       this.presentAlert(errorMessage);
-      return throwError(() => new Error(errorMessage));
+
     }
 
     this.showErrorMessage = false;
@@ -136,11 +139,17 @@ export class NewJobsPage implements OnInit {
       body["requeriment"] = this.requeriment
     }
 
-    let fin = false
-    if (this.apiServiceNewJobs.postJobs(body)) {
-      fin = true;
-      this.presentAlertSuccess("Nueva oferta creada.");
-    }
-    return fin;
+    this.isSubmitting = true;
+    this.apiServiceNewJobs.postJobs(body).subscribe({
+      next: (_) => {
+        this.isSubmitting = false;
+        this.presentAlertSuccess("Nueva oferta creada.");
+        const screen = this.isAccountCompany ? '/bottom-tab-bar-company' : '/bottom-tab-bar';
+
+        this.goTo(`${screen}/home`);
+      }, error: () => {
+        this.isSubmitting = false;
+      }
+    });
   }
 }

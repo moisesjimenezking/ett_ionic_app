@@ -161,19 +161,6 @@ export class JobDetailPage implements OnInit {
     return result;
   }
 
-  saveAndCloseModal() {
-    this.saveNewRecord()
-    if (this.closeModal) {
-      setTimeout(() => {
-        this.apiJobsService.allJobsApi({ id: this.dataJobs.id }).subscribe((data) => {
-          const job = data.find(j => j.id == this.dataJobs.id)!;
-          localStorage.setItem('jobs', JSON.stringify(job));
-          this.dataJobs = job;
-          this.cdr.detectChanges();
-        });
-      }, 1000);
-    }
-  }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
@@ -183,38 +170,6 @@ export class JobDetailPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  saveNewRecord() {
-
-    this.amount = this.amount.replace(/[^0-9.]/g, '');
-
-    if (!this.title || !this.type_time || !this.amount || this.amount === '') {
-      this.showErrorMessage = true;
-      let errorMessage = 'Por favor completa todos los campos';
-      this.closeModal = false;
-      this.presentAlert(errorMessage);
-      return throwError(() => new Error(errorMessage));
-    }
-
-    this.showErrorMessage = false;
-    this.closeModal = true;
-
-    const body = {
-      id: this.dataJobs.id,
-      title: this.title,
-      type_time: this.type_time,
-      amount: this.amount,
-      description: this.description,
-      location: this.location,
-      requeriment: this.requeriment
-    };
-
-    let fin = false
-    if (this.apiJobsService.putJobs(body)) {
-      fin = true;
-    }
-    return fin;
   }
 
   addItemToList() {
@@ -236,43 +191,8 @@ export class JobDetailPage implements OnInit {
     this.requeriment = this.requeriment.filter(i => i !== item);
   }
 
-  sendMessage(message: string) {
-    if (this.isProcessing) return; // Evita múltiples clics
-    this.isProcessing = true;
-
-    const body = {
-      "user_sending_id": localStorage.getItem('user_id'),
-      "user_recept_id": this.dataJobs.user_id
-    }
-
-    setTimeout(() => {
-      this.apiJobsService.postChats(body).subscribe((data: any) => {
-        const body = {
-          'message': message,
-          'chats_id': data.id,
-          'jobs_id': this.dataJobs.id
-        }
-
-        setTimeout(() => {
-          this.apiJobsService.postMessage(body).subscribe((data: any) => {
-            this.isProcessing = false;
-          });
-        }, 50);
-      }, (error) => {
-        // Manejar el error de postChats aquí
-        this.isProcessing = false;
-        console.error("Error al crear el chat:", error);
-      });
-    }, 1000);
+  onJobEditChange(job: JobModel) {
+    this.dataJobs = job;
   }
 
-  closeMenu() {
-    if (this.menu) {
-      this.menu.close();
-    }
-  }
-
-  logout() {
-    this.closeMenu();
-  }
 }

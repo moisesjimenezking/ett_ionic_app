@@ -46,7 +46,7 @@ export class ChatsPage implements OnInit {
   }
 
   goBack() {
-    this.navCtrl.back()
+    this.navCtrl.navigateRoot('')
   }
 
   allChats() {

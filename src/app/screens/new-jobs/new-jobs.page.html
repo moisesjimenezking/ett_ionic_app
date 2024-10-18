@@ -143,8 +143,10 @@
 </ion-content>
 
 <ion-footer mode="ios" class="bg-background px-5">
-  <ion-chip class="customChip mx-2 mb-4 mt-5" (click)="saveNewRecord()"
+  <ion-chip [disabled]="isSubmitting" class="customChip mx-2 mb-4 mt-5" (click)="saveNewRecord()"
     style="background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
-    <ion-text class="textAux" style="font-size: 16px;">Guardar </ion-text>
+    <ion-text class="textAux" style="font-size: 16px;">
+      {{isSubmitting?'Creando...': 'Crear'}}
+    </ion-text>
   </ion-chip>
 </ion-footer>

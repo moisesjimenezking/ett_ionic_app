@@ -24,7 +24,7 @@ export class OnboardingPage implements OnInit {
       id: "1",
       onboardingImage: `${assetsPath}/images/person-working-1.png`,
       onboardingTitle: "Encuentra tu trabajo ideal",
-      onboardingDescription: 'La primera plataforma pensada para profesionales en búsqueda de nuevas oportunidaes laborales.',
+      onboardingDescription: 'La primera plataforma pensada para profesionales en búsqueda de nuevas oportunidades laborales.',
     },
     {
       id: "2",

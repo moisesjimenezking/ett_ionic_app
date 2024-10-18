@@ -244,7 +244,7 @@ export class ApiService {
       );
   }
 
-  allJobsApi(data: any) {
+  allJobsApi(data: any, opts?: { showError?: boolean }) {
     const request = this.http.get<JobModel[]>(`${this.apiUrl}/jobs`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
 
 
@@ -254,8 +254,10 @@ export class ApiService {
         if (error.status !== 200 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
+        if (opts?.showError) {
 
-        this.presentAlert(errorMessage);
+          this.presentAlert(errorMessage);
+        }
         return throwError(() => error);
       },)
     );
@@ -267,9 +269,7 @@ export class ApiService {
   }
 
   postJobs(data: any) {
-    let result = true;
-
-    this.http.post(`${this.apiUrl}/jobs`, data, this.options)
+    return this.http.post(`${this.apiUrl}/jobs`, data, this.options)
       .pipe(
         catchError((error) => {
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
@@ -277,15 +277,10 @@ export class ApiService {
             errorMessage = error.error.message;
           }
           this.presentAlert(errorMessage);
-          result = false;
           return throwError(() => new Error(errorMessage));
         }),
         finalize(() => { })
-      ).subscribe(
-        (response: any) => { }
       );
-
-    return result;
   }
 
   postChats(data: any) {
@@ -295,9 +290,8 @@ export class ApiService {
   }
 
   putJobs(data: any) {
-    let result = true;
 
-    this.http.put(`${this.apiUrl}/jobs`, data, this.options)
+    return this.http.put<JobModel>(`${this.apiUrl}/jobs`, data, this.options)
       .pipe(
         catchError((error) => {
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
@@ -305,15 +299,10 @@ export class ApiService {
             errorMessage = error.error.message;
           }
           this.presentAlert(errorMessage);
-          result = false;
           return throwError(() => new Error(errorMessage));
         }),
         finalize(() => { })
-      ).subscribe(
-        (response: any) => { }
       );
-
-    return result;
   }
 
   postMessage(data: any) {

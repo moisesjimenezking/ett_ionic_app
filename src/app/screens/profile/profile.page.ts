@@ -95,12 +95,12 @@ export class ProfilePage implements OnInit {
       this.fullName = localStorage.getItem('fullname');
       this.email = localStorage.getItem('email');
       this.phone = localStorage.getItem('phone');
-      this.specialization = localStorage.getItem('specialization') === 'null' ? '' : localStorage.getItem('specialization');
-      this.icon = this.stablishUrlPic(localStorage.getItem('icon_profile'));
-      this.iconFront = this.stablishUrlPic(localStorage.getItem('icon_front'));
-      this.location = localStorage.getItem('location');
-      this.experienceYear = localStorage.getItem('experienceYear');
-      this.about = localStorage.getItem('about');
+      this.specialization = localStorage.getItem('specialization') === 'null' ? '' : localStorage.getItem('specialization') ?? '';
+      this.icon = this.stablishUrlPic(localStorage.getItem('icon_profile')) ?? '';
+      this.iconFront = this.stablishUrlPic(localStorage.getItem('icon_front')) ?? '';
+      this.location = localStorage.getItem('location') ?? '';
+      this.experienceYear = localStorage.getItem('experienceYear') ?? '';
+      this.about = localStorage.getItem('about') ?? '';
       let listWeb = localStorage.getItem('social_link');
       if (listWeb) {
         this.websitesList = JSON.parse(listWeb);

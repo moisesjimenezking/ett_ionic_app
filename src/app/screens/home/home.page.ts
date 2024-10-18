@@ -104,8 +104,9 @@ export class HomePage implements OnInit {
       body["user_id"] = localStorage.getItem('user_id')
     }
 
+    this.jobList = [];
     this.isLoadingJobList = true;
-    this.apiService.allJobsApi(body).subscribe({
+    this.apiService.allJobsApi(body, { showError: false }).subscribe({
       next: (data) => {
         this.jobList = data;
         this.isLoadingJobList = false;

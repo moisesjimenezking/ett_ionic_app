@@ -60,7 +60,7 @@
         {{ specialization }}
       </ion-text>
       <ion-text class="text-ellipsis text-sm text-primary-foreground/80 line-clamp-1 capitalize">
-        {{ location.replace('null','') }}
+        {{ location?.replace('null','') }}
       </ion-text>
     </div>
   </ng-container>
@@ -80,15 +80,14 @@
   <div class="px-4">
     <ng-container *ngIf="account === 'PERSON' && isProfileLoaded">
       <div class="my-[20px] bg-destructive rounded-xl p-3">
-        <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
-          <ion-text class="blackColor19SemiBold ellipseText text-primary-foreground"
-            style="flex: 1; -webkit-line-clamp: 1">
+        <div class="rowAlignCenter text-primary-foreground justify-between">
+          <ion-text class="font-semibold text-ellipsis text-primary-foreground line-clamp-1 flex-1">
             Acerca de mí
           </ion-text>
           <ion-icon id="open-edit-about-profile-modal" name="create-outline" style="font-size: 22px"></ion-icon>
         </div>
 
-        <div>
+        <div *ngIf="about?.length > 0" class="mt-[10px]">
           <ion-text class="text-ellipsis line-clamp-6 text-primary-foreground">
             {{about.replace('null', "Escribe aquí una biografía")}}
           </ion-text>
@@ -104,15 +103,15 @@
       </div>
 
       <!-- EXPERIENCE -->
-      <div class="">
+      <!-- <div class="">
         <div class="my-[20px] bg-destructive rounded-xl p-3">
-          <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
+          <div class="rowAlignCenter text-primary-foreground justify-between">
             <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
               Experiencia
             </ion-text>
 
           </div>
-          <div class="w-full grid gap-3 divide-y-[.25px] divide-muted">
+          <div class="w-full grid gap-3 divide-y-[.25px] divide-muted mt-[10px]">
             <ng-container *ngFor="let exp of workExperiencesList">
               <div class="w-full flex flex-col gap-3 py-3">
                 <p class="text-lg text-primary-foreground">
@@ -128,11 +127,11 @@
             </ng-container>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div>
         <div class="my-[20px] bg-destructive rounded-xl p-3">
-          <ion-text class="text-ellipsis font-semibold text-primary-foreground" style="flex: 1; -webkit-line-clamp: 1">
+          <ion-text class="text-ellipsis font-semibold text-primary-foreground line-clamp-1 flex-1">
             Habilidades
           </ion-text>
           <div id="open-add-skills-profile-modal" class=" center square18 mt-1">
@@ -165,20 +164,20 @@
         </div>
 
         <div class="flex flex-col gap-1.5 my-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Dirección de correo electrónico </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Dirección de correo electrónico </ion-text>
           <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
             {{ email }}
           </ion-text>
         </div>
         <div class="flex flex-col gap-1.5 my-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Número de teléfono móvil </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Número de teléfono móvil </ion-text>
           <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
             {{ phone }}
           </ion-text>
         </div>
 
         <div *ngIf="websitesList?.length" class="flex flex-col gap-1.5 mt-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Sitio web </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Sitio web </ion-text>
           <div *ngFor="let item of websitesList" class="column" style="margin-top: 3px">
             <ion-text class="text-primary text-sm"> {{item}} </ion-text>
           </div>
