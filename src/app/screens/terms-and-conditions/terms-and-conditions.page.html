@@ -1,31 +1,178 @@
-<ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="whiteColor">
-    <div class="rowAlignCenter margin20 center" style="position: relative">
-      <span (click)="goBack()" class="material-icons headerBackArrow">
-        keyboard_backspace
+<ion-header mode="ios" [translucent]="false" class="ion-no-border bg-background">
+  <ion-toolbar color="false" class="bg-transparent">
+    <div class="flex items-center py-5 px-2" style="position: relative">
+      <span (click)="goBack()" class="material-icons text-primary-foreground text-[36px]">
+        chevron_left
       </span>
-      <ion-text
-        class="blackColor20Bold ellipseText"
-        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"
-      >
-        Términos y condiciones
-      </ion-text>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div style="margin: 0 20px; margin-top: 5px">
-    <ion-text class="blackColor19SemiBold"> Condiciones de uso </ion-text>
-    <div *ngFor="let item of termsOfUseList">
-      <ion-text class="grayColor16Regular" style="margin-top: 15px;display: flex;"> {{item}} </ion-text>
-    </div>
-  </div>
+  <div class="flex flex-col gap-4 w-full max-h-full overflow-y-auto text-primary-foreground px-2 text-sm pb-6">
+    <div class="">
+      <h1 class="text-xl font-semibold text-center mb-4">Términos y Condiciones de Uso de la App <strong>Ett
+          Venezuela</strong></h1>
 
-  <div style="margin:20px; margin-top: 30px">
-    <ion-text class="blackColor19SemiBold"> Política de la compañía </ion-text>
-    <div *ngFor="let item of companyPoliciesList">
-      <ion-text class="grayColor16Regular" style="margin-top: 15px;display: flex;"> {{item}} </ion-text>
+      <p class=""><strong>Fecha de vigencia:</strong> 18 de octubre de 2024</p>
+
+      <p class="mt-2">Bienvenido a la App <strong>Ett Venezuela</strong>. Al descargar, instalar o utilizar la
+        aplicación móvil,
+        aceptas estar sujeto
+        a
+        los
+        siguientes Términos y Condiciones. Si no estás de acuerdo con estos términos, te recomendamos no utilizar la
+        aplicación.</p>
     </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">1. Aceptación de los Términos</h2>
+      <div class="px-1">
+        <p class="">Al acceder y utilizar la aplicación móvil <strong>Ett Venezuela</strong>, declaras haber leído,
+          entendido y
+          aceptado estos
+          Términos y
+          Condiciones. Nos reservamos el derecho de modificar estos términos en cualquier momento. Las modificaciones
+          entrarán
+          en vigor desde el momento en que se publiquen en la aplicación, y el uso continuado de la misma implicará la
+          aceptación de dichos cambios.</p>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">2. Descripción del Servicio</h2>
+      <div class="px-1">
+        <p><strong>Ett Venezuela</strong> es una plataforma que facilita la búsqueda de empleo temporal en Venezuela,
+          conectando a usuarios
+          (demandantes de empleo) con empresas que publican ofertas laborales.</p>
+        <p>La App permite:</p>
+        <ul class="mx-3">
+          <li>A los usuarios encontrar ofertas laborales disponibles en el mercado venezolano.</li>
+          <li>A las empresas, publicar ofertas de trabajo y gestionar procesos de selección de personal.</li>
+        </ul>
+        <p><strong>Ett Venezuela</strong> también ofrece servicios de gestión administrativa y legal de personal para
+          empresas que lo
+          requieran.
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">3. Registro de Usuarios</h2>
+      <div class="px-1">
+        <p>Para acceder a ciertos servicios, es necesario crear una cuenta proporcionando información personal precisa y
+          actualizada. Cada usuario es responsable de mantener la confidencialidad de su cuenta y contraseña, así como
+          de
+          las
+          actividades que ocurran bajo su cuenta.</p>
+
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">4. Responsabilidad del Usuario</h2>
+      <div class="px-1">
+        <p>Al utilizar la aplicación, te comprometes a:</p>
+        <ul class="mx-3">
+          <li>Proporcionar información veraz, precisa y completa durante el registro y la creación de tu perfil.</li>
+          <li>No utilizar la plataforma con fines ilegales, fraudulentos o en violación de cualquier normativa vigente
+            en
+            Venezuela.</li>
+          <li>Respetar los derechos de propiedad intelectual y los derechos de privacidad de otros usuarios y de las
+            empresas
+            que publican ofertas.</li>
+          <li>No subir ni transmitir contenido malicioso, ofensivo o que infrinja los derechos de terceros.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">5. Publicación de Ofertas por Empresas</h2>
+      <div class="px-1">
+        <p>Las empresas que utilicen la plataforma para publicar ofertas de empleo deben garantizar que las ofertas sean
+          verídicas, actualizadas y que cumplan con las normativas laborales vigentes en Venezuela.</p>
+        <p><strong>Ett Venezuela</strong> no se responsabiliza de la veracidad, precisión o integridad de las ofertas
+          publicadas por
+          terceros.
+          Las empresas son las únicas responsables de la información que publican y de la contratación de personal.</p>
+
+
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">6. Limitación de Responsabilidad</h2>
+      <div class="px-1">
+        <p><strong>Ett Venezuela</strong> actúa únicamente como intermediario entre empresas y usuarios. No garantizamos
+          la disponibilidad,
+          continuidad ni exactitud de las ofertas publicadas en la plataforma.</p>
+        <p>No asumimos responsabilidad por:</p>
+        <ul class="list-disc mt-2 mx-3">
+          <li>El resultado de los procesos de selección.</li>
+          <li>El incumplimiento por parte de las empresas o los usuarios de los acuerdos laborales.</li>
+          <li>Cualquier daño directo o indirecto que pueda derivarse del uso de la plataforma.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">7. Propiedad Intelectual</h2>
+      <div class="px-1">
+        <p>Todo el contenido disponible en la aplicación, incluidos, entre otros, textos, imágenes, gráficos, logotipos,
+          íconos
+          y software, es propiedad de <strong>Ett Venezuela</strong> o de terceros que han autorizado su uso en la
+          plataforma. El uso no
+          autorizado de dicho contenido puede constituir una violación de los derechos de propiedad intelectual.</p>
+
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">8. Privacidad de Datos</h2>
+      <div class="px-1">
+        <p>La protección de tu privacidad es fundamental para nosotros. Al utilizar la aplicación, consientes la
+          recopilación,
+          uso y almacenamiento de tus datos personales de acuerdo con nuestra Política de Privacidad. Nos comprometemos
+          a
+          no
+          compartir tus datos personales con terceros sin tu consentimiento, excepto cuando sea requerido por ley o para
+          la
+          prestación de nuestros servicios.</p>
+
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">9. Suspensión o Terminación del Servicio</h2>
+      <div class="px-1">
+        <p>Nos reservamos el derecho de suspender o finalizar el acceso a la aplicación, temporal o permanentemente, sin
+          previo
+          aviso, en caso de incumplimiento de estos Términos y Condiciones o por motivos técnicos, de seguridad o
+          legales.
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">10. Legislación Aplicable y Jurisdicción</h2>
+      <div class="px-1">
+        <p>Estos Términos y Condiciones se regirán e interpretarán de acuerdo con las leyes de la República Bolivariana
+          de
+          Venezuela. Cualquier disputa relacionada con el uso de la aplicación será sometida a los tribunales
+          competentes
+          en
+          Venezuela.</p>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-lg font-medium">11. Contacto</h2>
+      <div class="px-1">
+        <p>Si tienes preguntas o comentarios sobre estos Términos y Condiciones, puedes ponerte en contacto con nosotros
+          a
+          través de los canales disponibles en la aplicación.</p>
+      </div>
+    </div>
+
   </div>
 </ion-content>

@@ -1,10 +1,8 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { ApiService } from '../../service/api.service';
 import { NavController } from '@ionic/angular';
-import { IonMenu, IonModal } from '@ionic/angular';
 import { UtilsLib } from '@/lib/utils';
+import { icWalletUpcomingAsset } from '@/lib/constanst/assets';
 
 
 @Component({
@@ -13,40 +11,19 @@ import { UtilsLib } from '@/lib/utils';
   styleUrls: ['./wallet.page.scss'],
 })
 export class WalletPage implements OnInit {
-  @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
 
-  fullName = localStorage.getItem('fullname')
-  icon = this.stablishUrlPic(localStorage.getItem('icon_profile'));
-  accountType = localStorage.getItem('accountType') === "COMPANY" ? true : false;
-
-  walletId: string = '';
-  balanceAvailable: string = '';
-  balanceLocked: string = '';
-  walletCode: string = '';
-  listTransaction: any[] = [{ amount: 10 }];
+  walletUpcommintAsset = icWalletUpcomingAsset;
 
   protected readonly utils = new UtilsLib();
 
   constructor(
     private router: Router,
-    private http: HttpClient,
-    private apiWallet: ApiService,
     private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
-    this.apiWallet.getWallet().subscribe((data: any) => {
-      this.walletId = data.id;
-      this.balanceAvailable = data.balance;
-      this.balanceLocked = data.balance_locked;
-      this.walletCode = data.account_code;
-    });
-  }
 
-  stablishUrlPic(url: string | null) {
-    return this.utils.stablishUrlPic(url);
   }
-
 
   goBack() {
     this.navCtrl.back()
@@ -56,14 +33,5 @@ export class WalletPage implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  closeMenu() {
-    if (this.menu) {
-      this.menu.close();
-    }
-  }
-
-  logout() {
-    this.closeMenu();
-  }
 
 }

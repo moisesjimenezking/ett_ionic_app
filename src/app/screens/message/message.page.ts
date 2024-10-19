@@ -93,8 +93,13 @@ export class MessagePage implements OnInit {
     });
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    const result = await this.navCtrl.pop();
+
+    if (!result) {
+
+      // this.navCtrl.navigateBack();
+    }
   }
 
   viewsAll() {
@@ -110,10 +115,11 @@ export class MessagePage implements OnInit {
   }
 
   backspace() {
-    this.goTo(localStorage.getItem('accountType') === "PERSON"
-      ? 'bottom-tab-bar/chats'
-      : 'bottom-tab-bar-company/chats'
-    );
+    this.goBack();
+    // this.navCtrl.(localStorage.getItem('accountType') === "PERSON"
+    //   ? 'bottom-tab-bar/chats'
+    //   : 'bottom-tab-bar-company/chats'
+    // );
   }
 
   addMessage() {

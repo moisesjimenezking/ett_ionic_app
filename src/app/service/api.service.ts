@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { catchError, throwError, finalize } from 'rxjs';
+import { catchError, throwError, finalize, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { NgZone } from '@angular/core';
@@ -110,9 +110,18 @@ export class ApiService {
           localStorage.setItem('civil_status', response.user.civil_status);
           localStorage.setItem('family_responsibilities', response.user.family_responsibilities);
           localStorage.setItem('birthdate', response.user.birthdate);
-          localStorage.setItem('identification', response.user.identification);
-          localStorage.setItem('license', response.user.license);
-          localStorage.setItem('rif', response.user.rif);
+          localStorage.setItem('identification', JSON.stringify({
+            text: response.user.identification_text ?? "",
+            img: response.user.identification_img ?? ""
+          }));
+          localStorage.setItem('license', JSON.stringify({
+            text: response.user.license_text ?? "",
+            img: response.user.license_img ?? ""
+          }));
+          localStorage.setItem('rif', JSON.stringify({
+            text: response.user.rif_text ?? "",
+            img: response.user.rif_img ?? ""
+          }));
           localStorage.setItem('level_study', response.user.level_study);
           localStorage.setItem('blood_type', response.user.blood_type);
           localStorage.setItem('allergies', response.user.allergies);
@@ -156,19 +165,19 @@ export class ApiService {
         (response: any) => {
           localStorage.setItem('fullname', response.fullname);
           localStorage.setItem('email', response.email);
-          localStorage.setItem('icon_profile', response.user.icon);
-          localStorage.setItem('icon_front', response.user.icon_front);
-          localStorage.setItem('social_link', JSON.stringify(response.user.social_link));
-          localStorage.setItem('specialization', response.user.specialization);
+          localStorage.setItem('icon_profile', response.user?.icon);
+          localStorage.setItem('icon_front', response.user?.icon_front);
+          localStorage.setItem('social_link', JSON.stringify(response.user?.social_link));
+          localStorage.setItem('specialization', response.user?.specialization);
           localStorage.setItem('phone', response.phone);
           localStorage.setItem('address', response.address);
           localStorage.setItem('sex', response.sex);
           localStorage.setItem('civil_status', response.civil_status);
           localStorage.setItem('family_responsibilities', response.family_responsibilities);
           localStorage.setItem('birthdate', response.birthdate);
-          localStorage.setItem('identification', response.identification);
-          localStorage.setItem('license', response.license);
-          localStorage.setItem('rif', response.rif);
+          // localStorage.setItem('identification', response.identification);
+          // localStorage.setItem('license', response.license);
+          // localStorage.setItem('rif', response.rif);
           localStorage.setItem('level_study', response.level_study);
           localStorage.setItem('blood_type', response.blood_type);
           localStorage.setItem('allergies', response.allergies);
@@ -212,7 +221,7 @@ export class ApiService {
 
   postUser(data: any) {
     this.showSpinner();
-    this.http.post(`${this.apiUrl}/register`, data, this.options)
+    return this.http.post(`${this.apiUrl}/register`, data, this.options)
       .pipe(
         catchError((error) => {
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
@@ -223,12 +232,7 @@ export class ApiService {
           this.presentAlert(errorMessage);
           return throwError(() => new Error(errorMessage));
         }),
-        finalize(() => {
-          this.hideSpinner();
-        })
-      )
-      .subscribe(
-        (response: any) => {
+        tap((response: any) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('fullname', response.user.fullname);
           localStorage.setItem('email', response.user.email);
@@ -240,11 +244,12 @@ export class ApiService {
             ? 'bottom-tab-bar/home'
             : 'bottom-tab-bar-company/home'
           );
-        }
+          this.hideSpinner();
+        })
       );
   }
 
-  allJobsApi(data: any) {
+  allJobsApi(data: any, opts?: { showError?: boolean }) {
     const request = this.http.get<JobModel[]>(`${this.apiUrl}/jobs`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
 
 
@@ -254,8 +259,10 @@ export class ApiService {
         if (error.status !== 200 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
+        if (opts?.showError) {
 
-        this.presentAlert(errorMessage);
+          this.presentAlert(errorMessage);
+        }
         return throwError(() => error);
       },)
     );
@@ -267,9 +274,7 @@ export class ApiService {
   }
 
   postJobs(data: any) {
-    let result = true;
-
-    this.http.post(`${this.apiUrl}/jobs`, data, this.options)
+    return this.http.post(`${this.apiUrl}/jobs`, data, this.options)
       .pipe(
         catchError((error) => {
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
@@ -277,15 +282,10 @@ export class ApiService {
             errorMessage = error.error.message;
           }
           this.presentAlert(errorMessage);
-          result = false;
           return throwError(() => new Error(errorMessage));
         }),
         finalize(() => { })
-      ).subscribe(
-        (response: any) => { }
       );
-
-    return result;
   }
 
   postChats(data: any) {
@@ -295,9 +295,8 @@ export class ApiService {
   }
 
   putJobs(data: any) {
-    let result = true;
 
-    this.http.put(`${this.apiUrl}/jobs`, data, this.options)
+    return this.http.put<JobModel>(`${this.apiUrl}/jobs`, data, this.options)
       .pipe(
         catchError((error) => {
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
@@ -305,15 +304,10 @@ export class ApiService {
             errorMessage = error.error.message;
           }
           this.presentAlert(errorMessage);
-          result = false;
           return throwError(() => new Error(errorMessage));
         }),
         finalize(() => { })
-      ).subscribe(
-        (response: any) => { }
       );
-
-    return result;
   }
 
   postMessage(data: any) {

@@ -1,0 +1,39 @@
+<ion-modal mode="md" #sendMessageModal [canDismiss]="isSubmitting?false: true" trigger="open-message-modal"
+  style="--border-radius: 5px; --background: #2C2C2C;">
+  <ng-template>
+    <div
+      class="my-2 bg-muted flex flex-col justify-center items-center rounded-xl px-3 py-5 h-full max-h-full overflow-y-auto">
+      <ion-text class="text-primary-foreground text-2xl font-semibold text-center mb-7">
+        Enviar mensaje
+      </ion-text>
+
+      <div class="w-full flex flex-col gap-2 text-start">
+        <ion-text class="text-sm ml-5 text-primary-foreground">Mensaje </ion-text>
+        <ion-chip class="field">
+          <ion-input [readonly]="isSubmitting" mode="ios" placeholder="Escribe tu mensaje"
+            placeholder="Escribe tu mensaje aquí..." [(ngModel)]="message" inputmode="text">
+          </ion-input>
+        </ion-chip>
+      </div>
+
+      <!-- Aquí aplicamos los cambios -->
+      <div class="w-full flex gap-1 items-center justify-between mt-5">
+        <ion-chip [disabled]="isSubmitting"
+          class="w-full flex items-center justify-center bg-accent text-primary-foreground rounded-full text-md font-medium h-12"
+          (click)="sendMessageModal.dismiss()">
+          <ion-text>
+            Cancelar
+          </ion-text>
+        </ion-chip>
+        <ion-chip [disabled]="isSubmitting"
+          class="w-full flex items-center justify-center bg-primary text-primary-foreground rounded-full text-md font-medium h-12"
+          (click)="sendMessage(message, sendMessageModal);">
+          <ion-text>
+            {{isSubmitting? 'Enviando...': 'Enviar'}}
+          </ion-text>
+        </ion-chip>
+      </div>
+    </div>
+
+  </ng-template>
+</ion-modal>

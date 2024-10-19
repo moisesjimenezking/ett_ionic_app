@@ -9,6 +9,7 @@ import {
 
 import { fadeIn } from '@/lib/animations/custom-animations';
 import { UtilsLib } from '@/lib/utils';
+import { icPersonAsset } from '@/lib/constanst/assets';
 
 @Component({
   selector: 'ng-image',
@@ -19,6 +20,7 @@ import { UtilsLib } from '@/lib/utils';
 })
 export class ImgComponent implements OnInit {
   @Input() src = '';
+  @Input() loadBackground = 'bg-muted';
   @Input() width: string | number = '80';
   @Input() height: string | number = '200px';
   @Input() heightAfterLoaded?: string | number;
@@ -29,6 +31,7 @@ export class ImgComponent implements OnInit {
   isLoad = false;
   isError = false;
 
+
   protected readonly utils = new UtilsLib();
 
   constructor(private readonly el: ElementRef,
@@ -37,6 +40,10 @@ export class ImgComponent implements OnInit {
 
   ngOnInit() {
     this.el.nativeElement.classList.add('position-relatie');
+  }
+
+  getBgAnimated() {
+    return `${this.loadBackground} animate-pulse`;
   }
 
   load(_: any) {

@@ -1,7 +1,8 @@
 <div [style.width]="width" [style.height]="isLoad ? (heightAfterLoaded??height) : height" [class]="utils.cn(
   'overflow-hidden',
-  !isLoad ||isError && 'bg-muted animate-pulse',
+  !isLoad ||isError && getBgAnimated(),
   isLoad && 'animate-fade animate-delay-75 animate-duration-700',
+  
   className
 )">
   <ion-img [src]="src" (ionImgWillLoad)="load($event)" (ionImgDidLoad)="loaded($event)" (ionError)="error($event)"

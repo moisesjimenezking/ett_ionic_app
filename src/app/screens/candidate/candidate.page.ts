@@ -3,6 +3,7 @@ import { IonMenu } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UtilsLib } from '@/lib/utils';
+import { bgBiografyAsset } from '@/lib/constanst/assets';
 
 @Component({
   selector: 'app-candidate',
@@ -17,6 +18,7 @@ export class CandidatePage implements OnInit {
   currentSkill = this.userData.user.skills;
   icon = '';
   iconFront = '';
+  biografyAsset = bgBiografyAsset;
 
   showMore = false;
 
@@ -29,8 +31,8 @@ export class CandidatePage implements OnInit {
 
   ngOnInit() {
     this.userData = this.details();
-    this.icon = this.stablishUrlPic(this.userData.user.icon);
-    this.iconFront = this.stablishUrlPic(this.userData.user.icon_front);
+    this.icon = this.utils.stablishUrlPic(this.userData.user.icon);
+    this.iconFront = this.utils.stablishUrlPic(this.userData.user.icon_front, true);
   }
 
   details() {
@@ -50,9 +52,6 @@ export class CandidatePage implements OnInit {
     this.router.navigateByUrl(screen);
   }
 
-  stablishUrlPic(url: string) {
-    return this.utils.stablishUrlPic(url);
-  }
 
   logout() {
     this.closeMenu();

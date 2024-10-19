@@ -1,6 +1,6 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" class="mt-4 mb-8 bg-background">
-    <div class="w-full flex justify-between mb-[20xp]">
+  <ion-toolbar color="false" class="bg-background">
+    <div class="w-full flex justify-between px-4 py-5">
       <!-- <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
         keyboard_backspace
       </span> -->
@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="w-full h-full px-5 max-h-full overflow-y-auto">
+  <div class="w-full h-full px-4 max-h-full overflow-y-auto">
     <div style="margin-top: 10px;">
       <div class="textFieldWrapper" style="background-color: transparent;">
         <ion-text class="textAux" style="color: #FFFBF7; margin-left:20px; font-size: 14px"> Título de la oferta
@@ -143,8 +143,10 @@
 </ion-content>
 
 <ion-footer mode="ios" class="bg-background px-5">
-  <ion-chip class="customChip mx-2 mb-4 mt-5" (click)="saveNewRecord()"
+  <ion-chip [disabled]="isSubmitting" class="customChip mx-2 mb-4 mt-5" (click)="saveNewRecord()"
     style="background-color: #2758BF; color: #ffffff; border: none; height: 50px; display: flex; justify-content: center; align-items: center;">
-    <ion-text class="textAux" style="font-size: 16px;">Guardar </ion-text>
+    <ion-text class="textAux" style="font-size: 16px;">
+      {{isSubmitting?'Creando...': 'Crear'}}
+    </ion-text>
   </ion-chip>
 </ion-footer>

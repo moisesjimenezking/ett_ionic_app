@@ -44,16 +44,43 @@
       <div class="flex flex-col gap-2 text-start">
         <ion-text class="text-sm ml-5 text-primary-foreground"> Contraseña </ion-text>
         <ion-chip class="field">
-          <ion-input mode="ios" [style.font-size]="password&&securePassword? platform.is('ios')?'14px':'14px':'14px'"
-            [(ngModel)]="password" [type]="securePassword?'password':'text'">
+          <ion-input mode="ios" [(ngModel)]="password" [type]="securePassword?'password':'text'">
           </ion-input>
           <ion-icon [name]="securePassword ? 'eye':'eye-off'" color="whiteColor" style="font-size: 18px"
             (click)="securePassword=!securePassword"></ion-icon>
         </ion-chip>
+        <ion-text class="textAux" color="danger" *ngIf="!name && showErrorMessage" style="margin-left: 15px;">Este campo
+          es obligatorio</ion-text>
       </div>
 
 
-      <ion-segment value="PERSON" mode="ios" (ionChange)="seleccionarTipoCuenta($event)">
+      <div class="w-full flex flex-col gap-2 text-start">
+        <ion-text class="text-sm ml-5 text-primary-foreground"> RIF (opcional)</ion-text>
+        <div class="min-h-[48px]">
+
+          <div class="field">
+            <ion-input mode="ios" placeholder="Ingrese su RIF" [(ngModel)]="rifValue" inputmode="numeric">
+            </ion-input>
+          </div>
+          <div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="w-full flex flex-col gap-2 text-start">
+        <ion-text class="text-sm ml-5 text-primary-foreground"> Identificación (opcional)</ion-text>
+        <div class="min-h-[48px]">
+
+          <div class="field">
+            <ion-input mode="ios" placeholder="Ingrese su identificación" [(ngModel)]="identificationValue">
+            </ion-input>
+          </div>
+        </div>
+      </div>
+
+
+      <ion-segment value="PERSON" mode="ios" style="margin-top:.5rem" (ionChange)="seleccionarTipoCuenta($event)">
         <ion-segment-button value="PERSON" layout="icon-start" (click)="this.accountType='PERSON'">
           <ion-icon name="person" style="font-size: 16px"></ion-icon>
           <ion-label>Personal</ion-label>
@@ -78,7 +105,7 @@
 <ion-footer mode="ios" class="bg-background">
   <div class="footer flex justify-center items-center gap-2 text-[15px]">
     <ion-text class="text-primary-foreground">
-      Ya tienes una cuenta?
+      ¿Ya tienes una cuenta?
     </ion-text>
     <ion-text class="text-secondary font-medium" (click)="goTo('auth/login')">
       Iniciar sesión

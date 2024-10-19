@@ -25,6 +25,11 @@ export class SidebarComponent implements OnInit {
     this.menu.close();
   }
 
+  tyc() {
+    this.closeMenu();
+    this.goTo('/terms-and-conditions');
+  }
+
   logout() {
     localStorage.clear();
     this.logoutDialog.dismiss();

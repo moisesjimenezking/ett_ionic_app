@@ -2,19 +2,18 @@
   <!-- <div class="absolute top-0 w-full bottom-0 bg-primary -z-10">
   </div> -->
   <ion-toolbar color="false" class="bg-transparent">
-    <div class="rowAlignCenter">
+    <div class="flex justify-between items-center px-2">
       <span (click)="goBack()" class="material-icons text-[36px] text-primary-foreground rounded-full"
         [style.background]="'hsl(0 0% 7% / .15)'">
         chevron_left
       </span>
-      <ion-text class="whiteColor20Bold ellipseText"
-        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
+      <ion-text class="text-lg font-bold text-primary-foreground text-ellipsis line-clamp-1 text-center"></ion-text>
 
-      <ion-text class="rounded-full h-[36px] w-[36px]"
-        style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: .25rem; background: hsl(0 0% 7% / .15);">
+      <ion-chip class="p-0 m-0 bg-[hsl(0 0% 7% / .15)] flex justify-center items-center rounded-full h-[36px] w-[36px]">
+
         <ion-menu-button menu="app-menu" class="menu-button-custom rounded-full" color="whiteColor"
           style="font-size: 30px;"></ion-menu-button>
-      </ion-text>
+      </ion-chip>
     </div>
   </ion-toolbar>
 
@@ -23,8 +22,8 @@
 <ion-content [fullscreen]="true">
   <div class="relative -top-[50px] min-h-[230px] h-[230px]">
     <ng-container *ngIf="isProfileLoaded; else ProfileImageFrontLoadingState">
-      <ng-image [src]="iconFront" width="100%" height="230px" class="imageOverflow w-full h-full relative z-10"
-        (click)="openModal('front')" />
+      <ng-image [src]="iconFront||biografyAsset" width="100%" height="230px"
+        class="imageOverflow w-full h-full relative z-10" (click)="openModal('front')" />
     </ng-container>
     <ng-template #ProfileImageFrontLoadingState>
       <div class="imageOverflow bg-muted/80 h-[230px]">
@@ -60,7 +59,7 @@
         {{ specialization }}
       </ion-text>
       <ion-text class="text-ellipsis text-sm text-primary-foreground/80 line-clamp-1 capitalize">
-        {{ location.replace('null','') }}
+        {{ location?.replace('null','') }}
       </ion-text>
     </div>
   </ng-container>
@@ -80,15 +79,14 @@
   <div class="px-4">
     <ng-container *ngIf="account === 'PERSON' && isProfileLoaded">
       <div class="my-[20px] bg-destructive rounded-xl p-3">
-        <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
-          <ion-text class="blackColor19SemiBold ellipseText text-primary-foreground"
-            style="flex: 1; -webkit-line-clamp: 1">
+        <div class="rowAlignCenter text-primary-foreground justify-between">
+          <ion-text class="font-semibold text-ellipsis text-primary-foreground line-clamp-1 flex-1">
             Acerca de mí
           </ion-text>
           <ion-icon id="open-edit-about-profile-modal" name="create-outline" style="font-size: 22px"></ion-icon>
         </div>
 
-        <div>
+        <div *ngIf="about?.length > 0" class="mt-[10px]">
           <ion-text class="text-ellipsis line-clamp-6 text-primary-foreground">
             {{about.replace('null', "Escribe aquí una biografía")}}
           </ion-text>
@@ -104,15 +102,15 @@
       </div>
 
       <!-- EXPERIENCE -->
-      <div class="">
+      <!-- <div class="">
         <div class="my-[20px] bg-destructive rounded-xl p-3">
-          <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
+          <div class="rowAlignCenter text-primary-foreground justify-between">
             <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
               Experiencia
             </ion-text>
 
           </div>
-          <div class="w-full grid gap-3 divide-y-[.25px] divide-muted">
+          <div class="w-full grid gap-3 divide-y-[.25px] divide-muted mt-[10px]">
             <ng-container *ngFor="let exp of workExperiencesList">
               <div class="w-full flex flex-col gap-3 py-3">
                 <p class="text-lg text-primary-foreground">
@@ -128,11 +126,11 @@
             </ng-container>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div>
         <div class="my-[20px] bg-destructive rounded-xl p-3">
-          <ion-text class="text-ellipsis font-semibold text-primary-foreground" style="flex: 1; -webkit-line-clamp: 1">
+          <ion-text class="text-ellipsis font-semibold text-primary-foreground line-clamp-1 flex-1">
             Habilidades
           </ion-text>
           <div id="open-add-skills-profile-modal" class=" center square18 mt-1">
@@ -165,20 +163,20 @@
         </div>
 
         <div class="flex flex-col gap-1.5 my-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Dirección de correo electrónico </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Dirección de correo electrónico </ion-text>
           <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
             {{ email }}
           </ion-text>
         </div>
         <div class="flex flex-col gap-1.5 my-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Número de teléfono móvil </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Número de teléfono móvil </ion-text>
           <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
             {{ phone }}
           </ion-text>
         </div>
 
         <div *ngIf="websitesList?.length" class="flex flex-col gap-1.5 mt-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Sitio web </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Sitio web </ion-text>
           <div *ngFor="let item of websitesList" class="column" style="margin-top: 3px">
             <ion-text class="text-primary text-sm"> {{item}} </ion-text>
           </div>

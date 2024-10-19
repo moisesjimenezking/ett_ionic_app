@@ -1,16 +1,16 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
   <ion-toolbar color="false" class="bg-background">
-    <div class="rowAlignCenter margin20 center" style="position: relative">
-      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
+    <div class="flex justify-between items-center px-2 py-5" style="position: relative">
+      <span (click)="goBack()" class="material-icons text-primary-foreground">
         arrow_back_ios
       </span>
-      <ion-text class="whiteColor20Bold ellipseText" style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+      <ion-text class="text-lg font-bold flex-1 text-center text-ellipsis line-clamp-1 text-primary-foreground">
         Mensajes
       </ion-text>
-      <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
+      <ion-chip class="p-0 m-0 bg-transparent">
         <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
           style="font-size: 30px"></ion-menu-button>
-      </ion-text>
+      </ion-chip>
     </div>
   </ion-toolbar>
 </ion-header>

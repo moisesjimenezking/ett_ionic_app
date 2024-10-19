@@ -1,6 +1,6 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
   <ion-toolbar color="false" style="background-color: #121212; height: 100%">
-    <div class="rowAlignCenter margin20" style="justify-content: space-between">
+    <div class="flex justify-between items-center px-4 py-5 relative">
       <div class="rowAlignCenter" style="flex: 1">
         <div class="column" style="flex: 2; margin-left: 0px">
           <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-bold"
@@ -37,8 +37,8 @@
       <ng-image width="100%" heightAfterLoaded="auto" [src]="homeBannerImage" class="w-auto h-auto rounded-xl"
         alt="Banner home" />
     </div>
-    <div class="px-4 mt-6 mb-4">
-      <ion-text class="text-2xl text-primary-foreground line-clamp-1 text-ellipsis truncate font-bold">
+    <div class="px-4 mt-6 mb-4 overflow-hidden w-full max-w-full truncate">
+      <ion-text class="text-2xl text-primary-foreground line-clamp-2 overflow-hidden text-ellipsis font-bold">
         {{isAccountCompany ? 'Tus ofertas actuales': 'Últimas ofertas publicadas'}}
       </ion-text>
     </div>

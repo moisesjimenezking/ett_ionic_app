@@ -10,6 +10,7 @@ import { JobDetailPage } from './job-detail.page';
 import { SharedModule } from "../../shared/shared.module";
 import { EditJobDetailComponent } from './components/edit-job-detail/edit-job-detail.component';
 import { CandidatesComponent } from './components/candidates/candidates.component';
+import { SendMessageModalComponent } from './components/send-message-modal/send-message-modal.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { CandidatesComponent } from './components/candidates/candidates.componen
     HttpClientModule,
     SharedModule
   ],
-  declarations: [JobDetailPage, EditJobDetailComponent, CandidatesComponent],
+  declarations: [JobDetailPage, EditJobDetailComponent, CandidatesComponent, SendMessageModalComponent],
   providers: [ApiService]
 })
 export class JobDetailPageModule { }

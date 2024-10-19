@@ -15,6 +15,7 @@ import { UtilsLib } from '@/lib/utils';
 export class ChatsPage implements OnInit {
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
 
+
   protected readonly utils = new UtilsLib();
 
   chatsList: ChatMessage[] = [
@@ -46,7 +47,7 @@ export class ChatsPage implements OnInit {
   }
 
   goBack() {
-    this.navCtrl.back()
+    this.navCtrl.navigateRoot('')
   }
 
   allChats() {

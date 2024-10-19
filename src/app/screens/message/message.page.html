@@ -1,6 +1,6 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border bg-background">
   <ion-toolbar color="false" class="">
-    <div class="rowAlignCenter margin20 center" style="justify-content: space-between; margin-right: 15px">
+    <div class="flex px-4 py-5 justify-between items-center">
       <div class="rowAlignCenter relative" style="flex: 1">
         <span (click)="backspace()" class="material-icons text-primary-foreground text-[28px]">
           arrow_back_ios
@@ -8,10 +8,11 @@
         <!-- <ion-img [src]="searchIcon(dataChat.sourceImage)" class="imageOverflow sourceLogo"></ion-img> -->
         <div class="column" style="flex: 1">
           <ion-text class="text-[20px] text-primary-foreground text-center font-semibold text-ellipsis line-clamp-1">
-            {{ dataChat?.sourceName }}
+            <!-- {{ dataChat?.sourceName }} -->
+            Atención al cliente
           </ion-text>
         </div>
-        <ion-text class="absolute right-1">
+        <ion-text class="">
           <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor" style="font-size: 30px"
             (click)="openMenu()"></ion-menu-button>
         </ion-text>

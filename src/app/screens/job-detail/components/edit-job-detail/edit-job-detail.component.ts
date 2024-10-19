@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, AlertController, IonModal } from '@ionic/angular';
-import { throwError } from 'rxjs';
+
 
 import { ApiService } from '@/service/api.service';
+import { JobModel } from '@/types';
 
 
 @Component({
@@ -13,7 +14,9 @@ import { ApiService } from '@/service/api.service';
 })
 export class EditJobDetailComponent implements OnInit, OnChanges {
   @ViewChild('openEditJobs', { read: IonModal }) modal!: IonModal;
-  @Input({ required: true }) job: any;
+  @Input({ required: true }) job!: JobModel;
+
+  @Output() onChange = new EventEmitter<JobModel>();
 
   title: string = '';
   type_time: string = '';
@@ -29,6 +32,8 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
 
   presentingElement: HTMLDivElement | null = null;
   isWorktypeTimeModalOpen = false;
+
+  isSubmitting = false;
 
   constructor(
     private router: Router,
@@ -119,19 +124,6 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
     }
   }
 
-  saveAndCloseModal() {
-    this.saveNewRecord()
-    if (this.closeModal) {
-      this.modal?.dismiss();
-      setTimeout(() => {
-        this.apiService.allJobsApi({ id: this.job.id }).subscribe((data: any) => {
-          let result = data[0];
-          localStorage.setItem('jobs', JSON.stringify(result));
-
-        });
-      }, 1000);
-    }
-  }
 
   saveNewRecord() {
 
@@ -140,13 +132,9 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
     if (!this.title || !this.type_time || !this.amount || this.amount === '') {
       this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
-      this.closeModal = false;
       this.presentAlert(errorMessage);
-      return throwError(() => new Error(errorMessage));
     }
 
-    this.showErrorMessage = false;
-    this.closeModal = true;
 
     const body = {
       id: this.job.id,
@@ -158,11 +146,21 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
       requeriment: this.requeriment
     };
 
-    let fin = false
-    if (this.apiService.putJobs(body)) {
-      fin = true;
-    }
-    return fin;
+    this.isSubmitting = true;
+    this.apiService.putJobs(body).subscribe({
+      next: (data) => {
+        this.job = data;
+        localStorage.setItem('jobs', JSON.stringify(data));
+        this.onChange.emit(data);
+        this.showErrorMessage = false;
+        this.isSubmitting = false;
+        this.modal?.dismiss();
+      }, error: () => {
+        this.showErrorMessage = false;
+
+        this.isSubmitting = false;
+      }
+    })
   }
 
 

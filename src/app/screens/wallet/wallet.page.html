@@ -1,85 +1,18 @@
-<ion-header mode="ios" [translucent]="false" class="ion-no-border bg-background">
+<ion-header mode="ios" [translucent]="false" class="ion-no-border bg-primary">
   <ion-toolbar color="false" class="bg-transparent">
-    <ion-chip class="flex items-center m-3 gap-3 rounded-xl bg-muted">
-      <!-- Ajustar el ancho de la chip y alinear elementos en fila -->
-      <ion-img [src]="icon" class="imageOverflow min-w-12 w-12 h-12 rounded-[28px]"></ion-img>
-      <div class="flex flex-col flex-1 text-primary-foreground">
-        <ion-label [color]="false" class="text-lg font-bold text-primary-foreground">Próximo
-          Pago</ion-label>
-        <ion-label [color]="false" class="text-[16px] text-left mt-1 text-primary-foreground"><strong>Monto: </strong>
-          Bs
-          3.000.000,00</ion-label>
-        <ion-label [color]="false" class="text-muted text-sm text-left"><strong>Fecha: </strong> 01/10/2024</ion-label>
-      </div>
-      <div class="flex items-center ml-auto">
-        <ion-img src="../../../../assets/images/appIcon.png"
-          class="imageOverflow min-w-12 w-12 h-12 rounded-full"></ion-img>
-      </div>
-    </ion-chip>
-    <!-- <ion-chip style="margin: 10px; display: flex; align-items: center; margin: 10px; background-color: white;"> 
-      <ion-tab-button>
-        <span class="material-icons" style="font-size: 26px">savings</span>
-        <ion-label>Depositar</ion-label>
-      </ion-tab-button>
-      <ion-tab-button>
-        <span class="material-icons" style="font-size: 26px">undo</span>
-        <ion-label>Retirar</ion-label>
-      </ion-tab-button>
-      <ion-tab-button>
-        <span class="material-icons" style="font-size: 26px">swap_horiz</span>
-        <ion-label>Transferir</ion-label>
-      </ion-tab-button>
-    </ion-chip> -->
+    <div class="w-full flex justify-between items-center px-2 py-5">
+      <span (click)="goBack()" class="material-icons text-primary-foreground text-[36px]">
+        chevron_left
+      </span>
+      <ion-chip class="bg-transparent p-0 m-0">
+        <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
+          style="font-size: 30px"></ion-menu-button>
+      </ion-chip>
+    </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
-  <div class="w-full h-full py-2">
-    <div class="w-full flex justify-center items-center h-full px-4">
-      <ion-list class="w-full h-full bg-muted py-2 px-4 rounded-xl"
-        *ngIf="listTransaction && listTransaction.length > 0">
-        <div *ngFor="let item of listTransaction; let i=index;">
-          <div class="w-full flex gap-1 text-primary-foreground">
-            <p class="text-lg">Pago de Bs</p>
-            <p class="text-xl text-primary-foreground/90">{{item.amount}}</p>
-            <!-- <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
-              <ion-label style="font-size: 12px">0.00</ion-label>
-              <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon> -->
-          </div>
-        </div>
-      </ion-list>
-      <ion-label *ngIf="!listTransaction || listTransaction.length === 0" style="font-weight: bold; color: black;">Sin
-        Pagos recibidos</ion-label>
-    </div>
-    <!-- <ion-list>
-        <ion-item>
-          <ion-label style="font-size: 12px">Retiro</ion-label>
-          <ion-label style="font-size: 12px">#89657128</ion-label>
-          <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
-          <ion-label style="font-size: 12px">0.00</ion-label>
-          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
-        </ion-item>
-         </ion-list>
-        <ion-item>
-          <ion-label style="font-size: 12px">Transferencia</ion-label>
-          <ion-label style="font-size: 12px">#89657127</ion-label>
-          <ion-label style="font-size: 12px; color: green">+ 500.00</ion-label>
-          <ion-label style="font-size: 12px">1,000.00</ion-label>
-          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-label style="font-size: 12px">Transferencia</ion-label>
-          <ion-label style="font-size: 12px">#89657126</ion-label>
-          <ion-label style="font-size: 12px; color: red">- 1,000.00</ion-label>
-          <ion-label style="font-size: 12px">500.00</ion-label>
-          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-label style="font-size: 12px">Deposito</ion-label>
-          <ion-label style="font-size: 12px">#89657125</ion-label>
-          <ion-label style="font-size: 12px; color: green">+ 1,000.00</ion-label>
-          <ion-label style="font-size: 12px">1,500.00</ion-label>
-          <ion-icon name="eye" style="color: #2758BF; font-size: 20px;"></ion-icon>
-        </ion-item>
-      </ion-list> -->
+<ion-content [fullscreen]="true" style="--background: hsl(var(--primary))">
+  <div class="flex justify-center items-center w-full h-full">
+    <ion-img [src]="walletUpcommintAsset" class="w-[200px] h-auto object-contain" />
   </div>
 </ion-content>

@@ -1,26 +1,28 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border bg-transparent">
   <ion-toolbar color="false" class="bg-transparent">
-    <div class="rowAlignCenter margin20 center" style="position: relative">
-      <span (click)="goBack()" class="material-icons headerBackArrow" style="color: #FFF;">
-        keyboard_backspace
+    <div class="flex justify-between items-center px-2">
+      <span (click)="goBack()" class="material-icons text-[36px] text-primary-foreground rounded-full"
+        [style.background]="'hsl(0 0% 7% / .15)'">
+        chevron_left
       </span>
-      <ion-text class="whiteColor20Bold ellipseText"
-        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center"></ion-text>
+      <ion-text class="text-lg font-bold text-primary-foreground text-ellipsis line-clamp-1 text-center"></ion-text>
 
-      <ion-text style="max-width: 80%; -webkit-line-clamp: 1; text-align: left; position: absolute; right: 0;">
+      <ion-chip class="p-0 m-0 bg-[hsl(0 0% 7% / .15)] flex justify-center items-center rounded-full h-[36px] w-[36px]">
+
         <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
           style="font-size: 30px"></ion-menu-button>
-      </ion-text>
+      </ion-chip>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="relative -top-[50px]">
-    <ion-img [src]="iconFront" class="imageOverflow w-full h-[230px]"></ion-img>
+  <div class="relative -top-[50px] min-h-[230px] h-[230px]">
+    <ng-image width="100%" height="230px" [src]="iconFront||biografyAsset" class="imageOverflow w-full h-[230px]" />
     <div class="column imageOverlay">
-      <div class="column image-container" style="position: relative; width: 150px; height: 150px; margin-top: 150px;">
-        <ion-img [src]="icon" class="imageOverflowNew" style=" width: 110px; height: 110px; border-radius: 60px;" />
+      <div class="flex items-center image-container absolute max-w-max h-[150px] mt-[140px] z-10">
+        <ng-image [src]="icon" width="110px" height="110px"
+          class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full" />
       </div>
     </div>
   </div>
@@ -42,9 +44,8 @@
   <!-- ABOUT ME -->
   <div class="px-4">
     <div class="my-[20px] bg-destructive rounded-xl p-3">
-      <div class="rowAlignCenter text-primary-foreground justify-between mb-[10px]">
-        <ion-text class="blackColor19SemiBold ellipseText text-primary-foreground"
-          style="flex: 1; -webkit-line-clamp: 1">
+      <div class="rowAlignCenter text-primary-foreground justify-between">
+        <ion-text class="font-semibold text-ellipsis text-primary-foreground line-clamp-1 flex-1">
           Acerca de mí
         </ion-text>
       </div>
@@ -65,45 +66,14 @@
     <div class="">
       <div class="my-[20px] bg-destructive rounded-xl p-3">
         <div class="flex flex-col gap-2 text-primary-foreground justify-between mb-[10px]">
-          <ion-text class="text-ellipsis font-semibold text-primary-foreground flex-1 line-clamp-1">
+          <ion-text class="text-ellipsis font-semibold text-primary-foreground line-clamp-1 flex-1">
             Experiencia
           </ion-text>
-          <p>+{{ userData.user.experience ?? 0}} Años de experiencia</p>
+          <p class="text-sm">+{{ userData.user.experience ?? 0}} Años de experiencia</p>
         </div>
-        <!-- <div class="w-full grid gap-3 divide-y-[.25px] divide-muted">
-            <ng-container *ngFor="let exp of workExperiencesList">
-              <div class="w-full flex flex-col gap-3 py-3">
-                <p class="text-lg text-primary-foreground">
-                  {{exp.post}}
-                </p>
-                <p class="text-sm text-primary-foreground/80 m-0">
-                  {{exp.serviceProvider}}
-                </p>
-                <small class="text-sm text-primary-foreground/80 m-0">
-                  {{exp.experience}}
-                </small>
-              </div>
-            </ng-container>
-          </div> -->
+
       </div>
     </div>
-
-    <!-- <div class="my-[20px] bg-destructive rounded-xl p-3">
-        <div class="rowAlignCenter flex-1">
-          <span class="material-icons text-primary-foreground/80 text-lg">business_center</span>
-          <ion-text class="text-primary-foreground/80 font-medium text-ellipsis ml-[5px] flex-1 line-clamp-1">
-            {{ experienceYear ?? 0}} + Años de experiencia
-          </ion-text>
-        </div>
-        <div class="rowAlignCenter" style="flex: 1">
-          <span class="material-icons text-primary-foreground/80 text-lg">
-            location_pin
-          </span>
-          <ion-text class="grayColor15Medium flex-1 ml-[5px] line-clamp-1 text-primary-foreground/80">
-            {{ location }}
-          </ion-text>
-        </div>
-      </div> -->
 
     <div>
       <div class="my-[20px] bg-destructive rounded-xl p-3">
@@ -130,20 +100,20 @@
         </div>
 
         <div class="flex flex-col gap-1.5 my-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Dirección de correo electrónico </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Dirección de correo electrónico </ion-text>
           <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
             {{ userData.user.email }}
           </ion-text>
         </div>
         <div class="flex flex-col gap-1.5 my-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Número de teléfono móvil </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Número de teléfono móvil </ion-text>
           <ion-text class="text-sm text-primary-foreground/90" style="margin-top: 3px">
             {{ userData.user.phone }}
           </ion-text>
         </div>
 
         <div *ngIf="websitesList?.length" class="flex flex-col gap-1.5 mt-6">
-          <ion-text class="text-primary-foreground font-medium text-lg"> Sitio web </ion-text>
+          <ion-text class="text-primary-foreground font-medium text-sm"> Sitio web </ion-text>
           <div *ngFor="let item of websitesList" class="column" style="margin-top: 3px">
             <ion-text class="text-primary text-sm"> {{item}} </ion-text>
           </div>
