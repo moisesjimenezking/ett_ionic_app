@@ -12,7 +12,6 @@ export class FileItemLoaderComponent implements OnInit {
   @Input({ required: true }) base64!: string;
   @Output() onRemove = new EventEmitter();
 
-  protected file?: File;
   protected isLoading = false;
 
   protected readonly utils = new UtilsLib();
@@ -20,20 +19,9 @@ export class FileItemLoaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.loadFile(this.base64);
   }
 
 
-  loadFile(base64: string) {
-    this.isLoading = true;
-    this.utils.convertPDFBase64ToFile(base64, `${new Date().getTime()}.pdf`)
-      .then((file) => {
-        this.file = file;
-        this.isLoading = false;
-      }).catch(() => {
-        this.isLoading = false;
-      })
-  }
 
 
 }

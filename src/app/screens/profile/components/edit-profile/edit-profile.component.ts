@@ -34,10 +34,13 @@ export class EditProfileComponent implements OnInit {
   isModalOpen = false;
 
   rifValue: string = '';
+  rifImg = '';
 
   identificationValue: string = '';
+  identificationImg = '';
 
   licenceValue: string = '';
+  licenceImg = '';
 
   selectedFile: File | null = null;
 
@@ -75,9 +78,24 @@ export class EditProfileComponent implements OnInit {
     if (listWeb) {
       this.websitesList = JSON.parse(listWeb);
     }
-    this.rifValue = localStorage.getItem('rif')?.replace('null', '') ?? "";
-    this.identificationValue = localStorage.getItem('identification')?.replace('null', '') ?? "";
-    this.licenceValue = localStorage.getItem('licence')?.replace('null', '') ?? "";
+    const rif = JSON.parse(localStorage.getItem('rif') ?? "");
+    if (rif) {
+      this.rifValue = rif.text;
+      this.rifImg = rif.img;
+    }
+
+    const idenfitication = JSON.parse(localStorage.getItem('identification') ?? "");
+    if (idenfitication) {
+      this.identificationValue = idenfitication.text;
+      this.identificationImg = idenfitication.img;
+    }
+
+    const licence = JSON.parse(localStorage.getItem('license') ?? '');
+    if (licence) {
+      this.licenceValue = licence.text;
+      this.licenceImg = licence.img;
+    }
+
   }
 
   goBack() {
@@ -134,17 +152,29 @@ export class EditProfileComponent implements OnInit {
     }
 
     if (this.rifValue) {
+      body['rif_text'] = this.rifValue;
+    }
 
-      body['rif'] = this.rifValue;
+    if (this.utils.isBase64(this.rifImg)) {
+      body['rif_img'] = this.rifImg;
     }
 
 
     if (this.identificationValue) {
-      body['identification'] = this.identificationValue;
+      body['identification_text'] = this.identificationValue;
     }
 
+    if (this.utils.isBase64(this.identificationImg)) {
+      body['identification_img'] = this.identificationImg;
+    }
+
+
     if (this.licenceValue) {
-      body['licence'] = this.licenceValue;
+      body['licence_text'] = this.licenceValue;
+    }
+
+    if (this.utils.isBase64(this.licenceImg)) {
+      body['licence_img'] = this.licenceImg;
     }
 
     this.isSubmitting = true;
@@ -155,19 +185,30 @@ export class EditProfileComponent implements OnInit {
         this.mobile = data.phone;
         this.specialization = data.specialization;
         this.websitesList = data.social_link;
-        this.isSubmitting = false;
-        this.rifValue = data.rif;
-        this.identificationValue = data.identification;
-        this.licenceValue = data.licence;
+        this.rifValue = data.rif_text;
+        this.rifImg = data.rif_img;
+        this.identificationValue = data.identification_text;
+        this.identificationImg = data.identification_img
+        this.licenceValue = data.licence_text;
+        this.licenceImg = data.licence_img;
 
         localStorage.setItem('fullname', data.fullname);
         localStorage.setItem('email', data.email);
         localStorage.setItem('phone', data.phone);
         localStorage.setItem('social_link', JSON.stringify(data.social_link));
         localStorage.setItem('specialization', data.specialization);
-        localStorage.setItem('rif', data.rif);
-        localStorage.setItem('identification', data.identification);
-        localStorage.setItem('licence', data.licence);
+        localStorage.setItem('rif', JSON.stringify({
+          text: data.rif_text,
+          img: data.rif_img
+        }));
+        localStorage.setItem('identification', JSON.stringify({
+          text: data.identification_text,
+          img: data.identification_img
+        }));
+        localStorage.setItem('licence', JSON.stringify({
+          text: data.licence_text,
+          img: data.licence_img
+        }));
 
         this.onChange.emit({
           fullname: data.fullname,
@@ -177,6 +218,7 @@ export class EditProfileComponent implements OnInit {
           specialization: data.specialization
         });
 
+        this.isSubmitting = false;
 
         modal.dismiss();
       },
@@ -187,8 +229,14 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-  isBase64(value: string) {
-    return this.utils.isBase64(value);
+  isBase64(value: string | null) {
+    if (value == null) return false;
+    return this.utils.isBase64(value) || this.isALinkk(value);
+  }
+
+  isALinkk(value: string | null) {
+    if (value == null) return false;
+    return this.utils.isALink(value);
   }
 
   onFileChange(event: Event, type: 'rif' | 'identification' | 'licence') {
@@ -198,15 +246,15 @@ export class EditProfileComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         if (type === 'rif') {
-          this.rifValue = e.target.result;
+          this.rifImg = e.target.result;
           return;
         }
         if (type === 'identification') {
-          this.identificationValue = e.target.result; // Guarda la URL del archivo
+          this.identificationImg = e.target.result; // Guarda la URL del archivo
           return;
         }
 
-        this.licenceValue = e.target.result;
+        this.licenceImg = e.target.result;
 
       };
       reader.readAsDataURL(file); // Lee el archivo como URL
@@ -215,18 +263,18 @@ export class EditProfileComponent implements OnInit {
 
   onRemoveFile(type: 'rif' | 'identification' | 'licence') {
     if (type == 'rif') {
-      this.rifValue = '';
+      this.rifImg = '';
       this.cdr.detectChanges();
       return;
     }
 
     if (type == 'identification') {
-      this.identificationValue = '';
+      this.identificationImg = '';
       this.cdr.detectChanges();
       return;
     }
 
-    this.licenceValue = '';
+    this.licenceImg = '';
     this.cdr.detectChanges();
   }
 }

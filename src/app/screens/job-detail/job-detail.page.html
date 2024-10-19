@@ -1,18 +1,15 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
-  <ion-toolbar color="false" class="mt-4 mb-8 bg-background">
-    <div class="flex justify-between mx-[10px] mb-[20xp]">
-      <span (click)="goBack()" class="material-icons" style="color: #fff; font-size: 32px">
+  <ion-toolbar color="false" class="bg-background">
+    <div class="flex justify-between px-2 py-5">
+      <span (click)="goBack()" class="material-icons text-[36px] text-primary-foreground">
         chevron_left
       </span>
-      <ion-text class="flex-1 text-center whiteColor20Bold ellipseText"
-        style="max-width: 80%; -webkit-line-clamp: 1; text-align: center">
+      <ion-text class="text-lg font-bold flex-1 text-center text-ellipsis line-clamp-1 text-primary-foreground">
         Detalles de la oferta
       </ion-text>
-      <div style="position: relative">
-        <ion-buttons style="background-color: #121212; color: white;">
-          <ion-menu-button menu="app-menu" class="menu-button-custom"></ion-menu-button>
-        </ion-buttons>
-      </div>
+      <ion-chip class="bg-transparent p-0 m-0">
+        <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"></ion-menu-button>
+      </ion-chip>
       <!-- <ion-icon id=openEditJobs *ngIf="account === 'COMPANY'" name="create-outline" color="whiteColor" style="font-size: 30px;"></ion-icon> -->
     </div>
 

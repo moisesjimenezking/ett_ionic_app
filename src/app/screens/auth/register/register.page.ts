@@ -23,6 +23,10 @@ export class RegisterPage implements OnInit {
   showErrorMessage: boolean = false;
   accountType: string = '';
 
+  rifValue = '';
+
+  identificationValue = '';
+
   constructor(
     private navCtrl: NavController,
     public platform: Platform,
@@ -69,11 +73,13 @@ export class RegisterPage implements OnInit {
 
   crearCuenta() {
     this.accountType = this.accountType || "PERSON"
-    if (!this.name || !this.email || !this.mobileNo || !this.password || !this.accountType) {
+    if (!this.name || !this.email || !this.mobileNo || !this.password || !this.accountType
+
+    ) {
       this.showErrorMessage = true;
       let errorMessage = 'Por favor completa todos los campos';
       this.presentAlert(errorMessage);
-      return throwError(() => new Error(errorMessage));
+      return;
     }
 
     this.showErrorMessage = false;
@@ -83,9 +89,12 @@ export class RegisterPage implements OnInit {
       email: this.email,
       phone: this.mobileNo,
       password: this.password,
-      account: this.accountType
+      account: this.accountType,
+      rif_text: this.rifValue,
+      identification_text: this.identificationValue,
     };
 
-    return this.apiService.postUser(body)
+    this.apiService.postUser(body).subscribe();
   }
+
 }

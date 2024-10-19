@@ -115,11 +115,11 @@ export class MessagePage implements OnInit {
   }
 
   backspace() {
-    // this.goBack();
-    this.navCtrl.navigateBack(localStorage.getItem('accountType') === "PERSON"
-      ? 'bottom-tab-bar/chats'
-      : 'bottom-tab-bar-company/chats'
-    );
+    this.goBack();
+    // this.navCtrl.(localStorage.getItem('accountType') === "PERSON"
+    //   ? 'bottom-tab-bar/chats'
+    //   : 'bottom-tab-bar-company/chats'
+    // );
   }
 
   addMessage() {

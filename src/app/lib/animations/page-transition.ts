@@ -27,7 +27,8 @@ export const pageTransition = (_: HTMLElement, opts: TransitionOptions): Animati
                     .easing('ease-in')
                     .beforeStyles({ background: 'hsl(var(--background))' })
                     .fromTo('transform', 'scale(1)', 'scale(.95)')
-                    .fromTo('opacity', '0.8', '1');
+                    .fromTo('opacity', '1', '.8');
+
                 animation.addAnimation(leavingAnimation);
             }
 
@@ -41,7 +42,7 @@ export const pageTransition = (_: HTMLElement, opts: TransitionOptions): Animati
             .easing('ease-in')
             .beforeStyles({ background: 'hsl(var(--background))' })
             .fromTo('transform', 'scale(.95)', 'scale(1)')
-            .fromTo('opacity', '0.8', '1');
+            .fromTo('opacity', '.8', '1')
 
         const leavingAnimation = animationCtrl
             .create()

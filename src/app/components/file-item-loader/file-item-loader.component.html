@@ -1,0 +1,50 @@
+<ng-container *ngIf="!isLoading; else LoadingFileState">
+  <div class="flex flex-col gap-2 text-start mt-2">
+    <div class="relative flex gap-3 px-3 py-2 h-[48px] bg-background text-primary-foreground rounded-[30px]">
+      <div [id]="'open-show-image-'+filename+'-modal'" class="w-full flex flex-1 gap-2 items-center">
+        <!-- <ng-image loadBackground="bg-[#121212]" width="40px" height="100%" [alt]="filename" [src]="base64"
+          class="rounded-md" /> -->
+        <ion-icon name="document-outline" class="text-primary-foreground text-xl"></ion-icon>
+        <div class="flex flex-col  justify-center flex-1 gap-2">
+          <p class="text-sm line-clamp-2 truncate text-ellipsis">
+            {{filename}}
+          </p>
+        </div>
+      </div>
+      <button
+        class="flex justify-center items-center outline-none shadow-none h-max w-max absolute top-2/4 -translate-y-2/4 right-1 z-[2]"
+        (click)="onRemove.emit()">
+        <span class="material-icons text-sm text-primary-foreground">
+          close
+        </span>
+      </button>
+    </div>
+    <!-- <ion-chip class="min-w-24 h-8 max-w-max px-3 py-1 rounded-lg bg-accent text-primary-foreground"
+      (click)="onRemove.emit()">
+      <span>
+        Eliminar archivo
+      </span>
+    </ion-chip> -->
+  </div>
+</ng-container>
+<ng-template #LoadingFileState>
+  <div class="flex gap-3 px-3 py-2 w-full h-[48px] rounded-[30px] bg-destructive animate-pulse">
+
+  </div>
+</ng-template>
+
+<ion-modal #showImageModal mode="md" [keepContentsMounted]="true" [trigger]="'open-show-image-'+filename+'-modal'"
+  style="--border-radius: 16px; --backdrop-opacity: .8">
+  <ng-template>
+    <div class="bg-transparent rounded-xl flex overflow-hidden w-full max-h-[530px] relative">
+      <ng-image width="100%" height="auto" [src]="base64" />
+      <ion-chip
+        class="absolute top-1 right-1 bg-[#12121280] flex justify-center items-center w-8 h-8 rounded-full text-primary-foreground"
+        (click)="showImageModal.dismiss()">
+        <span class="material-icons">
+          close
+        </span>
+      </ion-chip>
+    </div>
+  </ng-template>
+</ion-modal>

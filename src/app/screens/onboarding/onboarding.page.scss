@@ -86,7 +86,8 @@
    margin-top: 0px;
    width: 140px;
    /* Tamaño del logo, ajustable */
-   height: 150px;
+   height: auto;
+   object-fit: contain;
    margin-bottom: 20px;
  }
 

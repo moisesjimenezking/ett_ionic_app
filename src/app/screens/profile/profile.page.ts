@@ -6,7 +6,7 @@ import { IonMenu, IonModal } from '@ionic/angular';
 import { EditProfileEvent } from './components/edit-profile/edit-profile.component';
 import { AddSkillsEvent } from './components/add-skills/add-skills.component';
 import { EditAboutEvent } from './components/edit-about/edit-about.component';
-import { assetsPath } from '@/lib/constanst/assets';
+import { assetsPath, bgBiografyAsset } from '@/lib/constanst/assets';
 import { UtilsLib } from '@/lib/utils';
 
 @Component({
@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
   phone: any = '';
   icon = '';
   iconFront = '';
+  biografyAsset = bgBiografyAsset;
 
   isModalOpen = false;
   modalValue: string = '';
@@ -97,7 +98,7 @@ export class ProfilePage implements OnInit {
       this.phone = localStorage.getItem('phone');
       this.specialization = localStorage.getItem('specialization') === 'null' ? '' : localStorage.getItem('specialization') ?? '';
       this.icon = this.stablishUrlPic(localStorage.getItem('icon_profile')) ?? '';
-      this.iconFront = this.stablishUrlPic(localStorage.getItem('icon_front')) ?? '';
+      this.iconFront = this.stablishUrlPic(localStorage.getItem('icon_front'), true) ?? '';
       this.location = localStorage.getItem('location') ?? '';
       this.experienceYear = localStorage.getItem('experienceYear') ?? '';
       this.about = localStorage.getItem('about') ?? '';
@@ -114,8 +115,8 @@ export class ProfilePage implements OnInit {
     }, 1000);
   }
 
-  stablishUrlPic(url: string | null) {
-    return this.utils.stablishUrlPic(url);
+  stablishUrlPic(url: string | null, biografy = false) {
+    return this.utils.stablishUrlPic(url, biografy);
   }
 
 
@@ -145,7 +146,7 @@ export class ProfilePage implements OnInit {
       body["icon"] = "";
     } else {
       iconBeforeChange = this.iconFront;
-      this.iconFront = this.stablishUrlPic("");
+      this.iconFront = this.stablishUrlPic("", true);
       body["icon_front"] = "";
     }
 
@@ -153,7 +154,7 @@ export class ProfilePage implements OnInit {
       this.apService.putUser(body).subscribe({
         next: (data: any) => {
           this.icon = this.stablishUrlPic(data.icon);
-          this.iconFront = this.stablishUrlPic(data.icon_front);
+          this.iconFront = this.stablishUrlPic(data.icon_front, true);
           localStorage.setItem('icon_profile', data.icon);
           localStorage.setItem('icon_front', data.icon_front);
 
@@ -189,7 +190,7 @@ export class ProfilePage implements OnInit {
         next: (data: any) => {
 
           this.icon = this.stablishUrlPic(data.icon);
-          this.iconFront = this.stablishUrlPic(data.icon_front);
+          this.iconFront = this.stablishUrlPic(data.icon_front, true);
 
           localStorage.setItem('icon_profile', data.icon);
           localStorage.setItem('icon_front', data.icon_front);

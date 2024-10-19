@@ -212,6 +212,11 @@ ion-menu-button {
   padding: 0px !important;
   margin: 0px !important;
   background: transparent !important;
+
+  &::part(native) {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }
 
 // ::part(scroll) {

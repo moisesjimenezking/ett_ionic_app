@@ -15,6 +15,7 @@ import { UtilsLib } from '@/lib/utils';
 export class ChatsPage implements OnInit {
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
 
+
   protected readonly utils = new UtilsLib();
 
   chatsList: ChatMessage[] = [

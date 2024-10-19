@@ -59,62 +59,66 @@
         <div class="w-full flex flex-col gap-2 text-start">
           <ion-text class="text-sm ml-5 text-primary-foreground"> RIF</ion-text>
           <div class="min-h-[48px]">
-            <ng-container *ngIf="!isBase64(rifValue); else FileRifLoader">
-              <div class="field">
-                <ion-input mode="ios" placeholder="Ingrese su RIF" [(ngModel)]="rifValue" inputmode="numeric">
-                </ion-input>
-              </div>
-              <div>
+
+            <div class="field">
+              <ion-input mode="ios" placeholder="Ingrese su RIF" [(ngModel)]="rifValue" inputmode="numeric">
+              </ion-input>
+            </div>
+            <div>
+              <ng-container *ngIf="!rifImg?.length;else ImageRifLoader">
                 <ion-chip class="min-w-24 h-8 max-w-max px-3 py-1 rounded-lg bg-accent text-primary-foreground"
                   (click)="inputRif.click()">
                   <span>
                     Cargar RIF
                   </span>
                 </ion-chip>
-                <input #inputRif type="file" hidden accept=".pdf" (change)="onFileChange($event, 'rif')" />
-              </div>
-            </ng-container>
-            <ng-template #FileRifLoader>
-              <app-file-item-loader [base64]="rifValue" filename="RIF" (onRemove)="onRemoveFile('rif')" />
-            </ng-template>
+                <input #inputRif type="file" hidden accept=".jpeg" (change)="onFileChange($event, 'rif')" />
+              </ng-container>
+              <ng-template #ImageRifLoader>
+                <app-file-item-loader [base64]="rifImg" filename="RIF" (onRemove)="onRemoveFile('rif')" />
+              </ng-template>
+            </div>
+
           </div>
         </div>
 
         <div class="w-full flex flex-col gap-2 text-start">
           <ion-text class="text-sm ml-5 text-primary-foreground"> Identificación</ion-text>
           <div class="min-h-[48px]">
-            <ng-container *ngIf="!isBase64(identificationValue);else FileIdentificationLoader">
-              <div class="field">
-                <ion-input mode="ios" placeholder="Ingrese su identificación" [(ngModel)]="identificationValue">
-                </ion-input>
-              </div>
+
+            <div class="field">
+              <ion-input mode="ios" placeholder="Ingrese su identificación" [(ngModel)]="identificationValue">
+              </ion-input>
+            </div>
+            <ng-container *ngIf="!identificationImg.length;else FileIdentificationLoader">
               <div>
-                <ion-chip class="min-w-36 h-8 max-w-max px-3 py-1 rounded-lg bg-accent text-primary-foreground"
+                <ion-chip class="min-w-24 h-8 max-w-max px-3 py-1 rounded-lg bg-accent text-primary-foreground"
                   (click)="inputDNI.click()">
                   <span>
                     Cargar identificación
                   </span>
                 </ion-chip>
-                <input #inputDNI type="file" hidden accept=".pdf" (change)="onFileChange($event, 'identification')" />
+                <input #inputDNI type="file" hidden accept=".jpeg" (change)="onFileChange($event, 'identification')" />
               </div>
             </ng-container>
             <ng-template #FileIdentificationLoader>
-              <app-file-item-loader [base64]="identificationValue" filename="Identificación"
+              <app-file-item-loader [base64]="rifImg" filename="Identificación"
                 (onRemove)="onRemoveFile('identification')" />
             </ng-template>
           </div>
         </div>
-        <!-- 
+
         <div class="w-full flex flex-col gap-2 text-start">
           <ion-text class="text-sm ml-5 text-primary-foreground"> Licencia de conducir</ion-text>
           <div class="min-h-[48px]">
-            <ng-container *ngIf="!utils.isBase64(licenceValue);else FileLicenceLoader">
-              <div class="field">
-                <ion-input mode="ios" placeholder="Ingrese su identificación" [(ngModel)]="licenceValue">
-                </ion-input>
-              </div>
+
+            <div class="field">
+              <ion-input mode="ios" placeholder="Ingrese su identificación" [(ngModel)]="licenceValue">
+              </ion-input>
+            </div>
+            <ng-container *ngIf="!licenceImg.length;else FileLicenceLoader">
               <div>
-                <ion-chip class="min-w-36 h-8 max-w-max px-3 py-1 rounded-lg bg-accent text-primary-foreground"
+                <ion-chip class="min-w-24 h-8 max-w-max px-3 py-1 rounded-lg bg-accent text-primary-foreground"
                   (click)="inputLicence.click()">
                   <span>
                     Cargar licencia
@@ -124,10 +128,10 @@
               </div>
             </ng-container>
             <ng-template #FileLicenceLoader>
-              <app-file-item-loader [base64]="licenceValue" filename="Licencia" (onRemove)="licenceValue=''" />
+              <app-file-item-loader [base64]="licenceImg" filename="Licencia" (onRemove)="onRemoveFile('licence')" />
             </ng-template>
           </div>
-        </div> -->
+        </div>
 
         <div class="w-full flex flex-col gap-2 text-start">
           <ion-text class="text-sm ml-5 text-primary-foreground">Sitio web</ion-text>
