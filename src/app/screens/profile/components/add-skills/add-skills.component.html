@@ -8,7 +8,22 @@
       </ion-text>
 
       <div class="w-full flex-1 flex flex-col gap-4 max-h-full overflow-y-auto text-center">
-        <div class="flex flex-wrap gap-1 gap-y-2">
+        <div class="flex flex-col gap-2 text-start">
+          <ion-chip class="field">
+            <ion-input mode="ios" type="text" placeholder="Agrega una habilidad" [(ngModel)]="skill"
+              (keyup.enter)="addSkill()">
+            </ion-input>
+          </ion-chip>
+
+          <div class="px-3 flex flex-1 flex-wrap gap-1 max-h-[480px] overflow-y-auto">
+            <ion-chip class="bg-foreground flex items-center gap-1 max-w-max"
+              *ngFor="let item of currentSkill; let index = index">
+              <ion-label class="text-destructive text-sm">{{ item }}</ion-label>
+              <ion-icon name="close-circle" (click)="removeSkill(index)" class="text-primary"></ion-icon>
+            </ion-chip>
+          </div>
+        </div>
+        <!-- <div class="flex flex-wrap gap-1 gap-y-2">
           <ng-container *ngFor="let item of recommendedList;let i=index;">
             <div class="rounded-full flex items-center justify-between gap-1 max-w-max px-4 py-1"
               (click)="item.isSelected=!item.isSelected"
@@ -28,7 +43,7 @@
               </span>
             </div>
           </ng-container>
-        </div>
+        </div> -->
       </div>
       <div class="w-full flex gap-2 justify-end items-center mt-5">
         <ion-chip [disabled]="isSubmitting"

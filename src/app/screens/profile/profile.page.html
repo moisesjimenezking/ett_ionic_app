@@ -34,8 +34,7 @@
     <div class="column imageOverlay">
       <div class="flex items-center image-container absolute max-w-max h-[150px] mt-[140px] z-10">
         <ng-container *ngIf="isProfileLoaded;else ProfileImageLoadingState">
-
-          <ng-image [src]="icon" width="110px" height="110px"
+          <ng-image [fallbackErrorSrc]="stablishUrlPic(null)" [src]="icon" width="110px" height="110px"
             class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full" (click)="openModal('profile')" />
         </ng-container>
         <ng-template #ProfileImageLoadingState>
@@ -130,18 +129,23 @@
 
       <div>
         <div class="my-[20px] bg-destructive rounded-xl p-3">
-          <ion-text class="text-ellipsis font-semibold text-primary-foreground line-clamp-1 flex-1">
-            Habilidades
-          </ion-text>
-          <div id="open-add-skills-profile-modal" class=" center square18 mt-1">
-            <ion-icon name="add" class="text-[24px] text-primary-foreground"></ion-icon>
+          <div class="flex justify-between gap-1 items-center">
+            <ion-text class="text-ellipsis font-semibold text-primary-foreground line-clamp-1 flex-1">
+              Habilidades
+            </ion-text>
+            <div id="open-add-skills-profile-modal"
+              class="center w-[22px] h-[22px] rounded-[4px] border border-[var(--grayColor)]">
+              <ion-icon name="add" class="text-[24px] text-primary-foreground"></ion-icon>
+            </div>
           </div>
 
-          <div class="flex flex-wrap gap-1 px-2 mt-2">
-            <ion-chip *ngFor="let item of currentSkill" class="text-primary-foreground px-4 text-sm">
-              <ion-label>{{ item }}</ion-label>
-            </ion-chip>
-          </div>
+          <ng-container *ngIf="currentSkill.length">
+            <div class="flex flex-wrap gap-x-1 gap-y-2 mt-2">
+              <ion-chip *ngFor="let item of currentSkill" class="text-primary-foreground py-1.5 px-4 m-0 text-sm">
+                <ion-label>{{ item }}</ion-label>
+              </ion-chip>
+            </div>
+          </ng-container>
         </div>
 
         <app-add-skills (onChange)="onChangeAddSkillsEvent($event)" />
@@ -195,10 +199,17 @@
   <ion-modal #changePicSheet mode="ios" [keepContentsMounted]="true" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
     style="--height: auto; --width: 100%;">
     <ng-template>
-      <div class="mx-3 bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
-        <ion-img [src]="modalValue == 'profile' ? icon: iconFront"
-          class="min-w-[110px] min-h-[110px] rounded-full overflow-hidden object-cover"
-          style="width: 110px; height: 110px;" />
+      <div class="relative mx-3 bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
+        <ng-image [fallbackErrorSrc]="stablishUrlPic(null, modalValue != 'profile')"
+          [src]="modalValue == 'profile' ? icon: iconFront" width="110px" height="110px"
+          class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full" />
+        <button
+          class="flex justify-center items-center outline-none shadow-none h-max w-max absolute top-1.5 right-1.5 z-[2]"
+          (click)="changePicSheet.dismiss()">
+          <span class="material-icons text-xl text-primary-foreground">
+            close
+          </span>
+        </button>
         <div class="w-full flex gap-2 justify-between items-center">
           <ion-chip
             class="text-primary-foreground  text-md flex justify-center items-center font-medium bg-transparent w-full">

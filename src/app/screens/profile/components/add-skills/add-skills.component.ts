@@ -30,13 +30,8 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
     "Solaris"
   ];
 
+  skill = '';
   currentSkill: string[] = [];
-
-  recommendedList: any[] = [];
-
-  newWebsite: string = '';
-  websitesList: string[] = [];
-  selectedSkills: string[] = [];
 
   isSubmitting = false;
 
@@ -50,21 +45,10 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    let listCurrentSkill = localStorage.getItem('skills');
+    const listCurrentSkill = localStorage.getItem('skills');
     if (listCurrentSkill) {
       this.currentSkill = JSON.parse(listCurrentSkill);
     }
-
-    this.recommendedList = this.listSkillsRecommended.map((skill, index) => {
-      return {
-        id: index,
-        skill: skill,
-        isSelected: this.currentSkill.includes(skill)
-      };
-    });
-
-
-
   }
 
   ngAfterViewInit(): void {
@@ -78,15 +62,25 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl(screen);
   }
 
+  addSkill() {
+    this.currentSkill.push(this.skill);
+    this.skill = '';
+  }
+
+  removeSkill(position: number) {
+    this.currentSkill = this.currentSkill.filter((_, index) => index != position);
+  }
+
   updateUser(modal: IonModal) {
-    this.selectedSkills = this.recommendedList
-      .filter(item => item.isSelected)
-      .map(item => item.skill);
 
     const body: { [key: string]: any } = {};
-    if (this.selectedSkills) {
-      body["skills"] = this.selectedSkills
+
+    if (this.skill.length) {
+      this.currentSkill.push(this.skill);
+      this.skill = '';
     }
+
+    body["skills"] = this.currentSkill;
 
 
     this.isSubmitting = true;

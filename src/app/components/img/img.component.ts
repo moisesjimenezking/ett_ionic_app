@@ -21,6 +21,7 @@ import { icPersonAsset } from '@/lib/constanst/assets';
 export class ImgComponent implements OnInit {
   @Input() src = '';
   @Input() loadBackground = 'bg-muted';
+  @Input() fallbackErrorSrc = '';
   @Input() width: string | number = '80';
   @Input() height: string | number = '200px';
   @Input() heightAfterLoaded?: string | number;
