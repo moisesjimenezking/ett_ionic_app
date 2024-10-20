@@ -1,3 +1,4 @@
+import { icPersonAsset } from './../../lib/constanst/assets';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonMenu } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
@@ -19,6 +20,7 @@ export class CandidatePage implements OnInit {
   icon = '';
   iconFront = '';
   biografyAsset = bgBiografyAsset;
+  icPersonAsset = icPersonAsset;
 
   showMore = false;
 

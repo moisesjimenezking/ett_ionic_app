@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { ApiService } from '@/service/api.service';
@@ -30,41 +30,25 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
     "Solaris"
   ];
 
+  skill = '';
   currentSkill: string[] = [];
-
-  recommendedList: any[] = [];
-
-  newWebsite: string = '';
-  websitesList: string[] = [];
-  selectedSkills: string[] = [];
 
   isSubmitting = false;
 
   protected readonly utils = new UtilsLib();
 
   constructor(
-    private navCtrl: NavController,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private skillApi: ApiService,
+    private readonly navCtrl: NavController,
+    private readonly alertController: AlertController,
+    private readonly router: Router,
+    private readonly skillApi: ApiService,
   ) { }
 
   ngOnInit() {
-    let listCurrentSkill = localStorage.getItem('skills');
+    const listCurrentSkill = localStorage.getItem('skills');
     if (listCurrentSkill) {
       this.currentSkill = JSON.parse(listCurrentSkill);
     }
-
-    this.recommendedList = this.listSkillsRecommended.map((skill, index) => {
-      return {
-        id: index,
-        skill: skill,
-        isSelected: this.currentSkill.includes(skill)
-      };
-    });
-
-
-
   }
 
   ngAfterViewInit(): void {
@@ -78,15 +62,41 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl(screen);
   }
 
+  addSkill() {
+    if (!this.skill.trim().length) return;
+    const unavailable = this.currentSkill.map(s => s.toLowerCase().trim()).includes(this.skill.toLowerCase())
+    if (unavailable) {
+      this.presentAlert(`La habilidad ${this.skill} ya ha sido agregada.`);
+      return;
+    }
+    this.currentSkill.push(this.skill);
+    this.skill = '';
+  }
+
+  removeSkill(position: number) {
+    this.currentSkill = this.currentSkill.filter((_, index) => index != position);
+  }
+
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   updateUser(modal: IonModal) {
-    this.selectedSkills = this.recommendedList
-      .filter(item => item.isSelected)
-      .map(item => item.skill);
 
     const body: { [key: string]: any } = {};
-    if (this.selectedSkills) {
-      body["skills"] = this.selectedSkills
+
+    if (this.skill.length) {
+      this.addSkill();
     }
+
+    body["skills"] = this.currentSkill;
 
 
     this.isSubmitting = true;
