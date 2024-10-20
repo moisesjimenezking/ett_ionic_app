@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { ApiService } from '@/service/api.service';
@@ -38,10 +38,10 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
   protected readonly utils = new UtilsLib();
 
   constructor(
-    private navCtrl: NavController,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private skillApi: ApiService,
+    private readonly navCtrl: NavController,
+    private readonly alertController: AlertController,
+    private readonly router: Router,
+    private readonly skillApi: ApiService,
   ) { }
 
   ngOnInit() {
@@ -63,6 +63,12 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
   }
 
   addSkill() {
+    if (!this.skill.trim().length) return;
+    const unavailable = this.currentSkill.map(s => s.toLowerCase().trim()).includes(this.skill.toLowerCase())
+    if (unavailable) {
+      this.presentAlert(`La habilidad ${this.skill} ya ha sido agregada.`);
+      return;
+    }
     this.currentSkill.push(this.skill);
     this.skill = '';
   }
@@ -71,13 +77,23 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
     this.currentSkill = this.currentSkill.filter((_, index) => index != position);
   }
 
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   updateUser(modal: IonModal) {
 
     const body: { [key: string]: any } = {};
 
     if (this.skill.length) {
-      this.currentSkill.push(this.skill);
-      this.skill = '';
+      this.addSkill();
     }
 
     body["skills"] = this.currentSkill;

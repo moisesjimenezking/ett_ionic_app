@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, IonMenu, AlertController } from '@ionic/angular';
 import { throwError } from 'rxjs';
@@ -12,7 +12,7 @@ import { ApiService } from '../../service/api.service';
   styleUrls: ['./new-jobs.page.scss'],
 })
 export class NewJobsPage implements OnInit {
-  @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
+  @ViewChild('ScrollContainer') scrollContainer?: ElementRef;
 
   title: string = '';
   type_time: string = '';
@@ -48,20 +48,19 @@ export class NewJobsPage implements OnInit {
     this.navCtrl.back()
   }
 
-  closeMenu() {
-    if (this.menu) {
-      this.menu.close();
-    }
-  }
-
-  logout() {
-    this.closeMenu();
-  }
-
   addItemToList() {
     if (this.newItem.trim() !== '') {
+      const unavailable = this.requeriment.map(r => r.toLowerCase().trim()).includes(this.newItem.toLowerCase())
+      if (unavailable) {
+        this.presentAlert(`El requerimiento ${this.newItem} ya ha sido agregado.`);
+        return;
+      }
       this.requeriment.push(this.newItem);
       this.newItem = '';
+      if (this.requeriment.length > 8) return;
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100);
     }
   }
 
@@ -105,6 +104,15 @@ export class NewJobsPage implements OnInit {
     if (!this.amount.startsWith('Bs ')) {
       this.amount = 'Bs ' + this.amount;
     }
+  }
+
+
+  scrollToBottom(): void {
+    this.scrollContainer?.nativeElement.scroll({
+      top: this.scrollContainer?.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   saveNewRecord() {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, AlertController, IonModal } from '@ionic/angular';
 
@@ -14,6 +14,7 @@ import { JobModel } from '@/types';
 })
 export class EditJobDetailComponent implements OnInit, OnChanges {
   @ViewChild('openEditJobs', { read: IonModal }) modal!: IonModal;
+  @ViewChild('ScrollContainer') scrollContainer?: ElementRef;
   @Input({ required: true }) job!: JobModel;
 
   @Output() onChange = new EventEmitter<JobModel>();
@@ -72,8 +73,17 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
 
   addItemToList() {
     if (this.newItem.trim() !== '') {
+      const unavailable = this.requeriment.map(r => r.toLowerCase().trim()).includes(this.newItem.toLowerCase())
+      if (unavailable) {
+        this.presentAlert(`El requerimiento ${this.newItem} ya ha sido agregado.`);
+        return;
+      }
       this.requeriment.push(this.newItem);
       this.newItem = '';
+      if (this.requeriment.length > 8) return;
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100);
     }
   }
 
@@ -115,6 +125,14 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
     });
 
     await alert.present();
+  }
+
+  scrollToBottom(): void {
+    this.scrollContainer?.nativeElement.scroll({
+      top: this.scrollContainer?.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   formatAmount() {
