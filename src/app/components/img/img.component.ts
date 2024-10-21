@@ -4,7 +4,9 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 
 import { fadeIn } from '@/lib/animations/custom-animations';
@@ -18,7 +20,7 @@ import { icPersonAsset } from '@/lib/constanst/assets';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeIn],
 })
-export class ImgComponent implements OnInit {
+export class ImgComponent implements OnInit, OnChanges {
   @Input() src = '';
   @Input() loadBackground = 'bg-muted';
   @Input() fallbackErrorSrc = '';
@@ -41,6 +43,13 @@ export class ImgComponent implements OnInit {
 
   ngOnInit() {
     this.el.nativeElement.classList.add('position-relatie');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['src']) {
+      this.isError = false;
+      this.isLoad = false;
+    }
   }
 
   getBgAnimated() {
