@@ -185,6 +185,8 @@ export class ProfilePage implements OnInit {
       body["icon_front"] = base64String;
     }
 
+    this.cdr.detectChanges();
+
     setTimeout(() => {
       this.apService.putUser(body).subscribe({
         next: (data: any) => {
