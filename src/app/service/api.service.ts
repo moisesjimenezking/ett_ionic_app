@@ -100,14 +100,14 @@ export class ApiService {
           localStorage.setItem('token', response.token);
           localStorage.setItem('fullname', response.user.fullname);
           localStorage.setItem('email', response.user.email);
-          localStorage.setItem('icon_profile', response.user.icon);
-          localStorage.setItem('icon_front', response.user.icon_front);
-          localStorage.setItem('social_link', JSON.stringify(response.user.social_link));
-          localStorage.setItem('specialization', response.user.specialization);
-          localStorage.setItem('phone', response.user.phone);
-          localStorage.setItem('address', response.user.address);
-          localStorage.setItem('sex', response.user.sex);
-          localStorage.setItem('civil_status', response.user.civil_status);
+          localStorage.setItem('icon_profile', response.user.icon ?? '');
+          localStorage.setItem('icon_front', response.user.icon_front ?? '');
+          localStorage.setItem('social_link', response.user.social_link ? JSON.stringify(response.user.social_link) : '');
+          localStorage.setItem('specialization', response.user.specialization ?? '');
+          localStorage.setItem('phone', response.user.phone ?? '');
+          localStorage.setItem('address', response.user.address ?? '');
+          localStorage.setItem('sex', response.user.sex ?? '');
+          localStorage.setItem('civil_status', response.user.civil_status ?? '');
           localStorage.setItem('family_responsibilities', response.user.family_responsibilities);
           localStorage.setItem('birthdate', response.user.birthdate);
           localStorage.setItem('identification', JSON.stringify({
@@ -122,14 +122,14 @@ export class ApiService {
             text: response.user.rif_text ?? "",
             img: response.user.rif_img ?? ""
           }));
-          localStorage.setItem('level_study', response.user.level_study);
-          localStorage.setItem('blood_type', response.user.blood_type);
-          localStorage.setItem('allergies', response.user.allergies);
-          localStorage.setItem('accountType', response.user.account);
+          localStorage.setItem('level_study', response.user.level_study ?? '');
+          localStorage.setItem('blood_type', response.user.blood_type ?? '');
+          localStorage.setItem('allergies', response.user.allergies ?? '');
+          localStorage.setItem('accountType', response.user.account ?? '');
           localStorage.setItem('user_id', response.user.id);
-          localStorage.setItem('location', response.user.location);
-          localStorage.setItem('experienceYear', response.user.experience);
-          localStorage.setItem('about', response.user.about);
+          localStorage.setItem('location', response.user.location ?? '');
+          localStorage.setItem('experienceYear', response.user.experience ?? '');
+          localStorage.setItem('about', response.user.about ?? '');
 
           this.goTo(localStorage.getItem('accountType') === "PERSON"
             ? 'bottom-tab-bar/home'
