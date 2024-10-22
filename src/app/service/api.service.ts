@@ -100,16 +100,16 @@ export class ApiService {
           localStorage.setItem('token', response.token);
           localStorage.setItem('fullname', response.user.fullname);
           localStorage.setItem('email', response.user.email);
-          localStorage.setItem('icon_profile', response.user.icon);
-          localStorage.setItem('icon_front', response.user.icon_front);
-          localStorage.setItem('social_link', JSON.stringify(response.user.social_link));
-          localStorage.setItem('specialization', response.user.specialization);
-          localStorage.setItem('phone', response.user.phone);
-          localStorage.setItem('address', response.user.address);
-          localStorage.setItem('sex', response.user.sex);
-          localStorage.setItem('civil_status', response.user.civil_status);
-          localStorage.setItem('family_responsibilities', response.user.family_responsibilities);
-          localStorage.setItem('birthdate', response.user.birthdate);
+          localStorage.setItem('icon_profile', response.user?.icon ?? '');
+          localStorage.setItem('icon_front', response.user?.icon_front ?? '');
+          localStorage.setItem('social_link', response.user?.social_link ? JSON.stringify(response.user.social_link) : '');
+          localStorage.setItem('specialization', response.user?.specialization ?? '');
+          localStorage.setItem('phone', response.user?.phone ?? '');
+          localStorage.setItem('address', response.user?.address ?? '');
+          localStorage.setItem('sex', response.user?.sex ?? '');
+          localStorage.setItem('civil_status', response.user?.civil_status ?? '');
+          localStorage.setItem('family_responsibilities', response.user?.family_responsibilities ?? '');
+          localStorage.setItem('birthdate', response.user?.birthdate ?? '');
           localStorage.setItem('identification', JSON.stringify({
             text: response.user.identification_text ?? "",
             img: response.user.identification_img ?? ""
@@ -122,14 +122,14 @@ export class ApiService {
             text: response.user.rif_text ?? "",
             img: response.user.rif_img ?? ""
           }));
-          localStorage.setItem('level_study', response.user.level_study);
-          localStorage.setItem('blood_type', response.user.blood_type);
-          localStorage.setItem('allergies', response.user.allergies);
-          localStorage.setItem('accountType', response.user.account);
+          localStorage.setItem('level_study', response.user?.level_study ?? '');
+          localStorage.setItem('blood_type', response.user?.blood_type ?? '');
+          localStorage.setItem('allergies', response.user?.allergies ?? '');
+          localStorage.setItem('accountType', response.user?.account?.toUpperCase() ?? 'PERSON');
           localStorage.setItem('user_id', response.user.id);
-          localStorage.setItem('location', response.user.location);
-          localStorage.setItem('experienceYear', response.user.experience);
-          localStorage.setItem('about', response.user.about);
+          localStorage.setItem('location', response.user?.location ?? '');
+          localStorage.setItem('experienceYear', response.user?.experience ?? '');
+          localStorage.setItem('about', response.user?.about ?? '');
 
           this.goTo(localStorage.getItem('accountType') === "PERSON"
             ? 'bottom-tab-bar/home'
@@ -165,14 +165,14 @@ export class ApiService {
         (response: any) => {
           localStorage.setItem('fullname', response.fullname);
           localStorage.setItem('email', response.email);
-          localStorage.setItem('icon_profile', response.user?.icon);
-          localStorage.setItem('icon_front', response.user?.icon_front);
-          localStorage.setItem('social_link', JSON.stringify(response.user?.social_link));
-          localStorage.setItem('specialization', response.user?.specialization);
-          localStorage.setItem('phone', response.phone);
-          localStorage.setItem('address', response.address);
-          localStorage.setItem('sex', response.sex);
-          localStorage.setItem('civil_status', response.civil_status);
+          localStorage.setItem('icon_profile', response.user?.icon ?? '');
+          localStorage.setItem('icon_front', response.user?.icon_front ?? '');
+          localStorage.setItem('social_link', JSON.stringify(response.user?.social_link ?? ''));
+          localStorage.setItem('specialization', response.user?.specialization ?? '');
+          localStorage.setItem('phone', response.phone ?? '');
+          localStorage.setItem('address', response.address ?? '');
+          localStorage.setItem('sex', response.sex ?? '');
+          localStorage.setItem('civil_status', response.civil_status ?? '');
           localStorage.setItem('family_responsibilities', response.family_responsibilities);
           localStorage.setItem('birthdate', response.birthdate);
           // localStorage.setItem('identification', response.identification);
@@ -182,9 +182,9 @@ export class ApiService {
           localStorage.setItem('blood_type', response.blood_type);
           localStorage.setItem('allergies', response.allergies);
           localStorage.setItem('user_id', response.id);
-          localStorage.setItem('location', response.location);
-          localStorage.setItem('experienceYear', response.experience);
-          localStorage.setItem('about', response.about);
+          localStorage.setItem('location', response.location ?? '');
+          localStorage.setItem('experienceYear', response.experience ?? '');
+          localStorage.setItem('about', response.about ?? '');
         }
       );
   }
