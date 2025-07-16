@@ -47,7 +47,7 @@
   @apply font-bold;
   text-align: center !important;
   color: hsl(var(--primary-foreground)) !important;
-  margin-block: 28px;
+  margin-block: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,4 +71,16 @@
   margin-left: 0%;
   margin-right: 0%;
   height: 40px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; // o center si quieres todo centrado
+  padding-top: 15px; // ajusta según necesites
+}
+
+.logo-login {
+  width: 60px; // o el tamaño que desees
 }

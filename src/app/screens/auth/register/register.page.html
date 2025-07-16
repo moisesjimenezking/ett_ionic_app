@@ -9,6 +9,16 @@
     </ion-text>
 
     <div class="flex flex-1 flex-col gap-4 max-h-full overflow-y-auto">
+      <ion-segment value="PERSON" mode="ios" style="margin-top:.5rem" (ionChange)="seleccionarTipoCuenta($event)">
+        <ion-segment-button value="PERSON" layout="icon-start" (click)="this.accountType='PERSON'">
+          <ion-icon name="person" style="font-size: 16px"></ion-icon>
+          <ion-label>Personal</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="COMPANY" layout="icon-start" (click)="this.accountType='COMPANY'">
+          <ion-icon name="business" style="font-size: 16px"></ion-icon>
+          <ion-label>Empresarial</ion-label>
+        </ion-segment-button>
+      </ion-segment>
       <div class="flex flex-col gap-2 text-start">
         <ion-text class="text-sm ml-5 text-primary-foreground"> Nombre</ion-text>
         <ion-chip class="field">
@@ -78,20 +88,6 @@
           </div>
         </div>
       </div>
-
-
-      <ion-segment value="PERSON" mode="ios" style="margin-top:.5rem" (ionChange)="seleccionarTipoCuenta($event)">
-        <ion-segment-button value="PERSON" layout="icon-start" (click)="this.accountType='PERSON'">
-          <ion-icon name="person" style="font-size: 16px"></ion-icon>
-          <ion-label>Personal</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="COMPANY" layout="icon-start" (click)="this.accountType='COMPANY'">
-          <ion-icon name="business" style="font-size: 16px"></ion-icon>
-          <ion-label>Empresarial</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-
-
     </div>
     <ion-chip
       class="px-4 h-14 mt-6 bg-primary text-primary-foreground border-none rounded-full flex justify-center items-center"

@@ -1,5 +1,13 @@
-package com.ionic.jobFinder;
+package com.venezuela.ett;
 
-import com.getcapacitor.BridgeActivity;
+import android.os.Bundle;
+import android.webkit.WebView;
+import com.getcapacitor.BridgeActivity; // ✅ Esta línea es obligatoria
 
-public class MainActivity extends BridgeActivity {}
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        WebView.setWebContentsDebuggingEnabled(true);
+    }
+}

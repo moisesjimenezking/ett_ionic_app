@@ -20,8 +20,8 @@ export class HomePage implements OnInit {
 
   homeBannerImage = '';
 
-  fullName = localStorage.getItem('fullname')
-  isAccountCompany = localStorage.getItem('accountType') === "COMPANY";
+  fullName = "";
+  isAccountCompany = false;
   icon = "";
   temporalIcon = "";
 
@@ -55,6 +55,8 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.fullName = localStorage.getItem('fullname') ?? '';
+    this.isAccountCompany = localStorage.getItem('accountType') === "COMPANY"
     this.icon = this.stablishUrlPic(localStorage.getItem('icon_profile'));
     this.homeBannerImage = this.isAccountCompany ? homeBannerCompanyAsset :
       homeBannerPersonAsset;

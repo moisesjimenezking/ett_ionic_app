@@ -14,7 +14,6 @@
               (keyup.enter)="addSkill()">
             </ion-input>
           </ion-chip>
-
           <div class="px-3 flex flex-1 flex-wrap gap-1 max-h-[480px] overflow-y-auto">
             <ion-chip class="bg-foreground flex items-center gap-1 max-w-max"
               *ngFor="let item of currentSkill; let index = index">
@@ -22,28 +21,11 @@
               <ion-icon name="close-circle" (click)="removeSkill(index)" class="text-primary"></ion-icon>
             </ion-chip>
           </div>
+          <p class="px-3 flex flex-1 flex-wrap gap-1 max-h-[480px] overflow-y-auto" style="font-size: 0.85em; color: #8a8a8a; margin-top: 4px;">
+            Ingresa habilidades palabra por palabra, presionando “Enter” para agregarlas.
+          </p>
         </div>
-        <!-- <div class="flex flex-wrap gap-1 gap-y-2">
-          <ng-container *ngFor="let item of recommendedList;let i=index;">
-            <div class="rounded-full flex items-center justify-between gap-1 max-w-max px-4 py-1"
-              (click)="item.isSelected=!item.isSelected"
-              [style.border-color]="item.isSelected?'hsl(var(--primary))':'hsl(var(--destructive))'"
-              [style.background]="item.isSelected? 'hsl(var(--primary))':'hsl(var(--accent))'">
-              <ion-text [class]="utils.cn(
-                      'text-primary-foreground/80 text-sm text-left flex-1 line-clamp-1 text-ellipsis',
-                      item.isSelected && 'text-primary-foreground'
-                    )">
-                {{item.skill}}
-              </ion-text>
-              <span [class]="utils.cn(
-                      'material-icons text-lg ml-1 text-accent',
-                    item.isSelected && 'text-primary-foreground'
-                    )">
-                {{item.isSelected?'check':'add'}}
-              </span>
-            </div>
-          </ng-container>
-        </div> -->
+
       </div>
       <div class="w-full flex gap-2 justify-end items-center mt-5">
         <ion-chip [disabled]="isSubmitting"

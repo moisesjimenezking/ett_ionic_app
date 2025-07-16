@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Ett Venezuela</string>
     <string name="title_activity_main">Ett Venezuela</string>
-    <string name="package_name">com.ionic.jobFinder</string>
-    <string name="custom_url_scheme">com.ionic.jobFinder</string>
+    <string name="package_name">com.venezuela.ett</string>
+    <string name="custom_url_scheme">com.venezuela.ett</string>
 </resources>

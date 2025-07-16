@@ -5,30 +5,24 @@ import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { catchError, throwError, finalize, tap } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { ChatMessage, JobModel } from '@/types';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ApiService {
-  // private apiUrl = 'http://172.20.0.1:1263';
-  private apiUrl = "https://ettapi.com";
-  // private apiUrl = 'http://149.50.141.62:1263/'
-  // private apiUrl = 'https://api-tunnel.flippoapp.com/proxy/';
-  // private apiUrl = 'http://app.ettvenezuela.com:1263/';
-
-
+  private apiUrl = 'https://ettapi.com';
+  // private apiUrl = "http://127.0.0.1:1263";
 
   private options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token')
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
     }),
-    timeout: 20000
+    timeout: 20000,
   };
 
   constructor(
@@ -42,7 +36,7 @@ export class ApiService {
   }
 
   goTo(screen: any) {
-    this.router.navigateByUrl(screen)
+    this.router.navigateByUrl(screen);
   }
 
   redirect(uri: string) {
@@ -51,7 +45,7 @@ export class ApiService {
 
   async showSpinner() {
     const loading = await this.loadingController.create({
-      message: 'Cargando...'
+      message: 'Cargando...',
     });
     await loading.present();
   }
@@ -60,12 +54,11 @@ export class ApiService {
     await this.loadingController.dismiss();
   }
 
-
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Ups!',
       message: message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
@@ -76,12 +69,106 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/`);
   }
 
-  postToken(data: any) {
+  postTokenByCode(code: string) {
+    const body = { code, fcm_code: 'ANDROID' };
     this.showSpinner();
-    return this.http.post(`${this.apiUrl}/token`, data, this.options)
+    return this.http
+      .post(`${this.apiUrl}/tokenByCode`, body, this.options)
       .pipe(
         catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          let errorMessage =
+            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          if (error.status !== 201 && error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          this.hideSpinner();
+          this.presentAlert(errorMessage);
+          return throwError(() => new Error(errorMessage));
+        }),
+        finalize(() => {
+          this.hideSpinner();
+        })
+      )
+      .subscribe((response: any) => {
+        localStorage.clear();
+
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('fullname', response.user.fullname);
+        localStorage.setItem('email', response.user.email);
+        localStorage.setItem('icon_profile', response.user?.icon ?? '');
+        localStorage.setItem('icon_front', response.user?.icon_front ?? '');
+        localStorage.setItem(
+          'social_link',
+          response.user?.social_link
+            ? JSON.stringify(response.user.social_link)
+            : ''
+        );
+        localStorage.setItem(
+          'specialization',
+          response.user?.specialization ?? ''
+        );
+        localStorage.setItem('phone', response.user?.phone ?? '');
+        localStorage.setItem('address', response.user?.address ?? '');
+        localStorage.setItem('sex', response.user?.sex ?? '');
+        localStorage.setItem('civil_status', response.user?.civil_status ?? '');
+        localStorage.setItem(
+          'family_responsibilities',
+          response.user?.family_responsibilities ?? ''
+        );
+        localStorage.setItem('birthdate', response.user?.birthdate ?? '');
+        localStorage.setItem(
+          'identification',
+          JSON.stringify({
+            text: response.user.identification_text ?? '',
+            img: response.user.identification_img ?? '',
+          })
+        );
+        localStorage.setItem(
+          'license',
+          JSON.stringify({
+            text: response.user.license_text ?? '',
+            img: response.user.license_img ?? '',
+          })
+        );
+        localStorage.setItem(
+          'rif',
+          JSON.stringify({
+            text: response.user.rif_text ?? '',
+            img: response.user.rif_img ?? '',
+          })
+        );
+        localStorage.setItem('level_study', response.user?.level_study ?? '');
+        localStorage.setItem('blood_type', response.user?.blood_type ?? '');
+        localStorage.setItem('allergies', response.user?.allergies ?? '');
+        localStorage.setItem(
+          'accountType',
+          response.user?.account?.toUpperCase() ?? 'PERSON'
+        );
+        localStorage.setItem('user_id', response.user.id);
+        localStorage.setItem('location', response.user?.location ?? '');
+        localStorage.setItem('experienceYear', response.user?.experience ?? '');
+        localStorage.setItem('about', response.user?.about ?? '');
+
+        this.zone.run(() => {
+          this.goTo(
+            localStorage.getItem('accountType') === 'PERSON'
+              ? 'bottom-tab-bar/home'
+              : 'bottom-tab-bar-company/home'
+          );
+        });
+      });
+  }
+
+  postToken(data: any) {
+    data.fcm_code = 'ANDROID';
+    console.log(data);
+    this.showSpinner();
+    return this.http
+      .post(`${this.apiUrl}/token`, data, this.options)
+      .pipe(
+        catchError((error) => {
+          let errorMessage =
+            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 201 && error.error && error.error.message) {
             errorMessage = error.error.message;
           }
@@ -95,60 +182,108 @@ export class ApiService {
           this.hideSpinner();
         })
       )
-      .subscribe(
-        (response: any) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('fullname', response.user.fullname);
-          localStorage.setItem('email', response.user.email);
-          localStorage.setItem('icon_profile', response.user?.icon ?? '');
-          localStorage.setItem('icon_front', response.user?.icon_front ?? '');
-          localStorage.setItem('social_link', response.user?.social_link ? JSON.stringify(response.user.social_link) : '');
-          localStorage.setItem('specialization', response.user?.specialization ?? '');
-          localStorage.setItem('phone', response.user?.phone ?? '');
-          localStorage.setItem('address', response.user?.address ?? '');
-          localStorage.setItem('sex', response.user?.sex ?? '');
-          localStorage.setItem('civil_status', response.user?.civil_status ?? '');
-          localStorage.setItem('family_responsibilities', response.user?.family_responsibilities ?? '');
-          localStorage.setItem('birthdate', response.user?.birthdate ?? '');
-          localStorage.setItem('identification', JSON.stringify({
-            text: response.user.identification_text ?? "",
-            img: response.user.identification_img ?? ""
-          }));
-          localStorage.setItem('license', JSON.stringify({
-            text: response.user.license_text ?? "",
-            img: response.user.license_img ?? ""
-          }));
-          localStorage.setItem('rif', JSON.stringify({
-            text: response.user.rif_text ?? "",
-            img: response.user.rif_img ?? ""
-          }));
-          localStorage.setItem('level_study', response.user?.level_study ?? '');
-          localStorage.setItem('blood_type', response.user?.blood_type ?? '');
-          localStorage.setItem('allergies', response.user?.allergies ?? '');
-          localStorage.setItem('accountType', response.user?.account?.toUpperCase() ?? 'PERSON');
-          localStorage.setItem('user_id', response.user.id);
-          localStorage.setItem('location', response.user?.location ?? '');
-          localStorage.setItem('experienceYear', response.user?.experience ?? '');
-          localStorage.setItem('about', response.user?.about ?? '');
+      .subscribe((response: any) => {
+        localStorage.clear();
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('fullname', response.user.fullname);
+        localStorage.setItem('email', response.user.email);
+        localStorage.setItem('icon_profile', response.user?.icon ?? '');
+        localStorage.setItem('icon_front', response.user?.icon_front ?? '');
+        localStorage.setItem(
+          'social_link',
+          response.user?.social_link
+            ? JSON.stringify(response.user.social_link)
+            : ''
+        );
+        localStorage.setItem(
+          'specialization',
+          response.user?.specialization ?? ''
+        );
+        localStorage.setItem('phone', response.user?.phone ?? '');
+        localStorage.setItem('address', response.user?.address ?? '');
+        localStorage.setItem('sex', response.user?.sex ?? '');
+        localStorage.setItem('civil_status', response.user?.civil_status ?? '');
+        localStorage.setItem(
+          'family_responsibilities',
+          response.user?.family_responsibilities ?? ''
+        );
+        localStorage.setItem('birthdate', response.user?.birthdate ?? '');
+        localStorage.setItem(
+          'identification',
+          JSON.stringify({
+            text: response.user.identification_text ?? '',
+            img: response.user.identification_img ?? '',
+          })
+        );
+        localStorage.setItem(
+          'license',
+          JSON.stringify({
+            text: response.user.license_text ?? '',
+            img: response.user.license_img ?? '',
+          })
+        );
+        localStorage.setItem(
+          'rif',
+          JSON.stringify({
+            text: response.user.rif_text ?? '',
+            img: response.user.rif_img ?? '',
+          })
+        );
+        localStorage.setItem('level_study', response.user?.level_study ?? '');
+        localStorage.setItem('blood_type', response.user?.blood_type ?? '');
+        localStorage.setItem('allergies', response.user?.allergies ?? '');
+        localStorage.setItem(
+          'accountType',
+          response.user?.account?.toUpperCase() ?? 'PERSON'
+        );
+        localStorage.setItem('user_id', response.user.id);
+        localStorage.setItem('location', response.user?.location ?? '');
+        localStorage.setItem('experienceYear', response.user?.experience ?? '');
+        localStorage.setItem('about', response.user?.about ?? '');
 
-          this.goTo(localStorage.getItem('accountType') === "PERSON"
+        this.goTo(
+          localStorage.getItem('accountType') === 'PERSON'
             ? 'bottom-tab-bar/home'
             : 'bottom-tab-bar-company/home'
-          );
-        }
+        );
+      });
+  }
+
+  changePass(data: any): Observable<any> {
+    this.showSpinner();
+
+    return this.http
+      .post(`${this.apiUrl}/user/change_password`, data, { observe: 'response' })
+      .pipe(
+        catchError((error) => {
+          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          if (error.status !== 201 && error.error?.message) {
+            errorMessage = error.error.message;
+          }
+
+          this.hideSpinner();
+          this.presentAlert(errorMessage);
+
+          return throwError(() => new Error(errorMessage));
+        }),
+        finalize(() => {
+          this.hideSpinner();
+        })
       );
   }
 
-  getVerificEmail(data: any) {
+
+  getVerificCode(data: any) {
     let params = new HttpParams();
     for (let key in data) {
       params = params.append(key, data[key]);
     }
-    // this.showSpinner();
-    return this.http.get(`${this.apiUrl}/verific_email`, { params: params })
+    return this.http
+      .get(`${this.apiUrl}/user/validate_code`, { params: params })
       .pipe(
         catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          let errorMessage =
+            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 200 && error.error && error.error.message) {
             errorMessage = error.error.message;
           }
@@ -161,31 +296,90 @@ export class ApiService {
           this.hideSpinner();
         })
       )
-      .subscribe(
-        (response: any) => {
-          localStorage.setItem('fullname', response.fullname);
-          localStorage.setItem('email', response.email);
-          localStorage.setItem('icon_profile', response.user?.icon ?? '');
-          localStorage.setItem('icon_front', response.user?.icon_front ?? '');
-          localStorage.setItem('social_link', JSON.stringify(response.user?.social_link ?? ''));
-          localStorage.setItem('specialization', response.user?.specialization ?? '');
-          localStorage.setItem('phone', response.phone ?? '');
-          localStorage.setItem('address', response.address ?? '');
-          localStorage.setItem('sex', response.sex ?? '');
-          localStorage.setItem('civil_status', response.civil_status ?? '');
-          localStorage.setItem('family_responsibilities', response.family_responsibilities);
-          localStorage.setItem('birthdate', response.birthdate);
-          // localStorage.setItem('identification', response.identification);
-          // localStorage.setItem('license', response.license);
-          // localStorage.setItem('rif', response.rif);
-          localStorage.setItem('level_study', response.level_study);
-          localStorage.setItem('blood_type', response.blood_type);
-          localStorage.setItem('allergies', response.allergies);
-          localStorage.setItem('user_id', response.id);
-          localStorage.setItem('location', response.location ?? '');
-          localStorage.setItem('experienceYear', response.experience ?? '');
-          localStorage.setItem('about', response.about ?? '');
-        }
+      .subscribe((response: any) => {}
+    );
+  }
+
+  getVerificEmail(data: any) {
+    let params = new HttpParams();
+    for (let key in data) {
+      params = params.append(key, data[key]);
+    }
+    // this.showSpinner();
+    return this.http
+      .get(`${this.apiUrl}/verific_email`, { params: params })
+      .pipe(
+        catchError((error) => {
+          let errorMessage =
+            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          if (error.status !== 200 && error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+
+          this.presentAlert(errorMessage);
+
+          return throwError(() => new Error(errorMessage));
+        }),
+        finalize(() => {
+          this.hideSpinner();
+        })
+      )
+      .subscribe((response: any) => {
+        localStorage.clear();
+        localStorage.setItem('fullname', response.fullname);
+        localStorage.setItem('email', response.email);
+        localStorage.setItem('icon_profile', response.user?.icon ?? '');
+        localStorage.setItem('icon_front', response.user?.icon_front ?? '');
+        localStorage.setItem(
+          'social_link',
+          JSON.stringify(response.user?.social_link ?? '')
+        );
+        localStorage.setItem(
+          'specialization',
+          response.user?.specialization ?? ''
+        );
+        localStorage.setItem('phone', response.phone ?? '');
+        localStorage.setItem('address', response.address ?? '');
+        localStorage.setItem('sex', response.sex ?? '');
+        localStorage.setItem('civil_status', response.civil_status ?? '');
+        localStorage.setItem(
+          'family_responsibilities',
+          response.family_responsibilities
+        );
+        localStorage.setItem('birthdate', response.birthdate);
+        localStorage.setItem('level_study', response.level_study);
+        localStorage.setItem('blood_type', response.blood_type);
+        localStorage.setItem('allergies', response.allergies);
+        localStorage.setItem('user_id', response.id);
+        localStorage.setItem('location', response.location ?? '');
+        localStorage.setItem('experienceYear', response.experience ?? '');
+        localStorage.setItem('about', response.about ?? '');
+      });
+  }
+
+  getRecoverPassEmail(data: any): Observable<any> {
+    let params = new HttpParams();
+    for (let key in data) {
+      params = params.append(key, data[key]);
+    }
+
+    this.showSpinner();
+
+    return this.http
+      .get(`${this.apiUrl}/user/recover_password`, { params })
+      .pipe(
+        catchError((error) => {
+          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          if (error.status !== 200 && error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+
+          this.presentAlert(errorMessage);
+          return throwError(() => new Error(errorMessage));
+        }),
+        finalize(() => {
+          this.hideSpinner();
+        })
       );
   }
 
@@ -197,116 +391,106 @@ export class ApiService {
       params = params.append(key, data[key]);
     }
 
-    this.http.get(`${this.apiUrl}/verific_email`, { params: params })
+    this.http
+      .get(`${this.apiUrl}/verific_email`, { params: params })
       .pipe(
         catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          let errorMessage =
+            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status === 200) {
-            this.presentAlert("Este email ya se encuentra registrado");
+            this.presentAlert('Este email ya se encuentra registrado');
           }
 
           return throwError(() => new Error(errorMessage));
         }),
-        finalize(() => { })
+        finalize(() => {})
       )
-      .subscribe(
-        (response: any) => {
-          id = response.id;
-          if (id != 0) {
-            this.presentAlert("Este email ya se encuentra registrado");
-          }
+      .subscribe((response: any) => {
+        id = response.id;
+        if (id != 0) {
+          this.presentAlert('Este email ya se encuentra registrado');
         }
-      );
+      });
   }
 
-  postUser(data: any) {
+  postUser(data: any): Observable<any> {
     this.showSpinner();
-    return this.http.post(`${this.apiUrl}/register`, data, this.options)
-      .pipe(
-        catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-          if (error.status !== 201 && error.error && error.error.message) {
-            errorMessage = error.error.message;
-          }
-          this.hideSpinner();
-          this.presentAlert(errorMessage);
-          return throwError(() => new Error(errorMessage));
-        }),
-        tap((response: any) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('fullname', response.user.fullname);
-          localStorage.setItem('email', response.user.email);
-          localStorage.setItem('phone', response.user.phone);
-          localStorage.setItem('accountType', response.user.account);
-          localStorage.setItem('user_id', response.user.id);
 
-          this.goTo(localStorage.getItem('accountType') === "PERSON"
-            ? 'bottom-tab-bar/home'
-            : 'bottom-tab-bar-company/home'
-          );
-          this.hideSpinner();
-        })
-      );
+    return this.http.post(`${this.apiUrl}/register`, data, this.options).pipe(
+      catchError((error) => {
+        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        if (error.status !== 201 && error.error?.message) {
+          errorMessage = error.error.message;
+        }
+        this.hideSpinner();
+        this.presentAlert(errorMessage);
+        return throwError(() => new Error(errorMessage));
+      }),
+      finalize(() => this.hideSpinner())
+    );
   }
 
   allJobsApi(data: any, opts?: { showError?: boolean }) {
-    const request = this.http.get<JobModel[]>(`${this.apiUrl}/jobs`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
-
+    const request = this.http.get<JobModel[]>(`${this.apiUrl}/jobs`, {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+      params: data,
+    });
 
     return request.pipe(
       catchError((error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 200 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
         if (opts?.showError) {
-
           this.presentAlert(errorMessage);
         }
         return throwError(() => error);
-      },)
+      })
     );
   }
 
-
   getChat(data: any) {
-    return this.http.get<ChatMessage | ChatMessage[]>(`${this.apiUrl}/chats`, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, params: data });
+    return this.http.get<ChatMessage | ChatMessage[]>(`${this.apiUrl}/chats`, {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+      params: data,
+    });
   }
 
   postJobs(data: any) {
-    return this.http.post(`${this.apiUrl}/jobs`, data, this.options)
-      .pipe(
-        catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-          if (error.status !== 201 && error.error && error.error.message) {
-            errorMessage = error.error.message;
-          }
-          this.presentAlert(errorMessage);
-          return throwError(() => new Error(errorMessage));
-        }),
-        finalize(() => { })
-      );
+    return this.http.post(`${this.apiUrl}/jobs`, data, this.options).pipe(
+      catchError((error) => {
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        if (error.status !== 201 && error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        this.presentAlert(errorMessage);
+        return throwError(() => new Error(errorMessage));
+      }),
+      finalize(() => {})
+    );
   }
 
   postChats(data: any) {
-
     return this.http.post(`${this.apiUrl}/chats`, data, this.options);
-
   }
 
   putJobs(data: any) {
-
-    return this.http.put<JobModel>(`${this.apiUrl}/jobs`, data, this.options)
+    return this.http
+      .put<JobModel>(`${this.apiUrl}/jobs`, data, this.options)
       .pipe(
         catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+          let errorMessage =
+            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 201 && error.error && error.error.message) {
             errorMessage = error.error.message;
           }
           this.presentAlert(errorMessage);
           return throwError(() => new Error(errorMessage));
         }),
-        finalize(() => { })
+        finalize(() => {})
       );
   }
 
@@ -315,78 +499,86 @@ export class ApiService {
   }
 
   putViewsAll(data: any) {
-    const request = this.http.put(`${this.apiUrl}/viewsAll`, data, this.options);
+    const request = this.http.put(
+      `${this.apiUrl}/viewsAll`,
+      data,
+      this.options
+    );
 
     request.subscribe({
       error: (error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
         this.presentAlert(errorMessage);
       },
-      complete: () => { }
+      complete: () => {},
     });
 
-    return request
+    return request;
   }
 
   putUser(data: any) {
     const request = this.http.put(`${this.apiUrl}/user`, data, this.options);
 
-    return request.
-      pipe(
-        catchError((error) => {
-          let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-          if (error.status !== 201 && error.error && error.error.message) {
-            errorMessage = error.error.message;
-          }
-
-          if (error.status === 304) {
-            errorMessage = "Sin cambios."
-          }
-
-          this.presentAlert(errorMessage);
-          return throwError(() => error);
+    return request.pipe(
+      catchError((error) => {
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        if (error.status !== 201 && error.error && error.error.message) {
+          errorMessage = error.error.message;
         }
-        ));
+
+        if (error.status === 304) {
+          errorMessage = 'Sin cambios.';
+        }
+
+        this.presentAlert(errorMessage);
+        return throwError(() => error);
+      })
+    );
   }
 
   getUser() {
-
     const request = this.http.get(`${this.apiUrl}/user`, this.options);
 
     request.subscribe({
       error: (error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 200 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
 
         this.presentAlert(errorMessage);
       },
-      complete: () => { }
+      complete: () => {},
     });
 
-    return request
+    return request;
   }
 
   postJobsApplied(data: any) {
-    const request = this.http.post(`${this.apiUrl}/applied_jobs`, data, this.options);
-
+    const request = this.http.post(
+      `${this.apiUrl}/applied_jobs`,
+      data,
+      this.options
+    );
 
     return request.pipe(
       catchError((error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
 
         this.presentAlert(errorMessage);
         return throwError(() => error);
-      },
-      )
-    )
+      })
+    );
   }
 
   getWallet() {
@@ -394,16 +586,17 @@ export class ApiService {
 
     request.subscribe({
       error: (error) => {
-        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 200 && error.error && error.error.message) {
           errorMessage = error.error.message;
         }
 
         this.presentAlert(errorMessage);
       },
-      complete: () => { }
+      complete: () => {},
     });
 
-    return request
+    return request;
   }
 }

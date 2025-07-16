@@ -72,7 +72,7 @@
                     Cargar RIF
                   </span>
                 </ion-chip>
-                <input #inputRif type="file" hidden accept=".jpeg" (change)="onFileChange($event, 'rif')" />
+                <input #inputRif type="file" hidden accept=".pdf,image/png,image/jpeg,image/jpg" (change)="onFileChange($event, 'rif')" />
               </ng-container>
               <ng-template #ImageRifLoader>
                 <app-file-item-loader [base64]="rifImg" filename="RIF" (onRemove)="onRemoveFile('rif')" />
@@ -98,11 +98,11 @@
                     Cargar identificación
                   </span>
                 </ion-chip>
-                <input #inputDNI type="file" hidden accept=".jpeg" (change)="onFileChange($event, 'identification')" />
+                <input #inputDNI type="file" hidden accept=".pdf,image/png,image/jpeg,image/jpg" (change)="onFileChange($event, 'identification')" />
               </div>
             </ng-container>
             <ng-template #FileIdentificationLoader>
-              <app-file-item-loader [base64]="rifImg" filename="Identificación"
+              <app-file-item-loader [base64]="identificationImg" filename="Identificación"
                 (onRemove)="onRemoveFile('identification')" />
             </ng-template>
           </div>
@@ -124,7 +124,7 @@
                     Cargar licencia
                   </span>
                 </ion-chip>
-                <input #inputLicence type="file" hidden accept=".pdf" (change)="onFileChange($event, 'licence')" />
+                <input #inputLicence type="file" hidden accept=".pdf,image/png,image/jpeg,image/jpg" (change)="onFileChange($event, 'licence')" />
               </div>
             </ng-container>
             <ng-template #FileLicenceLoader>

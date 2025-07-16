@@ -11,7 +11,9 @@ import { IonRouterOutlet, Platform } from '@ionic/angular';
 })
 export class OnboardingPage implements OnInit {
 
-  @ViewChild('swiper') swiperRef: ElementRef | undefined;
+  @ViewChild('swiper') swiperRef!: ElementRef;
+
+  swiperInstance: any;
 
   showMainImage = true;
   currentIndex = 0;
@@ -34,7 +36,7 @@ export class OnboardingPage implements OnInit {
     },
     {
       id: "3",
-      onboardingImage: `${assetsPath}/images/woman-worker-2.png`,
+      onboardingImage: `${assetsPath}/images/friends-hanging-out.jpg`,
       onboardingTitle: "Pública tus ofertas con nosotros",
       onboardingDescription: 'Si eres dueño de una empresa y necesitas personal, nosotros tenemos los mejores.',
     },
@@ -49,24 +51,43 @@ export class OnboardingPage implements OnInit {
   ngOnInit() {
   }
 
-  continueToCarousel() {
-    this.showMainImage = false;
-  }
-  slideChangeCall() {
-    this.currentIndex = this.swiperRef?.nativeElement.swiper.activeIndex;
+  ngAfterViewInit() {
+    // Espera que el componente esté renderizado para acceder a la instancia
+    setTimeout(() => {
+      this.swiperInstance = this.swiperRef?.nativeElement?.swiper;
+      if (!this.swiperInstance) {
+        console.warn("Swiper sigue sin estar listo después del timeout.");
+      }
+    }, 100); // puedes aumentar a 200 o 300 si sigue sin funcionar
   }
 
-  goTo(screen: any) {
-    this.router.navigateByUrl(screen)
+  continueToCarousel() {
+    this.showMainImage = false;
+    // Vuelve a esperar que el swiper esté listo, por si se carga después
+    setTimeout(() => {
+      this.swiperInstance = this.swiperRef?.nativeElement?.swiper;
+    }, 200);
+  }
+
+  slideChangeCall() {
+    if (this.swiperInstance) {
+      this.currentIndex = this.swiperInstance.activeIndex;
+    }
   }
 
   handleButtonPress() {
     if (this.currentIndex === 2) {
-      this.router.navigateByUrl('/auth/login')
+      this.router.navigateByUrl('/auth/login');
+    } else if (this.swiperInstance) {
+      const next = this.currentIndex === 0 ? 1 : 2;
+      this.swiperInstance.slideTo(next);
+    } else {
+      console.warn("Swiper aún no está listo");
     }
-    else {
-      this.swiperRef?.nativeElement.swiper.slideTo(this.currentIndex == 0 ? 1 : 2);
-    }
+  }
+
+  goTo(screen: any) {
+    this.router.navigateByUrl(screen)
   }
 
   ionViewDidEnter() {

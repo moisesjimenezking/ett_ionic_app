@@ -197,9 +197,13 @@
 
   <!-- CHANGE PROFILE IMAGE MODAL -->
   <ion-modal #changePicSheet mode="ios" [keepContentsMounted]="true" [isOpen]="isModalOpen" (didDismiss)="closeModal()"
-    style="--height: auto; --width: 100%;">
+    style="--height: 50%; --width: 100%;">
     <ng-template>
       <div class="relative mx-3 bg-muted flex flex-col justify-center items-center gap-y-8 rounded-xl px-3 py-5">
+        <ion-text class="text-primary-foreground text-2xl font-semibold text-center mb-4">
+          {{ modalValue === 'profile' ? 'Modifica tu foto de perfil' : 'Modifica tu foto de portada' }}
+        </ion-text>
+
         <ng-image [fallbackErrorSrc]="stablishUrlPic(null, modalValue != 'profile')"
           [src]="modalValue == 'profile' ? icon: iconFront" width="110px" height="110px"
           class="imageOverflowNew min-w-[110px] min-h-[110px] bg-muted rounded-full" />

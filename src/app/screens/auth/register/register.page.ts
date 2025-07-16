@@ -46,15 +46,36 @@ export class RegisterPage implements OnInit {
     this.router.navigateByUrl(screen)
   }
 
-  async presentAlert(message: string) {
+  async presentAlert(message: string, type: 'success' | 'error' | 'casi' = 'error') {
+    let header = 'Error';
+    let cssClass = 'alert-error';
+
+    const buttons: any[] = ['OK'];
+
+    if (type === 'success') {
+      header = 'Éxito';
+      cssClass = 'alert-success';
+    } else if (type === 'casi') {
+      header = 'Ya casi lo tienes';
+      cssClass = 'alert-success';
+      buttons[0] = {
+        text: 'OK',
+        handler: () => {
+          this.goTo('/auth/login');
+        }
+      };
+    }
+
     const alert = await this.alertController.create({
-      header: 'Error',
-      message: message,
-      buttons: ['OK']
+      header,
+      message,
+      buttons,
+      cssClass,
     });
 
     await alert.present();
   }
+
 
   validateEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -72,13 +93,11 @@ export class RegisterPage implements OnInit {
   }
 
   crearCuenta() {
-    this.accountType = this.accountType || "PERSON"
-    if (!this.name || !this.email || !this.mobileNo || !this.password || !this.accountType
+    this.accountType = this.accountType || "PERSON";
 
-    ) {
+    if (!this.name || !this.email || !this.mobileNo || !this.password || !this.accountType) {
       this.showErrorMessage = true;
-      let errorMessage = 'Por favor completa todos los campos';
-      this.presentAlert(errorMessage);
+      this.presentAlert('Por favor completa todos los campos');
       return;
     }
 
@@ -94,7 +113,12 @@ export class RegisterPage implements OnInit {
       identification_text: this.identificationValue,
     };
 
-    this.apiService.postUser(body).subscribe();
+    this.apiService.postUser(body).subscribe({
+      next: (response) => {
+        this.presentAlert('Active su usuario mediante el enlace enviado a su correo.', 'casi');
+      },
+      error: (err) => {}
+    });
   }
 
 }

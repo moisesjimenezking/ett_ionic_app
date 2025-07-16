@@ -1,28 +1,17 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.ionic.jobFinder',
+  appId: 'com.venezuela.ett',
   appName: 'Ett Venezuela',
   webDir: 'www',
   bundledWebRuntime: false,
   server: {
-    androidScheme: 'https',
+    androidScheme: 'https',   // ¡deja https para que cargue bien en Android!
     cleartext: true,
   },
-  plugins: {
-    SplashScreen: {
-      launchShowDuration: 0,
-      launchFadeOutDuration: 3000,
-      backgroundColor: "#2757be",
-      androidSplashResourceName: "splash",
-      androidScaleType: "CENTER_CROP",
-      androidSpinnerStyle: "large",
-      splashFullScreen: true,
-      splashImmersive: true,
-      layoutName: "launch_screen",
-    }
-  }
-
+  ios: {
+    scheme: 'ettvenezuela',   // iOS puede usar esquema personalizado
+  },
 };
 
 export default config;

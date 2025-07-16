@@ -7,13 +7,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from "./shared/shared.module";
 import { pageTransition } from './lib/animations/page-transition';
+import { ApiService } from './service/api.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot({ navAnimation: pageTransition, animated: true, }), AppRoutingModule, SharedModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    IonicModule.forRoot({ navAnimation: pageTransition, animated: true, }), AppRoutingModule, SharedModule, HttpClientModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ApiService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

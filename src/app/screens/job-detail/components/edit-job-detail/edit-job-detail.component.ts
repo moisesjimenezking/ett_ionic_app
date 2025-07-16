@@ -137,8 +137,8 @@ export class EditJobDetailComponent implements OnInit, OnChanges {
 
   formatAmount() {
     this.amount = this.amount.replace(/[^0-9$]/g, '');
-    if (!this.amount.startsWith('Bs ')) {
-      this.amount = 'Bs ' + this.amount;
+    if (!this.amount.startsWith('REF ')) {
+      this.amount = 'REF ' + this.amount;
     }
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@an
 import { Router } from '@angular/router';
 import { IonContent, NavController, MenuController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
+import { SocketService } from '../../service/socket.service';
 import { UtilsLib } from 'src/app/lib/utils';
 import { Message } from '@/types';
 
@@ -12,9 +13,9 @@ import { Message } from '@/types';
   styleUrls: ['./message.page.scss'],
 })
 export class MessagePage implements OnInit {
-  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+  // @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
   @ViewChild('textArea') textArea: any;
-  @ViewChild(IonContent) content: IonContent | undefined;
+  @ViewChild(IonContent, { static: false }) content!: IonContent;
 
 
   userMessages: any;
@@ -34,10 +35,14 @@ export class MessagePage implements OnInit {
     private router: Router,
     private apiMessage: ApiService,
     private cdr: ChangeDetectorRef,
-    private menu: MenuController
+    private menu: MenuController,
+    private socketService: SocketService 
   ) { }
 
   ngOnInit() {
+    this.socketService.listen('newMessage', (data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) => {
+      this.handleNewMessage(data);
+    });
   }
 
   ionViewWillEnter() {
@@ -46,6 +51,12 @@ export class MessagePage implements OnInit {
     this.dataChat = this.details("all");
 
     this.viewsAll();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 500); // ⏳ Espera para asegurarse de que los mensajes ya están en la vista
   }
 
   details(text: string) {
@@ -63,9 +74,9 @@ export class MessagePage implements OnInit {
   }
 
 
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
+  // ngAfterViewChecked() {
+  //   this.scrollToBottom();
+  // }
 
   trackMessagesIndex(_: number, item: Message) {
     return item.id;
@@ -85,21 +96,14 @@ export class MessagePage implements OnInit {
     return newIcon;
   }
 
-  private scrollToBottom(): void {
-    this.scrollContainer.nativeElement.scroll({
-      top: this.scrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
+  private async scrollToBottom(): Promise<void> {
+    if (this.content) {
+      await this.content.scrollToBottom(300); // 🏃 Desplazamiento suave de 300ms
+    }
   }
 
   async goBack() {
-    const result = await this.navCtrl.pop();
-
-    if (!result) {
-
-      // this.navCtrl.navigateBack();
-    }
+    this.navCtrl.back()
   }
 
   viewsAll() {
@@ -122,6 +126,30 @@ export class MessagePage implements OnInit {
     // );
   }
 
+  handleNewMessage(data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
+    if (data.chats_id === this.dataChat.id) { // ✅ Solo actualiza si el mensaje es del chat actual
+      const newMsg: Message = data
+      const messageExists = this.userMessages.some((msg: Message) => msg.id === newMsg.id);
+
+      if (!messageExists) {
+        const user_id = localStorage.getItem('user_id')
+
+        if (user_id !== null && user_id !== "" && parseInt(user_id) === data.user_id) {
+          newMsg.isSender = true;
+        }else{
+          newMsg.isSender = false;
+        }
+
+        this.userMessages.push(newMsg); // 🔥 Agregar mensaje a la lista
+        this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 300);
+      }
+    }
+  }
+  
+
   addMessage() {
     if (this.newMsg) {
       const body = {
@@ -130,22 +158,21 @@ export class MessagePage implements OnInit {
       }
 
       this.messageSending = this.newMsg;
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 300);
       this.newMsg = '';
       this.isSending = true
       this.apiMessage.postMessage(body).subscribe({
         next: (data: any) => {
           this.isSending = false;
-          this.userMessages.push(data);
-          setTimeout(() => {
-            this.scrollToBottom();
-          }, 300);
-          this.getAllMessages();
+          // this.userMessages.push(data);
+          this.cdr.detectChanges();
         },
         error: () => {
           this.isSending = false;
+          this.cdr.detectChanges(); // ��� Forzar actualización de la vista
+        },
+        complete: () => {
+          this.isSending = false;
+          this.cdr.detectChanges(); // ��� Forzar actualización de la vista
         }
       });
     }
@@ -155,25 +182,35 @@ export class MessagePage implements OnInit {
     this.isWritting = true;
     this.apiMessage.getChat({}).subscribe({
       next: (data) => {
-        if (Array.isArray(data)) {
-          const messages = data.find(d => d.id == this.dataChat.id);
-          this.userMessages = messages!.messages;
-          localStorage.setItem('messages', JSON.stringify(messages))
-        } else if (data?.id == this.dataChat.id) {
-          this.userMessages = data.messages;
-          localStorage.setItem('messages', JSON.stringify(data))
+        try {
+          const messages = Array.isArray(data) ? data.find(d => d.id == this.dataChat.id) : data;
+          if (messages && messages.messages) {
+            this.userMessages = messages.messages;
+            localStorage.setItem('messages', JSON.stringify(messages));
+          }
+          this.messageSending = '';
+          this.isWritting = false;
+          this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
+        } catch (error) {
+          this.messageSending = '';
+          this.isWritting = false;
+          this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
+          console.error('Error procesando los mensajes:', error);
         }
-        setTimeout(() => {
-          this.scrollToBottom();
-        }, 300);
-        this.messageSending = '';
-        this.isWritting = false;
       },
-      error: (_) => {
+      error: (err) => {
         this.messageSending = '';
         this.isWritting = false;
+        this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
+        console.error('Error en la API:', err);
+      },
+      complete: () => {
+        this.messageSending = '';
+        this.isWritting = false;
+        this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
       }
     });
   }
+  
 
 }
