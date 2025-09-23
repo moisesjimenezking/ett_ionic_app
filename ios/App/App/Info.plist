@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>La app necesita acceder a la cámara para escanear códigos QR y tomar fotos de perfil.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>La app necesita acceder al micrófono para grabar audio.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>La app necesita acceso a la galería para seleccionar fotos.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
