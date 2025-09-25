@@ -1,0 +1,51 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" style="background-color: #121212; height: 100%">
+    <div class="flex justify-between items-center px-4 py-5 relative">
+      <div class="rowAlignCenter" style="flex: 1"></div>
+
+      <div style="position: relative">
+        <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
+          style="padding: 0;"></ion-menu-button>
+      </div>
+    </div>
+
+    <ion-chip class="customChip m-[20px]" style="background-color: #121212; height: 60px">
+      <span class="material-icons" style="color: white">search</span>
+      <ion-input mode="ios" placeholder="Buscar" class="textAux"
+        style="font-size: 16px; min-height: 20px; --placeholder-color: #FFFBF7; color: #FFFBF7;" inputmode="text"
+        (click)="clearPlaceholder()" (click)="resetPlaceholder()" (input)="goToSearchDelayed($event)">
+      </ion-input>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-background">
+  <div>
+    <div class="px-4">
+      <ng-image width="100%" heightAfterLoaded="auto" [src]="homeBannerImage" class="w-auto h-auto rounded-xl"
+        alt="Banner home" />
+    </div>
+
+    <div class="px-4 mt-6 mb-4 overflow-hidden w-full max-w-full truncate">
+      <ion-text class="text-2xl text-primary-foreground line-clamp-2 overflow-hidden text-ellipsis font-bold">
+        Últimas ofertas publicadas
+      </ion-text>
+    </div>
+
+    <ion-list class="p-4 space-y-4">
+      <div *ngFor="let item of jobList; let i=index;">
+        <app-job-card-not-login [job]="item"/>
+      </div>
+
+      <ng-container *ngIf="isLoadingJobList">
+        <div class="bg-destructive py-5 px-[15px] rounded-xl min-h-[200px] animate-pulse h-[200px]"
+          *ngFor="let item of [1,2,3,4,5]" style="background-color: hsl(var(--muted));">
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoadingJobList && jobList.length==0">
+        <app-company-empty-state />
+      </ng-container>
+    </ion-list>
+  </div>
+</ion-content>

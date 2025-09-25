@@ -1,0 +1,155 @@
+.bedgeWrapper {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: var(--redColor);
+  border: 1.5px solid var(--whiteColor);
+  position: absolute;
+  right: 4px;
+  top: 2px;
+}
+
+.banner {
+  background-color: var(--pinkColor);
+  border-radius: 10px;
+  justify-content: space-between;
+  margin: 30px 20px;
+  box-shadow: 0px 10px 30px -10px rgba(233, 69, 96, 0.6);
+}
+
+.bannerDetailWrapper {
+  flex: 1;
+  align-items: flex-start;
+  padding: 25px;
+  padding-right: 10px;
+}
+
+.smallButton {
+  background-color: var(--primaryColor);
+  padding: 8px 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.jobTypeWrapper {
+  padding: 8px 18px;
+  border-radius: 50px;
+  margin: 5px;
+  margin-bottom: 0px;
+}
+
+.custom-background {
+  --background: #2758BF;
+  /* Nuevo color de fondo */
+}
+
+.card-container {
+  position: relative;
+}
+
+ion-card {
+  margin-top: 40px;
+  /* Ajusta este valor según el tamaño de la imagen para evitar solapamientos */
+}
+
+.custom-margin-top {
+  margin-top: 0px;
+}
+
+.jobCardNew {
+  justify-content: space-between;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.imageOverflow {
+  /* Styling for the image */
+  overflow: hidden;
+}
+
+.rowAlignCenter {
+  /* Styling for the row with job details */
+  display: flex;
+  align-items: center;
+}
+
+.blackColor18SemiBold {
+  /* Styling for job type text */
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
+}
+
+/* Add styles for other classes accordingly */
+.rounded-top-corners {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  background-color: #2758BF;
+}
+
+.dialogButton {
+  flex: 1;
+  background-color: #2758BF;
+  padding: 12px;
+}
+
+.menu-button-custom {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.textAux {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.customChip {
+  background-color: black;
+  /* Color de fondo del chip */
+  border-radius: 100px;
+  /* Bordes redondeados */
+  border: 1px solid white;
+  padding: 1px 20px;
+  /* Espaciado interno */
+  display: flex;
+  /* Flex para centrar contenido */
+  height: 40px;
+}
+
+.custom-item {
+  background-color: #121212 !important;
+  /* Color de fondo */
+  color: white !important;
+  /* Color del texto */
+  --border-color: transparent;
+  /* Eliminar el borde */
+}
+
+.custom-item::part(native) {
+  background-color: #121212 !important;
+  /* Asegúrate de que el fondo se aplique al elemento nativo */
+}
+
+.custom-item:first-child {
+  --border-top: none;
+  /* Eliminar el borde superior del primer elemento */
+}
+
+ion-list {
+  --ion-item-background: transparent;
+  /* Eliminar el fondo blanco de la lista */
+  --ion-item-border-color: transparent;
+}
+
+ion-content {
+  --background: #121212;
+  /* Establecer el fondo del ion-content */
+  --ion-color-background: #121212;
+  /* Asegurarte de que el color de fondo se aplique */
+}

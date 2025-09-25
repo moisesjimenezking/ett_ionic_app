@@ -152,6 +152,10 @@ const routes: Routes = [
     path: 'wallet',
     loadChildren: () => import('./screens/wallet/wallet.module').then(m => m.WalletPageModule)
   },
+  {
+    path: 'home-not-login',
+    loadChildren: () => import('./screens/home-not-login/home-not-login.module').then(m => m.HomePageNotLoginModule),
+  },
 ];
 
 @NgModule({

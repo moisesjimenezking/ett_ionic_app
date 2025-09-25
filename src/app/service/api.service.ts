@@ -451,6 +451,27 @@ export class ApiService {
     );
   }
 
+  allJobsApiFree(data: any, opts?: { showError?: boolean }) {
+    const request = this.http.get<JobModel[]>(`${this.apiUrl}/jobs-free`, {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+      params: data,
+    });
+
+    return request.pipe(
+      catchError((error) => {
+        let errorMessage =
+          'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        if (error.status !== 200 && error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        if (opts?.showError) {
+          this.presentAlert(errorMessage);
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+
   getChat(data: any) {
     return this.http.get<ChatMessage | ChatMessage[]>(`${this.apiUrl}/chats`, {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },

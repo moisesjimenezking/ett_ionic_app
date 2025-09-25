@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
     public platform: Platform,
     private router: Router,
     private alertController: AlertController,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) { }
 
   ngOnInit() {
@@ -55,10 +55,6 @@ export class LoginPage implements OnInit {
 
   ionViewWillLeave() {
     this.routerOutlet.swipeGesture = true;
-  }
-
-  goTo(screen: any) {
-    this.router.navigateByUrl(screen)
   }
 
   async presentAlert(message: string, type: 'error' | 'success' = 'error') {
@@ -198,6 +194,10 @@ export class LoginPage implements OnInit {
     };
 
     return this.apiService.postToken(body)
+  }
+
+  goTo(screen: any) {
+    this.router.navigateByUrl(screen);
   }
 
   openDialogCode() {
