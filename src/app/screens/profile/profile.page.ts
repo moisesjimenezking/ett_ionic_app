@@ -20,12 +20,13 @@ export class ProfilePage implements OnInit {
   @ViewChild('rifInput') rifInput!: ElementRef;
   @ViewChild('identificacionInput') identificacionInput!: ElementRef;
   @ViewChild('conducirInput') conducirInput!: ElementRef;
+  @ViewChild('deleteAccountSheet', { static: true }) deleteAccountSheet!: IonModal;
 
   rifPdf: string | null = null;
   rifValue: string = '';
   identificacionPdf: string | null = null;
   conducirPdf: string | null = null;
-
+  isDeleteModalOpen = false;
   account = localStorage.getItem('accountType');
   isProfileLoaded = false;
   fullName: any = '';
@@ -126,6 +127,25 @@ export class ProfilePage implements OnInit {
 
   goBack() {
     this.navCtrl.back()
+  }
+
+  openDeleteModal() {
+    this.isDeleteModalOpen = true;
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModalOpen = false;
+  }
+
+  confirmDeleteAccount() {
+    this.apService.deleteUser().subscribe({
+      next: async () => {
+        this.deleteAccountSheet.dismiss();
+        localStorage.clear();
+        this.goTo('/auth/login');
+      },
+      error: () => {}
+    });
   }
 
   openModal(img: string) {

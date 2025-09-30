@@ -191,6 +191,55 @@
       <div class="min-h-[200px] bg-destructive rounded-xl my-5"></div>
     </ng-template>
   </div>
+  <!-- Tarjeta eliminar cuenta -->
+  <div class="my-5 flex justify-center">
+    <ion-chip
+      id="openDeleteAccountDialog"
+      class="text-white bg-red-600 text-md font-medium h-12 rounded-3xl px-6 flex justify-center items-center"
+    >
+      <ion-icon name="trash-outline" class="mr-2 text-lg text-white"></ion-icon>
+      <ion-text>Eliminar cuenta</ion-text>
+    </ion-chip>
+  </div>
+
+
+
+
+  <!-- Modal confirmación -->
+  <ion-modal mode="md" #deleteAccountSheet trigger="openDeleteAccountDialog" style="--border-radius: 10px">
+    <ng-template>
+      <div class="column bg-muted text-primary-foreground px-4">
+        <div class="flex justify-center items-center w-full h-24">
+          <ion-text class="text-center text-lg">
+            ¿Está seguro de que desea eliminar su cuenta?
+          </ion-text>
+        </div>
+        <div class="w-full flex gap-2 justify-center items-center mt-3 mb-5">
+          <!-- Cancelar -->
+          <ion-chip
+            class="text-primary-foreground text-md font-medium flex justify-center items-center bg-transparent px-4"
+            (click)="deleteAccountSheet.dismiss()">
+            <ion-text>Cancelar</ion-text>
+          </ion-chip>
+
+          <!-- Confirmar eliminación -->
+          <ion-chip
+            class="w-full flex-1 text-white bg-red-600 text-md font-medium h-12 rounded-3xl py-4 px-6 flex justify-center items-center"
+            (click)="confirmDeleteAccount()">
+            <ion-text>Sí, eliminar</ion-text>
+          </ion-chip>
+        </div>
+
+        <!-- Nota de advertencia -->
+        <div class="w-full flex justify-center mb-8">
+          <ion-text class="text-gray-500 text-sm text-center">
+            Esta acción no se puede deshacer.
+          </ion-text>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
 
 
 

@@ -25,6 +25,16 @@ export class ApiService {
     timeout: 20000,
   };
 
+  private getOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }),
+      timeout: 20000,
+    };
+  }
+
   constructor(
     private http: HttpClient,
     private loadingController: LoadingController,
@@ -73,7 +83,7 @@ export class ApiService {
     const body = { code, fcm_code: 'ANDROID' };
     this.showSpinner();
     return this.http
-      .post(`${this.apiUrl}/tokenByCode`, body, this.options)
+      .post(`${this.apiUrl}/tokenByCode`, body, this.getOptions())
       .pipe(
         catchError((error) => {
           let errorMessage =
@@ -164,7 +174,7 @@ export class ApiService {
     console.log(data);
     this.showSpinner();
     return this.http
-      .post(`${this.apiUrl}/token`, data, this.options)
+      .post(`${this.apiUrl}/token`, data, this.getOptions())
       .pipe(
         catchError((error) => {
           let errorMessage =
@@ -416,7 +426,7 @@ export class ApiService {
   postUser(data: any): Observable<any> {
     this.showSpinner();
 
-    return this.http.post(`${this.apiUrl}/register`, data, this.options).pipe(
+    return this.http.post(`${this.apiUrl}/register`, data, this.getOptions()).pipe(
       catchError((error) => {
         let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error?.message) {
@@ -480,7 +490,7 @@ export class ApiService {
   }
 
   postJobs(data: any) {
-    return this.http.post(`${this.apiUrl}/jobs`, data, this.options).pipe(
+    return this.http.post(`${this.apiUrl}/jobs`, data, this.getOptions()).pipe(
       catchError((error) => {
         let errorMessage =
           'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
@@ -495,12 +505,12 @@ export class ApiService {
   }
 
   postChats(data: any) {
-    return this.http.post(`${this.apiUrl}/chats`, data, this.options);
+    return this.http.post(`${this.apiUrl}/chats`, data, this.getOptions());
   }
 
   putJobs(data: any) {
     return this.http
-      .put<JobModel>(`${this.apiUrl}/jobs`, data, this.options)
+      .put<JobModel>(`${this.apiUrl}/jobs`, data, this.getOptions())
       .pipe(
         catchError((error) => {
           let errorMessage =
@@ -516,14 +526,14 @@ export class ApiService {
   }
 
   postMessage(data: any) {
-    return this.http.post(`${this.apiUrl}/messages`, data, this.options);
+    return this.http.post(`${this.apiUrl}/messages`, data, this.getOptions());
   }
 
   putViewsAll(data: any) {
     const request = this.http.put(
       `${this.apiUrl}/viewsAll`,
       data,
-      this.options
+      this.getOptions()
     );
 
     request.subscribe({
@@ -541,8 +551,25 @@ export class ApiService {
     return request;
   }
 
+  deleteUser() {
+    const request = this.http.delete(`${this.apiUrl}/user`, this.getOptions());
+
+    return request.pipe(
+      catchError((error) => {
+        let errorMessage = 'Error al eliminar la cuenta. Por favor, inténtalo de nuevo.';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+
+        this.presentAlert(errorMessage);
+        return throwError(() => error);
+      })
+    );
+  }
+
+
   putUser(data: any) {
-    const request = this.http.put(`${this.apiUrl}/user`, data, this.options);
+    const request = this.http.put(`${this.apiUrl}/user`, data, this.getOptions());
 
     return request.pipe(
       catchError((error) => {
@@ -563,7 +590,7 @@ export class ApiService {
   }
 
   getUser() {
-    const request = this.http.get(`${this.apiUrl}/user`, this.options);
+    const request = this.http.get(`${this.apiUrl}/user`, this.getOptions());
 
     request.subscribe({
       error: (error) => {
@@ -585,7 +612,7 @@ export class ApiService {
     const request = this.http.post(
       `${this.apiUrl}/applied_jobs`,
       data,
-      this.options
+      this.getOptions()
     );
 
     return request.pipe(
@@ -603,7 +630,7 @@ export class ApiService {
   }
 
   getWallet() {
-    const request = this.http.get(`${this.apiUrl}/wallet`, this.options);
+    const request = this.http.get(`${this.apiUrl}/wallet`, this.getOptions());
 
     request.subscribe({
       error: (error) => {
