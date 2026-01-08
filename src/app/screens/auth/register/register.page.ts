@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { NavController, Platform, AlertController } from '@ionic/angular';
-
-
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { FormsModule } from '@angular/forms';
 import { ApiService } from '@/service/api.service';
 
 
@@ -11,6 +13,13 @@ import { ApiService } from '@/service/api.service';
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    NgOtpInputModule,
+    FormsModule
+  ]
 })
 export class RegisterPage implements OnInit {
 

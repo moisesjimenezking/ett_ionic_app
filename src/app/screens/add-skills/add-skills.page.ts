@@ -2,12 +2,19 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-add-skills',
   templateUrl: './add-skills.page.html',
   styleUrls: ['./add-skills.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+  ]
 })
 export class AddSkillsPage implements OnInit {
 

@@ -18,9 +18,12 @@ import { AddSkillsComponent } from './components/add-skills/add-skills.component
     IonicModule,
     ProfilePageRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    ProfilePage, 
+    EditProfileComponent, 
+    EditAboutComponent, 
+    AddSkillsComponent
   ],
-  declarations: [ProfilePage, EditProfileComponent, EditAboutComponent, AddSkillsComponent],
   providers: [ApiService]
 })
 export class ProfilePageModule { }

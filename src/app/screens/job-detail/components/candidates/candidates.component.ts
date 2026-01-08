@@ -2,11 +2,23 @@ import { icPersonAsset } from '@/lib/constanst/assets';
 import { UtilsLib } from '@/lib/utils';
 import { CandidateModel } from '@/types';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ImgComponent } from '../../../../components/img/img.component';
+
 
 @Component({
   selector: 'app-candidates',
   templateUrl: './candidates.component.html',
   styleUrls: ['./candidates.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ImgComponent
+  ]
 })
 export class CandidatesComponent implements OnInit {
   @Input({ required: true }) candidates!: CandidateModel[];

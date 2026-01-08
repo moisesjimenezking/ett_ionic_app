@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { NavController, IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-terms-and-conditions',
   templateUrl: './terms-and-conditions.page.html',
   styleUrls: ['./terms-and-conditions.page.scss'],
+  standalone: true,                // ✅ marca como standalone
+  imports: [IonicModule, CommonModule] // ✅ importa IonicModule para usar ion-header, ion-content, etc.
 })
-export class TermsAndConditionsPage implements OnInit {
+export class TermsAndConditionsPage {
 
   termsOfUseList = [
     "Lorem ipsum dolor sit amet, consectetur adipiscingelit. Semper quis non, convallis leo sit. Dui ac at consectetur risus phasellus consectetur at elementum placerat.",
@@ -22,11 +25,7 @@ export class TermsAndConditionsPage implements OnInit {
 
   constructor(private navCtrl: NavController) { }
 
-  ngOnInit() {
-  }
-
   goBack() {
-    this.navCtrl.back()
+    this.navCtrl.back();
   }
-
 }

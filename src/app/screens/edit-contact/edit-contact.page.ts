@@ -3,12 +3,20 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { Router } from '@angular/router';
 import { UtilsLib } from 'src/app/lib/utils';
-
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-contact',
   templateUrl: './edit-contact.page.html',
   styleUrls: ['./edit-contact.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class EditContactPage implements OnInit {
   emailVerified: boolean = true;

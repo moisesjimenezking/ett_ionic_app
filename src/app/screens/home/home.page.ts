@@ -7,11 +7,25 @@ import { ApiService } from '@/service/api.service';
 import { JobModel } from '@/types';
 import { homeBannerCompanyAsset, homeBannerPersonAsset } from '@/lib/constanst/assets';
 import { UtilsLib } from '@/lib/utils';
+import { JobCardComponent } from './components/job-card/job-card.component';
+import { CompanyEmptyStateComponent } from './components/company-empty-state/company-empty-state.component';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { ImgComponent } from '@/components/img/img.component';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    JobCardComponent,
+    CompanyEmptyStateComponent,
+    ImgComponent
+  ]
 })
 export class HomePage implements OnInit {
   @ViewChild('openNewJob') openNewJob: any;

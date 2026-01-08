@@ -1,15 +1,18 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonRouterOutlet } from '@ionic/angular';
+import { IonRouterOutlet, IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-splash',
   templateUrl: './splash.page.html',
   styleUrls: ['./splash.page.scss'],
+  standalone: true,         
+  imports: [IonicModule, CommonModule]
 })
-export class SplashPage implements OnInit, AfterViewInit {
+export class SplashPage implements AfterViewInit {
 
-  constructor(private router: Router,private routerOutlet: IonRouterOutlet) { }
+  constructor(private router: Router, private routerOutlet: IonRouterOutlet) { }
 
   ngOnInit() {
   }

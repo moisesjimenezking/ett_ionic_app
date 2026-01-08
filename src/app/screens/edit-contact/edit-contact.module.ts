@@ -14,9 +14,9 @@ import { ApiService } from '../../service/api.service';
     FormsModule,
     IonicModule,
     EditContactPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    EditContactPage
   ],
-  declarations: [EditContactPage],
   providers: [ApiService]
 })
 export class EditContactPageModule {}

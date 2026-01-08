@@ -16,9 +16,9 @@ import { SharedModule } from "../../shared/shared.module";
     IonicModule,
     NewJobsPageRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    NewJobsPage
   ],
-  declarations: [NewJobsPage],
   providers: [ApiService]
 })
 export class NewJobsPageModule { }

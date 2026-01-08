@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.venezuela.ett.app',
+  appId: 'com.venezuela.ett',
   appName: 'Ett Venezuela',
   webDir: 'www',
   bundledWebRuntime: false,

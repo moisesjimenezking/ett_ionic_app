@@ -1,10 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { SwipeItemComponent } from '../../components/swipe-item/swipe-item.component'; // Ajusta la ruta
+
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.page.html',
   styleUrls: ['./notifications.page.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule, SwipeItemComponent]
 })
 export class NotificationsPage implements OnInit {
 

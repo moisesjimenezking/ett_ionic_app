@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-applied-jobs',
   templateUrl: './applied-jobs.page.html',
   styleUrls: ['./applied-jobs.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+  ]
 })
 export class AppliedJobsPage implements OnInit {
 

@@ -3,12 +3,22 @@ import { NavController, Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class EditProfilePage implements OnInit {
 

@@ -16,7 +16,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
     IonicModule,
     VerificationPageRoutingModule,
     NgOtpInputModule,
+    VerificationPage,
   ],
-  declarations: [VerificationPage]
 })
 export class VerificationPageModule {}

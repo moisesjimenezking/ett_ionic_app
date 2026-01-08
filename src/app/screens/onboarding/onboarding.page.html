@@ -1,26 +1,37 @@
 <ion-content [fullscreen]="true" scrollY="false">
   <div class="column relative h-full max-h-full">
-    <div class="relative h-full" *ngIf="showMainImage">
-      <ion-img class="bgImage" [src]="smallBusinessAsset"></ion-img>
-      <div class="darkOverlay"></div>
 
-      <div class="overlayContent px-5">
-        <ion-img [src]="ettLogoAsset" class="overlayLogo"></ion-img>
+    <!-- Pantalla inicial -->
+    <ng-container *ngIf="showMainImage; else carouselBlock">
+      <div class="relative h-full">
+        <ion-img class="bgImage" [src]="smallBusinessAsset"></ion-img>
+        <div class="darkOverlay"></div>
 
-        <ion-text class="overlayText mb-4">La suerte es lo que sucede cuando la preparación se encuentra con la oportunidad.</ion-text>
-        <ion-text class="overlayTextTow">Ett, una app creada para venezolanos en busca de empleo.</ion-text>
+        <div class="overlayContent px-5">
+          <ion-img [src]="ettLogoAsset" class="overlayLogo"></ion-img>
+
+          <ion-text class="overlayText mb-4">
+            La suerte es lo que sucede cuando la preparación se encuentra con la oportunidad.
+          </ion-text>
+          <ion-text class="overlayTextTow">
+            Ett, una app creada para venezolanos en busca de empleo.
+          </ion-text>
+        </div>
+
+        <ion-chip class="centeredButton" (click)="continueToCarousel()"
+          style="background-color: #2758BF; color: white;">
+          Comenzar
+        </ion-chip>
       </div>
+    </ng-container>
 
-      <ion-chip class="centeredButton" (click)="continueToCarousel()"
-        style="background-color: #2758BF; color: white;">Comenzar</ion-chip>
-    </div>
+    <!-- Carrusel -->
+    <ng-template #carouselBlock>
+      <div class="swiperPosition h-full">
 
-    <!-- Carrusel que se muestra al continuar -->
-    <div class="swiperPosition h-full" *ngIf="!showMainImage">
-      <swiper-container class="h-auto" #swiper (slidechange)="slideChangeCall();"
-        [autoplay]="{autoplay:true,disableOnInteraction:false,delay:2800}">
-        <swiper-slide *ngFor="let item of onboardingScreenList; let i = index">
-          <div class="column" style="margin: 0 20px; display: flex" [style.height]="screenHeight+'px'">
+        <!-- Slides -->
+        <ng-container *ngFor="let item of onboardingScreenList; let i = index">
+          <div class="slide column" *ngIf="i === currentIndex" [style.height]="screenHeight+'px'">
             <div class="imageWrapper">
               <ion-img [src]="item.onboardingImage" class="bgImage"></ion-img>
               <div class="blueOverlay"></div>
@@ -30,19 +41,25 @@
               </div>
             </div>
           </div>
-        </swiper-slide>
-      </swiper-container>
-      <!-- Indicadores -->
-      <div class="indicators">
-        <div *ngFor="let item of onboardingScreenList; let i = index" class="indicator"
-          [ngClass]="{'active': i === currentIndex}">
+        </ng-container>
+
+        <!-- Indicadores -->
+        <div class="indicators">
+          <div *ngFor="let item of onboardingScreenList; let i = index" class="indicator"
+               [ngClass]="{'active': i === currentIndex}">
+          </div>
         </div>
+
+        <!-- Botón siempre visible -->
+        <ion-chip class="centeredButton"
+          [style.background]="currentIndex < onboardingScreenList.length - 1 ? '#ffffff' : '#2758BF'"
+          [style.color]="currentIndex < onboardingScreenList.length - 1 ? '#2758BF' : '#ffffff'"
+          (click)="handleButtonPress()">
+          {{currentIndex < onboardingScreenList.length - 1 ? 'Siguiente' : 'Comenzar'}}
+        </ion-chip>
+
       </div>
-      <ion-chip class="centeredButton"
-        [style.background]="currentIndex < 2 ?'hsl(var(--foreground))': 'hsl(var(--primary))'"
-        [style.color]="currentIndex < 2 ? 'hsl(var(--primary))': 'hsl(var(--primary-foreground))'"
-        (click)="handleButtonPress()">
-        {{currentIndex < 2 ? 'Siguiente' : 'Comenzar' }}</ion-chip>
-    </div>
+    </ng-template>
+
   </div>
 </ion-content>

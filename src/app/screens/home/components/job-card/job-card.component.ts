@@ -1,14 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { catchError, switchMap } from 'rxjs';
-
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
 import { JobModel } from '@/types';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-job-card',
   templateUrl: './job-card.component.html',
   styleUrls: ['./job-card.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule
+  ]
 })
 export class JobCardComponent implements OnInit {
   @Input({ required: true }) job!: JobModel;

@@ -1,17 +1,25 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, NavController, MenuController } from '@ionic/angular';
+import { IonContent, NavController, MenuController, IonicModule } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { SocketService } from '../../service/socket.service';
 import { UtilsLib } from 'src/app/lib/utils';
 import { Message } from '@/types';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-message',
   templateUrl: './message.page.html',
   styleUrls: ['./message.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class MessagePage implements OnInit {
   // @ViewChild('scrollContainer') private scrollContainer!: ElementRef;

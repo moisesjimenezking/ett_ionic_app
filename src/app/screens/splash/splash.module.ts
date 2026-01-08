@@ -13,8 +13,8 @@ import { SplashPage } from './splash.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SplashPageRoutingModule
+    SplashPageRoutingModule,
+    SplashPage
   ],
-  declarations: [SplashPage]
 })
 export class SplashPageModule {}

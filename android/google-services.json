@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916293358230",
+    "project_id": "ett-venezuela-fire",
+    "storage_bucket": "ett-venezuela-fire.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916293358230:android:df60b0a476442f3cda28b7",
+        "android_client_info": {
+          "package_name": "com.venezuela.ett"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2NmDRYC5WCfc-lLWdfN3pZ85-UYqqs1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

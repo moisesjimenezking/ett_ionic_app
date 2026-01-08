@@ -15,8 +15,8 @@ import { SharedModule } from "../../shared/shared.module";
     FormsModule,
     IonicModule,
     BottomTabBarPageRoutingModule,
-    SharedModule
+    SharedModule,
+    BottomTabBarPage
   ],
-  declarations: [BottomTabBarPage]
 })
 export class BottomTabBarPageModule { }

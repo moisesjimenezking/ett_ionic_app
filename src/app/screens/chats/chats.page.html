@@ -108,7 +108,7 @@
 
         <ion-chip [disabled]="isSubmitting || !userExists"
           class="w-full flex items-center justify-center bg-primary text-primary-foreground rounded-full text-md font-medium h-12"
-          (click)="goToChat(sendMessageModal)">
+          (click)="goToChat()">
           <ion-text>
             {{ isSubmitting ? 'Verificando...' : 'Continuar' }}
           </ion-text>

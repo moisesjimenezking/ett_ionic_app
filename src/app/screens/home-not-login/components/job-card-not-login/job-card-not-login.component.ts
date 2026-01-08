@@ -4,11 +4,19 @@ import { Router } from '@angular/router';
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
 import { JobModel } from '@/types';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-job-card-not-login',
   templateUrl: './job-card-not-login.component.html',
   styleUrls: ['./job-card-not-login.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule
+  ]
+  
 })
 export class JobCardNotLoginComponent implements OnInit {
   @Input({ required: true }) job!: JobModel;

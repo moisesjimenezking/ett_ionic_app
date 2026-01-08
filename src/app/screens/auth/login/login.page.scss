@@ -84,3 +84,7 @@
 .logo-login {
   width: 60px; // o el tamaño que desees
 }
+
+.safe-footer {
+  padding-bottom: var(--ion-safe-area-bottom);
+}

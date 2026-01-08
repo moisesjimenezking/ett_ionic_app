@@ -15,8 +15,8 @@ import { SharedModule } from "../../shared/shared.module";
     FormsModule,
     IonicModule,
     CandidatePageRoutingModule,
-    SharedModule
+    SharedModule,
+    CandidatePage
   ],
-  declarations: [CandidatePage]
 })
 export class CandidatePageModule { }

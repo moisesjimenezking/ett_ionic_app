@@ -13,8 +13,8 @@ import { SavedPage } from './saved.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SavedPageRoutingModule
+    SavedPageRoutingModule,
+    SavedPage
   ],
-  declarations: [SavedPage]
 })
 export class SavedPageModule {}

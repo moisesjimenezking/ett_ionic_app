@@ -13,9 +13,9 @@ import { ApiService } from '../../../service/api.service';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginPage
   ],
-  declarations: [LoginPage],
   providers: [ApiService]
 })
 export class LoginPageModule {}

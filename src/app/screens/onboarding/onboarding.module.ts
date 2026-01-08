@@ -13,9 +13,9 @@ import { OnboardingPage } from './onboarding.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    OnboardingPageRoutingModule
+    OnboardingPageRoutingModule,
+    OnboardingPage
   ],
-  declarations: [OnboardingPage],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OnboardingPageModule {}

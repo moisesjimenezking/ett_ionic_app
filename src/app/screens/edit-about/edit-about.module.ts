@@ -14,9 +14,9 @@ import { EditAboutPage } from './edit-about.page';
     FormsModule,
     IonicModule,
     EditAboutPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    EditAboutPage
   ],
-  declarations: [EditAboutPage],
   providers: [ApiService]
 })
 export class EditAboutPageModule {}

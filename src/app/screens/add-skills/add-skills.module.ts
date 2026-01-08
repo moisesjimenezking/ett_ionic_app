@@ -14,9 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     IonicModule,
     AddSkillsPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AddSkillsPage
   ],
-  declarations: [AddSkillsPage],
   providers: [ApiService]
 })
 export class AddSkillsPageModule {}

@@ -13,7 +13,7 @@ import { EditProfilePage } from './edit-profile.page';
     IonicModule,
     EditProfilePageRoutingModule,
     HttpClientModule,
+    EditProfilePage
   ],
-  declarations: [EditProfilePage]
 })
 export class EditProfilePageModule {}

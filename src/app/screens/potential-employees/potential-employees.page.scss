@@ -1,0 +1,147 @@
+/* ====== ESTADO VACÍO ====== */
+ion-badge {
+  font-weight: bold;
+}
+
+.no-employees-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+
+  ion-icon {
+    font-size: 64px;
+    color: #8a8a8a;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 20px;
+    color: #8a8a8a;
+  }
+}
+
+/* ====== TARJETAS DE EMPLEADOS ====== */
+.employee-card {
+  background-color: #121212 !important;
+  border-radius: 16px;
+  padding: 14px;
+  margin: 0 12px 18px 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* Item dentro de la tarjeta */
+ion-list {
+  --ion-item-background: transparent;
+  --ion-item-border-color: transparent;
+}
+
+ion-item {
+  --background: transparent !important;
+}
+
+/* ====== AVATAR (MISMO TAMAÑO SIEMPRE) ====== */
+ion-avatar {
+  width: 65px !important;
+  height: 65px !important;
+  min-width: 65px !important;
+  min-height: 65px !important;
+  max-width: 65px !important;
+  max-height: 65px !important;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+ion-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ====== TEXTOS PRINCIPALES ====== */
+.employee-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+/* ====== INFO DE TEXTO GENERAL ====== */
+.employee-location,
+.employee-skill,
+.employee-email,
+.employee-phone,
+.employee-about {
+  font-size: 14px;
+  color: #b9b9b9;
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+}
+
+.employee-location ion-icon,
+.employee-skill ion-icon,
+.employee-email ion-icon,
+.employee-phone ion-icon,
+.employee-about ion-icon {
+  font-size: 16px;
+  margin-right: 6px;
+  color: #b9b9b9;
+}
+
+/* ===== Fondo general ====== */
+ion-content {
+  --background: #121212;
+  --ion-color-background: #121212;
+}
+
+/* Por si usas employee-avatar en algún lado */
+.employee-avatar {
+  width: 60px;
+  height: 60px;
+
+  img {
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.whatsapp-btn {
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.whatsapp-btn:hover {
+  opacity: 0.8;
+}
+
+/* Whatsapp habilitado */
+.whatsapp-enabled {
+  color: #25D366;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.whatsapp-enabled ion-icon {
+  color: #25D366;
+}
+
+/* Whatsapp deshabilitado */
+.whatsapp-disabled {
+  color: #777;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.whatsapp-disabled ion-icon {
+  color: #777;
+}

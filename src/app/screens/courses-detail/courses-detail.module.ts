@@ -13,8 +13,8 @@ import { CoursesDetailPage } from './courses-detail.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CoursesDetailPageRoutingModule
+    CoursesDetailPageRoutingModule,
+    CoursesDetailPage
   ],
-  declarations: [CoursesDetailPage]
 })
 export class CoursesDetailPageModule {}

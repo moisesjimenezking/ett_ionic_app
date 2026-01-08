@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonItemSliding, NavController } from '@ionic/angular';
-
+import { IonItemSliding, NavController, IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-saved',
   templateUrl: './saved.page.html',
   styleUrls: ['./saved.page.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule]
 })
 export class SavedPage implements OnInit {
 

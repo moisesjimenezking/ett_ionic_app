@@ -13,8 +13,8 @@ import { EditEducationPage } from './edit-education.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    EditEducationPageRoutingModule
+    EditEducationPageRoutingModule,
+    EditEducationPage
   ],
-  declarations: [EditEducationPage]
 })
 export class EditEducationPageModule {}

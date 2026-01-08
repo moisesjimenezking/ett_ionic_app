@@ -9,14 +9,32 @@ import { SocketService } from '../../service/socket.service';
 
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ChatEmptyStateComponent } from './chat-empty-state/chat-empty-state.component';
+import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
+import { SharedModule } from "../../shared/shared.module";
+
 
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.page.html',
   styleUrls: ['./chats.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ChatEmptyStateComponent,
+    ChatMessagesComponent,
+    SharedModule
+  ]
+  
 })
 export class ChatsPage implements OnInit {
   @ViewChild('logoutDialogChat', { read: IonModal }) logoutDialog!: IonModal;
+  @ViewChild('sendMessageModal') sendMessageModal!: IonModal;
 
 
   protected readonly utils = new UtilsLib();
@@ -69,7 +87,8 @@ export class ChatsPage implements OnInit {
     setTimeout(() => {
       this.apiChat.getChat({}).subscribe({
         next: (data: any) => {
-          this.chatsList = data;
+          // this.chatsList = data;
+          this.chatsList = data.map((chat: ChatMessage) => this.adjustMessageTime(chat));
           this.isLoadingChatList = false;
           this.cdr.detectChanges();
         },
@@ -101,6 +120,7 @@ export class ChatsPage implements OnInit {
       this.chatsList[chatIndex].datetime_update = new Date().toISOString();
       this.chatsList[chatIndex].unreadMsgCount += 1
       this.cdr.detectChanges();
+      this.allChats();
     } else {
       this.allChats();
       console.log(`⚠️ Chat ${data.chats_id} no encontrado en la lista.`);
@@ -170,15 +190,16 @@ export class ChatsPage implements OnInit {
     });
   }
 
-  goToChat(modal: any) {
+  goToChat() {
     if (!this.userExists) return;
 
     localStorage.removeItem('messages');
+
     const body = {
       "user_sending_id": localStorage.getItem('user_id'),
       "user_recept_id": this.userReceptId
-    }
-    
+    };
+
     this.apiChat.postChats(body)
       .pipe(
         catchError((error: any) => {
@@ -189,12 +210,30 @@ export class ChatsPage implements OnInit {
         tap((data: any) => {
           this.chatId = data.id;
           this.isSubmitting = false;
-          modal.dismiss();
-          
+
+          // 🔥 AQUÍ ya tienes la referencia real del modal
+          this.sendMessageModal.dismiss();
+
           this.allChats();
-          this.router.navigateByUrl(`/message?chatId=${this.chatId}&name=${this.userName}`);
+          this.router.navigateByUrl(
+            `/message?chatId=${this.chatId}&name=${this.userName}`
+          );
         })
       )
       .subscribe();
+  }
+
+  adjustMessageTime(msg: ChatMessage): ChatMessage {
+    const dt = msg.datetime_update || msg.datetime;
+    if (!dt) return msg;
+
+    const dateUTC = new Date(dt);
+    const localTime = dateUTC.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+
+    return { ...msg, lastMsgTime: localTime };
   }
 }

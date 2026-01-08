@@ -13,8 +13,8 @@ import { AuthPage } from './auth.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AuthPageRoutingModule
+    AuthPageRoutingModule,
+    AuthPage
   ],
-  declarations: [AuthPage]
 })
 export class AuthPageModule {}

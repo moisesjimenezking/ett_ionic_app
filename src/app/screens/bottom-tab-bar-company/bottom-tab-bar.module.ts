@@ -13,8 +13,8 @@ import { BottomTabBarPage } from './bottom-tab-bar.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    BottomTabBarPageRoutingModule
+    BottomTabBarPageRoutingModule,
+    BottomTabBarPage
   ],
-  declarations: [BottomTabBarPage]
 })
 export class BottomTabBarPageModule {}

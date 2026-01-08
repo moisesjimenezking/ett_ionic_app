@@ -13,8 +13,8 @@ import { UploadSuccessPage } from './upload-success.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    UploadSuccessPageRoutingModule
+    UploadSuccessPageRoutingModule,
+    UploadSuccessPage
   ],
-  declarations: [UploadSuccessPage]
 })
 export class UploadSuccessPageModule {}

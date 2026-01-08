@@ -3,10 +3,19 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+
+
 @Component({
   selector: 'app-all-jobs',
   templateUrl: './all-jobs.page.html',
   styleUrls: ['./all-jobs.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+  ]
 })
 export class AllJobsPage implements OnInit {
   limit = 1;

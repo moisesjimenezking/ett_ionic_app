@@ -1,3 +1,4 @@
+
 <ion-header mode="ios" [translucent]="true" class="ion-no-border">
   <ion-toolbar color="false" style="background-color: #121212; height: 100%"></ion-toolbar>
 </ion-header>
@@ -16,7 +17,7 @@
 
     <div class="flex flex-col gap-4 h-auto overflow-y-auto">
       <div class="flex flex-col gap-2 text-start">
-        <ion-text class="text-sm ml-5 text-primary-foreground"> Correo electrónico </ion-text>
+        <span class="text-sm ml-5 text-primary-foreground"> Correo electrónico </span>
         <ion-chip class="field">
           <ion-input mode="ios" placeholder="Introduce tu correo" [(ngModel)]="email" inputmode="email"
             (ionChange)="validateEmail()">
@@ -156,7 +157,7 @@
   </ion-modal>
 </ion-content>
 
-<ion-footer mode="ios">
+<ion-footer mode="ios" class="safe-footer">
   <div class="footer flex justify-center items-center gap-2 text-[15px]">
     <ion-text class="text-primary-foreground">
       ¿No tienes una cuenta?

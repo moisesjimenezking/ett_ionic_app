@@ -20,9 +20,11 @@ import { SharedModule } from "../../shared/shared.module";
     IonicModule,
     ChatsPageRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    ChatsPage, 
+    ChatEmptyStateComponent, 
+    ChatMessagesComponent
   ],
-  declarations: [ChatsPage, ChatEmptyStateComponent, ChatMessagesComponent],
   providers: [ApiService]
 })
 export class ChatsPageModule { }

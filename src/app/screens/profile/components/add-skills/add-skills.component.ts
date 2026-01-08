@@ -1,10 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
 import { IonModal } from '@ionic/angular/common';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 
 export type AddSkillsEvent = {
   skills: any;
@@ -14,6 +17,12 @@ export type AddSkillsEvent = {
   selector: 'app-add-skills',
   templateUrl: './add-skills.component.html',
   styleUrls: ['./add-skills.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class AddSkillsComponent implements OnInit, AfterViewInit {
 
@@ -46,8 +55,14 @@ export class AddSkillsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const listCurrentSkill = localStorage.getItem('skills');
-    if (listCurrentSkill) {
-      this.currentSkill = JSON.parse(listCurrentSkill);
+    if (listCurrentSkill && listCurrentSkill.indexOf(',') !== -1) {
+      this.currentSkill = listCurrentSkill.split(',');
+    } else {
+      try {
+        this.currentSkill = JSON.parse(listCurrentSkill || '[]');
+      } catch (error) {
+        this.currentSkill = [];
+      }
     }
   }
 

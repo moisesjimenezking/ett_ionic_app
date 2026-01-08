@@ -1,15 +1,17 @@
 import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, IonMenu, AlertController } from '@ionic/angular';
+import { NavController, IonMenu, AlertController, IonicModule } from '@ionic/angular';
 import { throwError } from 'rxjs';
-
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../../service/api.service';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-new-jobs',
   templateUrl: './new-jobs.page.html',
   styleUrls: ['./new-jobs.page.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule, FormsModule] 
 })
 export class NewJobsPage implements OnInit {
   @ViewChild('ScrollContainer') scrollContainer?: ElementRef;

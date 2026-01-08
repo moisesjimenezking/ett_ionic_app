@@ -1,11 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonMenu, IonModal } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-menu',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule]
 })
 export class SidebarComponent implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;

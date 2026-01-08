@@ -2,11 +2,22 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { IonMenu, IonModal } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component'; // ajusta el path
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.page.html',
   styleUrls: ['./courses.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    SidebarComponent
+  ]
 })
 export class CoursesPage implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;

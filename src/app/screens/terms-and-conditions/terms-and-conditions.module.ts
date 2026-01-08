@@ -13,8 +13,8 @@ import { TermsAndConditionsPage } from './terms-and-conditions.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TermsAndConditionsPageRoutingModule
+    TermsAndConditionsPageRoutingModule,
+    TermsAndConditionsPage
   ],
-  declarations: [TermsAndConditionsPage]
 })
 export class TermsAndConditionsPageModule {}

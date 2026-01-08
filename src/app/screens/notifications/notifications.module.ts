@@ -14,8 +14,9 @@ import { SwipeItemComponent } from 'src/app/components/swipe-item/swipe-item.com
     CommonModule,
     FormsModule,
     IonicModule,
-    NotificationsPageRoutingModule
+    NotificationsPageRoutingModule,
+    NotificationsPage,
+    SwipeItemComponent
   ],
-  declarations: [NotificationsPage,SwipeItemComponent]
 })
 export class NotificationsPageModule {}

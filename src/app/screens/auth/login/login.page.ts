@@ -1,21 +1,29 @@
-import { assetsPath, ettLogoAsset, smallBusinessAsset } from '@/lib/constanst/assets';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { assetsPath } from '@/lib/constanst/assets';
+import { Component, OnInit, ViewChild, ViewEncapsulation, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
-import { IonRouterOutlet, Platform, AlertController, IonModal } from '@ionic/angular';
+import { IonRouterOutlet, Platform, AlertController, IonModal, LoadingController } from '@ionic/angular';
 import { ApiService } from '@/service/api.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: true,
+  encapsulation: ViewEncapsulation.None,
+  imports: [IonicModule, CommonModule, NgOtpInputModule, FormsModule]
 })
 export class LoginPage implements OnInit {
   @ViewChild('dialogPass', { read: IonModal }) dialogPass!: IonModal;
   @ViewChild('dialogCode', { read: IonModal }) dialogCode!: IonModal;
 
   iconLogin = `${assetsPath}/images/ett-logo.png`;
+
   email: string = '';
   emailRecover: string = '';
   password: string = '';
@@ -34,10 +42,12 @@ export class LoginPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private apiService: ApiService,
+    private loadingController: LoadingController,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
-    this.apiService.getData()
+    this.apiService.getData();
   }
 
   ionViewWillEnter() {
@@ -63,7 +73,6 @@ export class LoginPage implements OnInit {
       message: message,
       buttons: ['OK'],
     });
-
     await alert.present();
   }
 
@@ -71,31 +80,36 @@ export class LoginPage implements OnInit {
     this.isModalOpen = true;
   }
 
-  submitEmail() {
+  async submitEmail() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
     const email = this.emailRecover;
-    console.log(email);
-    if (email && !emailRegex.test(email)) {
+
+    if (!email || !emailRegex.test(email)) {
       this.alertMessageEmail = 'Por favor ingresa un correo electrónico válido';
-      this.presentAlert(this.alertMessageEmail);
-      return throwError(() => new Error(this.alertMessageEmail));
+      await this.presentAlert(this.alertMessageEmail);
+      return;
     }
 
-    this.apiService.getRecoverPassEmail({ email: email }).subscribe({
-    next: (response) => {
+    const loading = await this.loadingController.create({ message: 'Enviando correo...' });
+    await loading.present();
+
+    this.apiService.getRecoverPassEmail({ email }).subscribe({
+      next: async (response) => {
+        await loading.dismiss();
         if (response?.result === 201) {
-          this.dialogPass.dismiss()
+          this.dialogPass.dismiss();
           this.dialogCode.present();
         } else {
-          this.presentAlert('No se pudo enviar el correo.');
+          await this.presentAlert('No se pudo enviar el correo.');
         }
       },
-      error: (error) => {
+      error: async (error) => {
+        await loading.dismiss();
         console.error('Error en recuperación de contraseña:', error.message);
+        await this.presentAlert('Error en recuperación de contraseña');
       }
     });
-    return;
   }
 
   onDismissDialogPass() {
@@ -104,68 +118,98 @@ export class LoginPage implements OnInit {
   }
 
   isDialogOpen(modal: IonModal) {
-    return modal.isOpen || modal.isCmpOpen;
+    return modal?.isOpen ?? false;
   }
 
-  validateEmail() {
+  async validateEmail(): Promise<boolean> {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.alertMessageEmail = '';
+
     const email = this.isDialogOpen(this.dialogPass) ? this.emailRecover : this.email;
 
-    if (email && !emailRegex.test(email)) {
+    if (!email) return false;
+    if (!emailRegex.test(email)) {
       this.alertMessageEmail = 'Por favor ingresa un correo electrónico válido';
-      return false
+      return false;
     }
 
-    return this.apiService.getVerificEmail({ email });
+    const loading = await this.loadingController.create({ message: 'Verificando correo...' });
+    await loading.present();
+
+    try {
+      const response: any = await lastValueFrom(this.apiService.getVerificEmail({ email }));
+
+      // Guardar datos de usuario sin afectar ngModel
+      this.zone.run(() => {
+        localStorage.setItem('fullname', response.fullname ?? '');
+        localStorage.setItem('email', response.email ?? '');
+        localStorage.setItem('icon_profile', response.user?.icon ?? '');
+        localStorage.setItem('icon_front', response.user?.icon_front ?? '');
+        localStorage.setItem('social_link', JSON.stringify(response.user?.social_link ?? ''));
+        localStorage.setItem('specialization', response.user?.specialization ?? '');
+        localStorage.setItem('phone', response.phone ?? '');
+        localStorage.setItem('address', response.address ?? '');
+        localStorage.setItem('sex', response.sex ?? '');
+        localStorage.setItem('civil_status', response.civil_status ?? '');
+        localStorage.setItem('family_responsibilities', response.family_responsibilities ?? '');
+        localStorage.setItem('birthdate', response.birthdate ?? '');
+        localStorage.setItem('level_study', response.level_study ?? '');
+        localStorage.setItem('blood_type', response.blood_type ?? '');
+        localStorage.setItem('allergies', response.allergies ?? '');
+        localStorage.setItem('user_id', response.id ?? '');
+        localStorage.setItem('location', response.location ?? '');
+        localStorage.setItem('experienceYear', response.experience ?? '');
+        localStorage.setItem('about', response.about ?? '');
+      });
+
+      return true;
+    } catch (error: any) {
+      await this.zone.run(async () => {
+        const alert = await this.alertController.create({
+          header: 'Error',
+          message: error?.error?.message || 'Error al verificar el correo',
+          buttons: ['OK'],
+        });
+        await alert.present();
+      });
+      return false;
+    } finally {
+      await loading.dismiss();
+    }
   }
 
-  changePassword(): void {
-    let errorAlert = false;
-    let errorMessage = '';
 
+  async changePassword(): Promise<void> {
     if (!this.passwd || !this.confirm_password) {
-      errorAlert = true;
-      errorMessage = 'Por favor, introduzca su nueva contraseña para continuar.';
-    }
-
-    if (this.passwd !== this.confirm_password) {
-      errorAlert = true;
-      errorMessage = 'Las contraseñas ingresadas no coinciden. Por favor, verifíquelas.';
-    }
-
-    if (errorAlert) {
-      this.presentAlert(errorMessage);
+      await this.presentAlert('Por favor, introduzca su nueva contraseña para continuar.');
       return;
     }
 
-    const body = {
-      code: this.code,
-      passwd: this.passwd,
-      confirm_password: this.confirm_password
-    };
+    if (this.passwd !== this.confirm_password) {
+      await this.presentAlert('Las contraseñas ingresadas no coinciden. Por favor, verifíquelas.');
+      return;
+    }
+
+    const body = { code: this.code, passwd: this.passwd, confirm_password: this.confirm_password };
 
     this.apiService.changePass(body).subscribe({
-      next: (response) => {
+      next: async (response) => {
         if (response.status === 201) {
-          this.presentAlert('Contraseña cambiada exitosamente.', 'success');
+          await this.presentAlert('Contraseña cambiada exitosamente.', 'success');
           this.dialogCode.dismiss();
-
           this.emailRecover = '';
           this.code = '';
           this.passwd = '';
           this.confirm_password = '';
         } else {
-          this.presentAlert('No se pudo cambiar la contraseña.');
+          await this.presentAlert('No se pudo cambiar la contraseña.');
         }
       },
       error: (err) => {
         console.error('Error en el cambio de contraseña:', err.message);
-        // Nota: el error ya se maneja también dentro de catchError del servicio
       }
     });
   }
-
 
   validateCode() {
     const codeRegex = /^\d{6}$/;
@@ -196,12 +240,12 @@ export class LoginPage implements OnInit {
     return this.apiService.postToken(body)
   }
 
-  goTo(screen: any) {
+  goTo(screen: string) {
     this.router.navigateByUrl(screen);
   }
 
   openDialogCode() {
-    this.dialogPass.dismiss(); // Cierra el primer modal
-    this.dialogCode.present(); // Abre el segundo modal
+    this.dialogPass.dismiss();
+    this.dialogCode.present();
   }
 }

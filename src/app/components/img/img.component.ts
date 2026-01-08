@@ -12,6 +12,8 @@ import {
 import { fadeIn } from '@/lib/animations/custom-animations';
 import { UtilsLib } from '@/lib/utils';
 import { icPersonAsset } from '@/lib/constanst/assets';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ng-image',
@@ -19,6 +21,11 @@ import { icPersonAsset } from '@/lib/constanst/assets';
   styleUrls: ['./img.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeIn],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+  ]
 })
 export class ImgComponent implements OnInit, OnChanges {
   @Input() src = '';

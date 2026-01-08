@@ -2,11 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { NgOtpInputConfig } from 'ng-otp-input';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @Component({
   selector: 'app-verification',
   templateUrl: './verification.page.html',
   styleUrls: ['./verification.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    NgOtpInputModule
+  ]
 })
 export class VerificationPage implements OnInit {
 

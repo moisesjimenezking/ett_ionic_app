@@ -2,11 +2,21 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { Router } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-edit-about',
   templateUrl: './edit-about.page.html',
   styleUrls: ['./edit-about.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class EditAboutPage implements OnInit {
 

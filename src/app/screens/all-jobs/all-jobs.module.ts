@@ -13,8 +13,8 @@ import { AllJobsPage } from './all-jobs.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AllJobsPageRoutingModule
+    AllJobsPageRoutingModule,
+    AllJobsPage
   ],
-  declarations: [AllJobsPage]
 })
 export class AllJobsPageModule {}

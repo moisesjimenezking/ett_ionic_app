@@ -19,8 +19,10 @@ import { CompanyEmptyStateComponent } from './components/company-empty-state/com
     HomePageRoutingModule,
     HttpClientModule,
     SharedModule,
+    HomePage, 
+    JobCardComponent, 
+    CompanyEmptyStateComponent
   ],
-  declarations: [HomePage, JobCardComponent, CompanyEmptyStateComponent],
   providers: [ApiService]
 })
 export class HomePageModule { }

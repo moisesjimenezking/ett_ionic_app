@@ -1,17 +1,32 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, ModalController, AlertController, IonMenu, IonModal } from '@ionic/angular';
+import { NavController, ModalController, AlertController, IonMenu, IonModal, IonicModule } from '@ionic/angular';
 import { catchError, switchMap, throwError } from 'rxjs';
 
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from 'src/app/lib/utils';
 import { JobModel } from '@/types';
-
+import { SharedModule } from "../../shared/shared.module";
+import { EditJobDetailComponent } from './components/edit-job-detail/edit-job-detail.component';
+import { CandidatesComponent } from './components/candidates/candidates.component';
+import { SendMessageModalComponent } from './components/send-message-modal/send-message-modal.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-job-detail',
   templateUrl: './job-detail.page.html',
   styleUrls: ['./job-detail.page.scss'],
+  standalone: true,
+  imports: [
+    EditJobDetailComponent,
+    SharedModule,
+    CandidatesComponent,
+    SendMessageModalComponent,
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class JobDetailPage implements OnInit {
   @ViewChild('modal') modal: any;

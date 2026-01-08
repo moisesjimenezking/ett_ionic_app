@@ -19,9 +19,12 @@ import { SendMessageModalComponent } from './components/send-message-modal/send-
     IonicModule,
     JobDetailPageRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    JobDetailPage, 
+    EditJobDetailComponent, 
+    CandidatesComponent, 
+    SendMessageModalComponent
   ],
-  declarations: [JobDetailPage, EditJobDetailComponent, CandidatesComponent, SendMessageModalComponent],
   providers: [ApiService]
 })
 export class JobDetailPageModule { }

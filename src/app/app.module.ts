@@ -1,23 +1,41 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+// app.module.ts
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from "./shared/shared.module";
+import { SharedModule } from './shared/shared.module';
 import { pageTransition } from './lib/animations/page-transition';
 import { ApiService } from './service/api.service';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NetworkInterceptor } from './interceptors/network.interceptor';
+import { AppComponent } from './app.component'; // Standalone
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     BrowserAnimationsModule,
-    IonicModule.forRoot({ navAnimation: pageTransition, animated: true, }), AppRoutingModule, SharedModule, HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ApiService],
+    IonicModule.forRoot({ navAnimation: pageTransition, animated: true }),
+    AppRoutingModule,
+    SharedModule,
+    HttpClientModule,
+    AppComponent // IMPORTAR, no declarar
+  ],
+  providers: [
+    { 
+      provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy
+    },
+    ApiService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NetworkInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,9 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
-import { IonModal, NavController } from '@ionic/angular';
+import { IonModal, NavController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
+import { CommonModule } from '@angular/common';
+import { FileItemLoaderComponent } from '@/components/file-item-loader/file-item-loader.component';
 
 export type EditProfileEvent = {
   fullname: string,
@@ -17,6 +19,13 @@ export type EditProfileEvent = {
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    FileItemLoaderComponent
+  ]
 })
 export class EditProfileComponent implements OnInit {
 

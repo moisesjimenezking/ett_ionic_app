@@ -4,11 +4,20 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // si usas ngModel
 
 @Component({
   selector: 'app-send-message-modal',
   templateUrl: './send-message-modal.component.html',
   styleUrls: ['./send-message-modal.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class SendMessageModalComponent implements OnInit {
   @Input({ required: true }) job!: JobModel;

@@ -5,11 +5,23 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UtilsLib } from '@/lib/utils';
 import { bgBiografyAsset } from '@/lib/constanst/assets';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ImgComponent } from '@/components/img/img.component';
+
 
 @Component({
   selector: 'app-candidate',
   templateUrl: './candidate.page.html',
   styleUrls: ['./candidate.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    ImgComponent
+  ]
 })
 export class CandidatePage implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;

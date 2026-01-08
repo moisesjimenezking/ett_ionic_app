@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { ChatMessage, JobModel } from '@/types';
+import { FirebaseMessagingService } from '../firebase-messaging.service';
+import { Capacitor } from '@capacitor/core';
 
 
 @Injectable({
@@ -15,6 +17,7 @@ import { ChatMessage, JobModel } from '@/types';
 })
 export class ApiService {
   private apiUrl = 'https://ettapi.com';
+  private apiPrefixUrl = 'https://ettapi.com/api/ett/v1/';
   // private apiUrl = "http://127.0.0.1:1263";
 
   private options = {
@@ -40,7 +43,8 @@ export class ApiService {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private fcmService: FirebaseMessagingService
   ) {
     localStorage.setItem('rute', this.apiUrl);
   }
@@ -86,6 +90,10 @@ export class ApiService {
       .post(`${this.apiUrl}/tokenByCode`, body, this.getOptions())
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
+
           let errorMessage =
             'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 201 && error.error && error.error.message) {
@@ -158,6 +166,7 @@ export class ApiService {
         localStorage.setItem('location', response.user?.location ?? '');
         localStorage.setItem('experienceYear', response.user?.experience ?? '');
         localStorage.setItem('about', response.user?.about ?? '');
+        localStorage.setItem('skills', response.user?.skills ?? '');
 
         this.zone.run(() => {
           this.goTo(
@@ -169,14 +178,30 @@ export class ApiService {
       });
   }
 
-  postToken(data: any) {
-    data.fcm_code = 'ANDROID';
-    console.log(data);
+  async postToken(data: any) {
+    console.log('aqui 1')
+    if (Capacitor.getPlatform() !== 'web') {
+      try {
+        const fcmToken = await this.fcmService.waitForToken();
+        data.fcm_code = fcmToken;
+      } catch (err) {
+        console.warn('FCM token no disponible:', err);
+      }
+    } else {
+      console.log('Ejecutando en web, no se obtiene FCM token');
+      data.fcm_code = 'WEB'; // o un string temporal para testing
+    }
+
+    console.log('Datos para login:', data);
     this.showSpinner();
     return this.http
       .post(`${this.apiUrl}/token`, data, this.getOptions())
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
+
           let errorMessage =
             'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 201 && error.error && error.error.message) {
@@ -250,6 +275,7 @@ export class ApiService {
         localStorage.setItem('location', response.user?.location ?? '');
         localStorage.setItem('experienceYear', response.user?.experience ?? '');
         localStorage.setItem('about', response.user?.about ?? '');
+        localStorage.setItem('skills', response.user?.skills ?? '');
 
         this.goTo(
           localStorage.getItem('accountType') === 'PERSON'
@@ -270,6 +296,10 @@ export class ApiService {
       .post(`${this.apiUrl}/user/change_password`, data, { observe: 'response' })
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
+
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 201 && error.error?.message) {
             errorMessage = error.error.message;
@@ -296,6 +326,10 @@ export class ApiService {
       .get(`${this.apiUrl}/user/validate_code`, { params: params })
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
+
           let errorMessage =
             'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 200 && error.error && error.error.message) {
@@ -316,59 +350,12 @@ export class ApiService {
 
   getVerificEmail(data: any) {
     let params = new HttpParams();
+
     for (let key in data) {
       params = params.append(key, data[key]);
     }
-    // this.showSpinner();
-    return this.http
-      .get(`${this.apiUrl}/verific_email`, { params: params })
-      .pipe(
-        catchError((error) => {
-          let errorMessage =
-            'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
-          if (error.status !== 200 && error.error && error.error.message) {
-            errorMessage = error.error.message;
-          }
 
-          this.presentAlert(errorMessage);
-
-          return throwError(() => new Error(errorMessage));
-        }),
-        finalize(() => {
-          this.hideSpinner();
-        })
-      )
-      .subscribe((response: any) => {
-        localStorage.clear();
-        localStorage.setItem('fullname', response.fullname);
-        localStorage.setItem('email', response.email);
-        localStorage.setItem('icon_profile', response.user?.icon ?? '');
-        localStorage.setItem('icon_front', response.user?.icon_front ?? '');
-        localStorage.setItem(
-          'social_link',
-          JSON.stringify(response.user?.social_link ?? '')
-        );
-        localStorage.setItem(
-          'specialization',
-          response.user?.specialization ?? ''
-        );
-        localStorage.setItem('phone', response.phone ?? '');
-        localStorage.setItem('address', response.address ?? '');
-        localStorage.setItem('sex', response.sex ?? '');
-        localStorage.setItem('civil_status', response.civil_status ?? '');
-        localStorage.setItem(
-          'family_responsibilities',
-          response.family_responsibilities
-        );
-        localStorage.setItem('birthdate', response.birthdate);
-        localStorage.setItem('level_study', response.level_study);
-        localStorage.setItem('blood_type', response.blood_type);
-        localStorage.setItem('allergies', response.allergies);
-        localStorage.setItem('user_id', response.id);
-        localStorage.setItem('location', response.location ?? '');
-        localStorage.setItem('experienceYear', response.experience ?? '');
-        localStorage.setItem('about', response.about ?? '');
-      });
+    return this.http.get<any>(`${this.apiUrl}/verific_email`, { params });
   }
 
   getRecoverPassEmail(data: any): Observable<any> {
@@ -383,6 +370,10 @@ export class ApiService {
       .get(`${this.apiUrl}/user/recover_password`, { params })
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
+
           let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 200 && error.error && error.error.message) {
             errorMessage = error.error.message;
@@ -409,6 +400,10 @@ export class ApiService {
       .get(`${this.apiUrl}/verific_email`, { params: params })
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
+
           let errorMessage =
             'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status === 200) {
@@ -432,6 +427,10 @@ export class ApiService {
 
     return this.http.post(`${this.apiUrl}/register`, data, this.getOptions()).pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error?.message) {
           errorMessage = error.error.message;
@@ -452,6 +451,10 @@ export class ApiService {
 
     return request.pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage =
           'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 200 && error.error && error.error.message) {
@@ -473,6 +476,10 @@ export class ApiService {
 
     return request.pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage =
           'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 200 && error.error && error.error.message) {
@@ -503,6 +510,10 @@ export class ApiService {
   postJobs(data: any) {
     return this.http.post(`${this.apiUrl}/jobs`, data, this.getOptions()).pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage =
           'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error && error.error.message) {
@@ -524,6 +535,9 @@ export class ApiService {
       .put<JobModel>(`${this.apiUrl}/jobs`, data, this.getOptions())
       .pipe(
         catchError((error) => {
+          if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+            return throwError(() => error);
+          }
           let errorMessage =
             'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
           if (error.status !== 201 && error.error && error.error.message) {
@@ -567,6 +581,10 @@ export class ApiService {
 
     return request.pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage = 'Error al eliminar la cuenta. Por favor, inténtalo de nuevo.';
         if (error.error && error.error.message) {
           errorMessage = error.error.message;
@@ -584,6 +602,10 @@ export class ApiService {
 
     return request.pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage =
           'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error && error.error.message) {
@@ -628,6 +650,10 @@ export class ApiService {
 
     return request.pipe(
       catchError((error) => {
+        if (error.status === 0 || error.message === 'Sin conexión a Internet') {
+          return throwError(() => error);
+        }
+
         let errorMessage =
           'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
         if (error.status !== 201 && error.error && error.error.message) {
@@ -675,5 +701,13 @@ export class ApiService {
     });
 
     return request;
+  }
+
+  getPotentialEmployees(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiPrefixUrl}/potentialEmployee`, this.getOptions());
+  }
+
+  getPotentialEmployeesJobs(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiPrefixUrl}/potentialEmployee?jobs_id=${id}`, this.getOptions());
   }
 }

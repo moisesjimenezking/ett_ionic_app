@@ -1,0 +1,73 @@
+<ion-header mode="ios" [translucent]="false" class="ion-no-border">
+  <ion-toolbar color="false" class="bg-background">
+    <div class="w-full flex justify-between px-4 py-5">
+      <ion-text class="flex-1 text-primary-foreground text-2xl text-ellipsis line-clamp-1 font-semibold text-center">
+        Empleados Potenciales
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #000000;">
+  <ion-list class="p-4 space-y-4">
+    <!-- Lista de empleados -->
+    <div *ngFor="let employee of potentialEmployees">
+      <ion-card class="employee-card">
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img [src]="employee.icon || 'assets/images/user/iconHuman.jpg'" />
+          </ion-avatar>
+
+          <ion-label>
+            <h2 class="employee-name">{{ employee.fullname }}</h2>
+            <p class="employee-about">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              {{ employee.about || 'Sin descripción personal' }}
+            </p>
+            <!-- <p class="employee-skill">
+              <ion-icon name="briefcase-outline"></ion-icon>
+              {{ employee.skills || 'Sin habilidades registradas' }}
+            </p> -->
+
+            <p class="employee-email">
+              <ion-icon name="mail-outline"></ion-icon>
+              {{ employee.email || 'Sin email' }}
+            </p>
+
+            <p class="employee-phone"
+              [class.whatsapp-enabled]="employee.phone && employee.phone.length >= 10"
+              [class.whatsapp-disabled]="!employee.phone || employee.phone.length < 10"
+              (click)="(employee.phone && employee.phone.length >= 10) ? openWhatsApp(employee.phone) : null">
+
+              <ion-icon name="logo-whatsapp"></ion-icon>
+
+              {{
+                !employee.phone || employee.phone.length < 10
+                  ? 'Sin teléfono'
+                  : (employee.phone.startsWith('+58')
+                      ? employee.phone
+                      : '+58' + employee.phone)
+              }}
+            </p>
+
+
+
+            <p class="employee-location">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ employee.location || 'Sin ubicación' }}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+    </div>
+
+
+    <!-- Estado vacío -->
+    <ng-template #noEmployees>
+      <div class="no-employees-container" style="text-align: center; color: #fff; margin-top: 50px;">
+        <ion-icon name="people-outline" size="large"></ion-icon>
+        <p>No hay empleados potenciales</p>
+      </div>
+    </ng-template>
+  </ion-list>
+</ion-content>

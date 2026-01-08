@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { WalletPageRoutingModule } from './wallet-routing.module';
-import { WalletPage } from './wallet.page';
-import { ApiService } from '../../service/api.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from "../../shared/shared.module";
+import { SharedModule } from '../../shared/shared.module';
+import { ApiService } from '../../service/api.service';
+
+// Importa el standalone component
+import { WalletPage } from './wallet.page';
 
 @NgModule({
   imports: [
@@ -15,9 +17,9 @@ import { SharedModule } from "../../shared/shared.module";
     IonicModule,
     WalletPageRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    WalletPage
   ],
-  declarations: [WalletPage],
   providers: [ApiService]
 })
 export class WalletPageModule { }

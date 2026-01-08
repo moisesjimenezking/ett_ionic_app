@@ -1,16 +1,23 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, AlertController, IonModal } from '@ionic/angular';
-
-
 import { ApiService } from '@/service/api.service';
 import { JobModel } from '@/types';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // si usas ngModel
 
 
 @Component({
   selector: 'app-edit-job-detail',
   templateUrl: './edit-job-detail.component.html',
   styleUrls: ['./edit-job-detail.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule
+  ]
 })
 export class EditJobDetailComponent implements OnInit, OnChanges {
   @ViewChild('openEditJobs', { read: IonModal }) modal!: IonModal;

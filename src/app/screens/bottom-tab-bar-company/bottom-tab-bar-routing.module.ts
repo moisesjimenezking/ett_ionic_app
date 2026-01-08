@@ -38,6 +38,10 @@ const routes: Routes = [
         data: { noCache: true }
       },
       {
+        path: 'potential-employees',
+        loadChildren: () => import('../../screens/potential-employees/potential-employees.module').then( m => m.PotentialEmployeesPageModule)
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'

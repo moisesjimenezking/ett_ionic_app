@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, IonicModule } from '@ionic/angular';
 import { ApiService } from '../../service/api.service';
 import { IonMenu, IonModal } from '@ionic/angular';
 import { EditProfileEvent } from './components/edit-profile/edit-profile.component';
@@ -8,11 +8,26 @@ import { AddSkillsEvent } from './components/add-skills/add-skills.component';
 import { EditAboutEvent } from './components/edit-about/edit-about.component';
 import { assetsPath, bgBiografyAsset } from '@/lib/constanst/assets';
 import { UtilsLib } from '@/lib/utils';
+import { CommonModule } from '@angular/common';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { EditAboutComponent } from './components/edit-about/edit-about.component';
+import { AddSkillsComponent } from './components/add-skills/add-skills.component';
+import { ImgComponent } from '../../components/img/img.component';
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
+  standalone: true,
+  imports: [
+    IonicModule, 
+    CommonModule,
+    EditProfileComponent,
+    EditAboutComponent,
+    AddSkillsComponent,
+    ImgComponent
+  ]
 })
 export class ProfilePage implements OnInit {
   @ViewChild('menu', { read: IonMenu }) menu!: IonMenu;
@@ -108,8 +123,14 @@ export class ProfilePage implements OnInit {
         this.websitesList = JSON.parse(listWeb);
       }
       let listCurrentSkill = localStorage.getItem('skills');
-      if (listCurrentSkill) {
-        this.currentSkill = JSON.parse(listCurrentSkill);
+      if (listCurrentSkill && listCurrentSkill.indexOf(',') !== -1) {
+        this.currentSkill = listCurrentSkill.split(',');
+      } else {
+        try {
+          this.currentSkill = JSON.parse(listCurrentSkill || '[]');
+        } catch (error) {
+          this.currentSkill = [];
+        }
       }
       this.isProfileLoaded = true;
       this.cdr.detectChanges();

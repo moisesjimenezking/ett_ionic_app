@@ -16,9 +16,9 @@ import { SharedModule } from '@/shared/shared.module';
     IonicModule,
     RegisterPageRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    RegisterPage
   ],
-  declarations: [RegisterPage,],
   providers: [ApiService]
 })
 export class RegisterPageModule { }

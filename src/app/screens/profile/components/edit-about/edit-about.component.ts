@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonModal, NavController } from '@ionic/angular';
+import { IonModal, NavController, IonicModule } from '@ionic/angular';
 import { ApiService } from '@/service/api.service';
 import { UtilsLib } from '@/lib/utils';
+import { CommonModule } from '@angular/common';
+import { FileItemLoaderComponent } from '@/components/file-item-loader/file-item-loader.component';
+import { FormsModule } from '@angular/forms';
 
 
 export type EditAboutEvent = {
@@ -15,6 +18,12 @@ export type EditAboutEvent = {
   selector: 'app-edit-about',
   templateUrl: './edit-about.component.html',
   styleUrls: ['./edit-about.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+  ]
 })
 export class EditAboutComponent implements OnInit {
 

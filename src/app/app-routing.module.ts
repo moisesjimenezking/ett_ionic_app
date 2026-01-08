@@ -156,6 +156,10 @@ const routes: Routes = [
     path: 'home-not-login',
     loadChildren: () => import('./screens/home-not-login/home-not-login.module').then(m => m.HomePageNotLoginModule),
   },
+  {
+    path: 'potential-employees',
+    loadChildren: () => import('./screens/potential-employees/potential-employees.module').then( m => m.PotentialEmployeesPageModule)
+  }
 ];
 
 @NgModule({

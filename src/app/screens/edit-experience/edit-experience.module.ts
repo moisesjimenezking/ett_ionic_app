@@ -13,8 +13,8 @@ import { EditExperiencePage } from './edit-experience.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    EditExperiencePageRoutingModule
+    EditExperiencePageRoutingModule,
+    EditExperiencePage
   ],
-  declarations: [EditExperiencePage]
 })
 export class EditExperiencePageModule {}

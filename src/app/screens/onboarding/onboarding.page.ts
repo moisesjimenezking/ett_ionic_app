@@ -1,13 +1,18 @@
 import { assetsPath, ettLogoAsset, smallBusinessAsset } from '@/lib/constanst/assets';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Platform, IonRouterOutlet } from '@ionic/angular'; // <- importa Platform y IonRouterOutlet desde Ionic
 import { Router } from '@angular/router';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { IonRouterOutlet, Platform } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
+  standalone: true,
+  imports: [IonicModule, CommonModule] // <- Agregar SwiperModule aquí
 })
 export class OnboardingPage implements OnInit {
 
@@ -51,6 +56,12 @@ export class OnboardingPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    this.showMainImage = true;
+    this.currentIndex = 0;
+  }
+
+
   ngAfterViewInit() {
     // Espera que el componente esté renderizado para acceder a la instancia
     setTimeout(() => {
@@ -63,10 +74,7 @@ export class OnboardingPage implements OnInit {
 
   continueToCarousel() {
     this.showMainImage = false;
-    // Vuelve a esperar que el swiper esté listo, por si se carga después
-    setTimeout(() => {
-      this.swiperInstance = this.swiperRef?.nativeElement?.swiper;
-    }, 200);
+    this.currentIndex = 0;
   }
 
   slideChangeCall() {
@@ -76,13 +84,10 @@ export class OnboardingPage implements OnInit {
   }
 
   handleButtonPress() {
-    if (this.currentIndex === 2) {
-      this.router.navigateByUrl('/auth/login');
-    } else if (this.swiperInstance) {
-      const next = this.currentIndex === 0 ? 1 : 2;
-      this.swiperInstance.slideTo(next);
+    if (this.currentIndex < this.onboardingScreenList.length - 1) {
+      this.currentIndex++;
     } else {
-      console.warn("Swiper aún no está listo");
+      this.router.navigateByUrl('/auth/login');
     }
   }
 

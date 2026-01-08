@@ -16,9 +16,9 @@ import { SharedModule } from "../../shared/shared.module";
     IonicModule,
     MessagePageRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    MessagePage
   ],
-  declarations: [MessagePage],
   providers: [ApiService]
 })
 export class MessagePageModule { }

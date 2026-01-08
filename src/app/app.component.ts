@@ -1,21 +1,31 @@
-import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Location, CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { App } from '@capacitor/app';
 import { StatusBar } from '@capacitor/status-bar';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, IonicModule } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { register } from 'swiper/element/bundle';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ApiService } from './service/api.service';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FirebaseMessagingService } from './firebase-messaging.service';
+import { PushNotifications, Token } from '@capacitor/push-notifications';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
-register();
 
 @Component({
   selector: 'app-root',
+  standalone: true, // <-- ahora es standalone
+  imports: [
+    IonicModule,   // <-- necesario para <ion-router-outlet>, <ion-app>, etc.
+    RouterModule,   // <-- necesario si usas rutas
+    SidebarComponent,
+    CommonModule
+  ],
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+
+export class AppComponent implements OnInit {
   tap = 0;
 
   constructor(
@@ -23,35 +33,86 @@ export class AppComponent {
     public location: Location,
     private navCtrl: NavController,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private fcmService: FirebaseMessagingService
   ) {
     this.initializeApp();
+  }
+
+  ngOnInit() {
+    this.initPush()
+    this.fcmService.listenMessages((payload) => {
+      console.log('Mensaje recibido: ', payload);
+    });
+  }
+  initPush() {
+      LocalNotifications.requestPermissions().then(result => {
+        if (result.display === 'granted') {
+          PushNotifications.register();
+        } else {
+          console.log('Permiso de notificaciones denegado');
+        }
+      });
+
+      PushNotifications.requestPermissions().then(result => {
+        if (result.receive === 'granted') {
+          PushNotifications.register();
+        } else {
+          console.log('Permiso de notificaciones denegado');
+        }
+      });
+
+    PushNotifications.addListener('registration', (token: Token) => {
+      console.log('FCM Token Android/iOS:', token.value);
+      this.fcmService.setToken(token.value);
+    });
+
+    PushNotifications.addListener('pushNotificationReceived', async (notification) => {
+      const state = await App.getState();
+      if (!state.isActive) {
+        await LocalNotifications.schedule({
+          notifications: [
+            {
+              id: new Date().getTime(),
+              title: notification.data?.title,
+              body: notification.data?.body,
+              extra: notification.data,
+            }
+          ]
+        });
+      }
+    });
+
+
+    PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+      App.getState().then(state => {
+        if (!state.isActive) { // Solo si la app estaba en background o cerrada
+          const data = notification.notification?.data;
+          if (data?.action === 'open_login') {
+            this.router.navigateByUrl('/auth/login');
+          }
+        }
+      });
+    });
   }
 
   async initializeApp() {
     try {
       await this.platform.ready();
-
-      // Mostrar splash al iniciar
       await SplashScreen.show({ showDuration: 500, autoHide: true });
       await StatusBar.setBackgroundColor({ color: '00000000' });
 
-      // Intentar obtener URL inicial
       const launch = await App.getLaunchUrl();
       if (launch?.url) {
-        console.log('🚀 Deep link getLaunchUrl:');
-        console.log(launch.url)
         const success = this.parseDeepLink(launch.url);
         if (!success) {
-          this.setupAppUrlOpenFallback(); // fallback
+          this.setupAppUrlOpenFallback();
         }
       } else {
-        this.setupAppUrlOpenFallback(); // fallback
+        this.setupAppUrlOpenFallback();
       }
 
-      // Configurar botón back físico
       this.setupBackButtonHandler();
-
     } catch (error) {
       console.error('Error al inicializar la app:', error);
     }
@@ -59,42 +120,27 @@ export class AppComponent {
 
   setupAppUrlOpenFallback() {
     App.addListener('appUrlOpen', (event: any) => {
-      console.log('🔁 Deep link appUrlOpen:');
-      console.log(event?.url)
       if (event?.url) {
         const success = this.parseDeepLink(event.url);
         if (!success) {
           this.router.navigateByUrl('/onboarding');
         }
       } else {
-        console.warn('⚠️ appUrlOpen sin url');
         this.router.navigateByUrl('/auth/login');
       }
     });
   }
-  
+
   private parseDeepLink(rawUrl: string): boolean {
     try {
       const url = new URL(rawUrl);
-      const path = url.pathname;
       const code = url.searchParams.get('code');
-  
-      console.log('📥 Ruta:');
-      console.log(path)
-      console.log('🔐 Código:');
-      console.log(code)
-  
       if (code) {
         this.loginWithCode(code);
         return true;
-      } else {
-        console.warn('⚠️ Deep link sin datos válidos');
-        return false;
       }
-  
-    } catch (err) {
-      console.error('❌ Error al parsear deep link');
-      console.log(err)
+      return false;
+    } catch {
       return false;
     }
   }
@@ -102,7 +148,6 @@ export class AppComponent {
   loginWithCode(code: string) {
     this.router.navigateByUrl('/auth/login');
     this.apiService.postTokenByCode(code);
-    // No navegas aquí porque postTokenByCode internamente navega tras éxito/fallo
   }
 
   get showSidebar() {
@@ -117,23 +162,19 @@ export class AppComponent {
   setupBackButtonHandler() {
     this.platform.backButton.subscribeWithPriority(10, () => {
       const path = this.location.path();
-
-      const isExitPath = [
+      const exitPaths = [
         '/bottom-tab-bar/home',
         '/bottom-tab-bar/saved',
         '/bottom-tab-bar/chats',
         '/bottom-tab-bar/profile',
         '/onboarding',
         '/auth/login',
-      ].includes(path);
+      ];
 
-      if (isExitPath) {
+      if (exitPaths.includes(path)) {
         this.tap++;
-        if (this.tap === 2) {
-          App.exitApp();
-        } else {
-          setTimeout(() => (this.tap = 0), 2000);
-        }
+        if (this.tap === 2) App.exitApp();
+        else setTimeout(() => (this.tap = 0), 2000);
       } else {
         this.navCtrl.back();
       }
