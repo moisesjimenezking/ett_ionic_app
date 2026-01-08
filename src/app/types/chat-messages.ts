@@ -2,6 +2,7 @@ export interface ChatMessage {
     datetime: string;
     datetime_ia: null;
     datetime_update: string;
+    icon: string;
     ia: number;
     id: number;
     lastMsg: string;

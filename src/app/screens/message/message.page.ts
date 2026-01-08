@@ -5,6 +5,7 @@ import { ApiService } from '../../service/api.service';
 import { SocketService } from '../../service/socket.service';
 import { UtilsLib } from 'src/app/lib/utils';
 import { Message } from '@/types';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class MessagePage implements OnInit {
 
   newMsgRegister: object = {};
   newMsg = '';
-
+  idChat = '';
+  nameRecept = '';
   isSending = false;
   messageSending = '';
   isWritting = false;
@@ -36,7 +38,8 @@ export class MessagePage implements OnInit {
     private apiMessage: ApiService,
     private cdr: ChangeDetectorRef,
     private menu: MenuController,
-    private socketService: SocketService 
+    private socketService: SocketService,
+    private route: ActivatedRoute 
   ) { }
 
   ngOnInit() {
@@ -46,17 +49,24 @@ export class MessagePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.getAllMessages();
     this.userMessages = this.details("messages");
 
     this.dataChat = this.details("all");
 
+    this.route.queryParams.subscribe(params => {
+      if(params['chatId']){
+        this.idChat = params['chatId'];
+        this.nameRecept = params['name'];
+      }
+    });
     this.viewsAll();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.scrollToBottom();
-    }, 500); // ⏳ Espera para asegurarse de que los mensajes ya están en la vista
+    }, 500); 
   }
 
   details(text: string) {
@@ -98,7 +108,7 @@ export class MessagePage implements OnInit {
 
   private async scrollToBottom(): Promise<void> {
     if (this.content) {
-      await this.content.scrollToBottom(300); // 🏃 Desplazamiento suave de 300ms
+      await this.content.scrollToBottom(300);
     }
   }
 
@@ -107,8 +117,9 @@ export class MessagePage implements OnInit {
   }
 
   viewsAll() {
+    let chatId = this.idChat !== '' ? this.idChat : this.dataChat.id;
     const body = {
-      chats_id: this.dataChat.id,
+      chats_id: chatId,
     }
 
     this.apiMessage.putViewsAll(body)
@@ -120,17 +131,18 @@ export class MessagePage implements OnInit {
 
   backspace() {
     this.goBack();
-    // this.navCtrl.(localStorage.getItem('accountType') === "PERSON"
-    //   ? 'bottom-tab-bar/chats'
-    //   : 'bottom-tab-bar-company/chats'
-    // );
   }
 
   handleNewMessage(data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
-    if (data.chats_id === this.dataChat.id) { // ✅ Solo actualiza si el mensaje es del chat actual
+    if (data.chats_id === this.dataChat.id || data.chats_id === Number(this.idChat)) { // ✅ Solo actualiza si el mensaje es del chat actual
       const newMsg: Message = data
+      if (!Array.isArray(this.userMessages)) {
+        this.userMessages = [];
+      }
+
       const messageExists = this.userMessages.some((msg: Message) => msg.id === newMsg.id);
 
+      console.log(messageExists)
       if (!messageExists) {
         const user_id = localStorage.getItem('user_id')
 
@@ -141,7 +153,7 @@ export class MessagePage implements OnInit {
         }
 
         this.userMessages.push(newMsg); // 🔥 Agregar mensaje a la lista
-        this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
+        // this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
         setTimeout(() => {
           this.scrollToBottom();
         }, 300);
@@ -152,9 +164,10 @@ export class MessagePage implements OnInit {
 
   addMessage() {
     if (this.newMsg) {
+      let chatId = this.idChat !== '' ? this.idChat : this.dataChat.id;
       const body = {
         message: this.newMsg,
-        chats_id: this.dataChat.id,
+        chats_id: chatId,
       }
 
       this.messageSending = this.newMsg;
@@ -164,15 +177,15 @@ export class MessagePage implements OnInit {
         next: (data: any) => {
           this.isSending = false;
           // this.userMessages.push(data);
-          this.cdr.detectChanges();
+          
         },
         error: () => {
           this.isSending = false;
-          this.cdr.detectChanges(); // ��� Forzar actualización de la vista
+           // ��� Forzar actualización de la vista
         },
         complete: () => {
           this.isSending = false;
-          this.cdr.detectChanges(); // ��� Forzar actualización de la vista
+           // ��� Forzar actualización de la vista
         }
       });
     }

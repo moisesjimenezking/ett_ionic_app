@@ -37,3 +37,30 @@
   box-shadow: none;
   margin: 0;
 }
+
+.custom-fab-icon {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+
+  img {
+    width: 56px; /* ajusta si tu ícono es más grande o pequeño */
+    height: 56px;
+    filter: var(--primary-filter);
+    transition: transform 0.2s ease;
+  }
+
+  &:active img {
+    transform: scale(0.9);
+  }
+}
+
+/* Convierte el PNG a color primario */
+:root {
+  --primary-filter: brightness(0) saturate(100%) invert(32%) sepia(92%)
+    saturate(3198%) hue-rotate(202deg) brightness(95%) contrast(97%);
+}
+

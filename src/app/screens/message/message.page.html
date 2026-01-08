@@ -8,8 +8,8 @@
         <!-- <ion-img [src]="searchIcon(dataChat.sourceImage)" class="imageOverflow sourceLogo"></ion-img> -->
         <div class="column" style="flex: 1">
           <ion-text class="text-[20px] text-primary-foreground text-center font-semibold text-ellipsis line-clamp-1">
-            <!-- {{ dataChat?.sourceName }} -->
-            Atención al cliente
+            <!--  -->
+              {{ nameRecept && nameRecept.trim() !== '' ? nameRecept :  dataChat?.sourceName }}
           </ion-text>
         </div>
         <ion-text class="">

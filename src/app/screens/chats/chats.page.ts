@@ -7,6 +7,9 @@ import { ChatMessage } from 'src/app/types/chat-messages';
 import { UtilsLib } from '@/lib/utils';
 import { SocketService } from '../../service/socket.service';
 
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.page.html',
@@ -18,9 +21,16 @@ export class ChatsPage implements OnInit {
 
   protected readonly utils = new UtilsLib();
 
+  phoneNumber: string = '';
+  userExists: boolean | null = null;
+  isSubmitting = false;
+  userName: string = '';
+  private debounceTimer: any;
+  userReceptId: string = '';
   chatsList: ChatMessage[] = [
   ];
   isLoadingChatList = false;
+  chatId: string = '';
 
   constructor(
     private navCtrl: NavController,
@@ -71,7 +81,7 @@ export class ChatsPage implements OnInit {
   }
 
   updateChat(data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
-    let chatIndex = this.chatsList.findIndex(chat => chat.id === data.chats_id);
+    let chatIndex = this.chatsList.findIndex(chat => chat.id === data.chats_id || chat.id === Number(this.chatId));
 
     if (chatIndex !== -1) {
       this.chatsList[chatIndex].lastMsg = data.message;
@@ -92,6 +102,7 @@ export class ChatsPage implements OnInit {
       this.chatsList[chatIndex].unreadMsgCount += 1
       this.cdr.detectChanges();
     } else {
+      this.allChats();
       console.log(`⚠️ Chat ${data.chats_id} no encontrado en la lista.`);
     }
   }
@@ -110,5 +121,80 @@ export class ChatsPage implements OnInit {
   searchIcon(item: any): string {
     let newIcon = this.stablishUrlPic(item)
     return newIcon;
+  }
+
+  onPhoneInput(event: any) {
+    const value = event.target.value;
+    this.phoneNumber = value;
+
+    // Cancela cualquier timer anterior
+    clearTimeout(this.debounceTimer);
+
+    // Espera 1.5 segundos antes de validar
+    this.debounceTimer = setTimeout(() => {
+      if (this.phoneNumber.trim().length > 5) {
+        this.validateUser(this.phoneNumber.trim());
+      } else {
+        this.userExists = null;
+        this.userName = '';
+      }
+    }, 1500);
+  }
+
+  // Simulación de la solicitud a la API
+  validateUser(phone: string) {
+    this.isSubmitting = true;
+
+    this.apiChat.getUserByPhone(phone).subscribe({
+      next: (response: any) => {
+        if (response?.data?.length > 0) {
+          this.userExists = true;
+          this.userName = response.data[0].fullname;
+          this.userReceptId = response.data[0].id;
+        } else {
+          this.userExists = false;
+          this.userName = '';
+          this.userReceptId = '';
+        }
+        this.isSubmitting = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error API:', err);
+        this.userExists = false;
+        this.userName = '';
+        this.isSubmitting = false;
+        this.userReceptId = '';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  goToChat(modal: any) {
+    if (!this.userExists) return;
+
+    localStorage.removeItem('messages');
+    const body = {
+      "user_sending_id": localStorage.getItem('user_id'),
+      "user_recept_id": this.userReceptId
+    }
+    
+    this.apiChat.postChats(body)
+      .pipe(
+        catchError((error: any) => {
+          this.isSubmitting = false;
+          console.error('Error al crear el chat:', error);
+          return throwError(() => error);
+        }),
+        tap((data: any) => {
+          this.chatId = data.id;
+          this.isSubmitting = false;
+          modal.dismiss();
+          
+          this.allChats();
+          this.router.navigateByUrl(`/message?chatId=${this.chatId}&name=${this.userName}`);
+        })
+      )
+      .subscribe();
   }
 }

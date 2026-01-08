@@ -2,7 +2,7 @@
   <ion-list class="bg-muted rounded-lg divide-y-[.25px] divide-destructive-foreground px-5">
     <ng-container *ngFor="let item of messages;let i=index;">
       <div class="flex items-center gap-4 py-5" (click)="onMessageSelected.emit(item)">
-        <ng-image [src]="icSupportAsset" width="56px" height="56px" class="min-w-14 size-14 rounded-full"
+        <ng-image [src]="item.sourceImage ? item.sourceImage : 'assets/images/profile.png'" width="56px" height="56px" class="min-w-14 size-14 rounded-full"
           alt="Chat Icon" />
         <div class="flex flex-1 flex-col justify-center gap-1 text-primary-foreground">
           <p class="text-primary-foreground text-xl">{{item.sourceName}}</p>

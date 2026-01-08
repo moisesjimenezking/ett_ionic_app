@@ -256,6 +256,10 @@ export class ApiService {
             ? 'bottom-tab-bar/home'
             : 'bottom-tab-bar-company/home'
         );
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       });
   }
 
@@ -489,6 +493,13 @@ export class ApiService {
     });
   }
 
+  getUserChat(data: any) {
+    return this.http.get<ChatMessage | ChatMessage[]>(`${this.apiUrl}/chats`, {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('token') },
+      params: data,
+    });
+  }
+
   postJobs(data: any) {
     return this.http.post(`${this.apiUrl}/jobs`, data, this.getOptions()).pipe(
       catchError((error) => {
@@ -640,6 +651,24 @@ export class ApiService {
           errorMessage = error.error.message;
         }
 
+        this.presentAlert(errorMessage);
+      },
+      complete: () => {},
+    });
+
+    return request;
+  }
+
+  getUserByPhone(phone: string): Observable<any> {
+
+    const request = this.http.get(`${this.apiUrl}/all_user?phone=${encodeURIComponent(phone)}`, this.getOptions());
+
+    request.subscribe({
+      error: (error) => {
+        let errorMessage = 'Error al realizar la solicitud. Por favor, inténtalo de nuevo.';
+        if (error.status !== 200 && error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
         this.presentAlert(errorMessage);
       },
       complete: () => {},
