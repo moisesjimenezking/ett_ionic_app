@@ -26,7 +26,7 @@ export interface Message {
     isSender: boolean;
     message: string;
     user_id: number;
-    view: number;
+    view: boolean;
 }
 
 export interface User {

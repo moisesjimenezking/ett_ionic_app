@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ChatEmptyStateComponent } from './chat-empty-state/chat-empty-state.component';
 import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
 import { SharedModule } from "../../shared/shared.module";
+import { ChatService } from '../../service/chat.service';
 
 
 @Component({
@@ -56,12 +57,16 @@ export class ChatsPage implements OnInit {
     private apiChat: ApiService,
     private socketService: SocketService,
     private cdr: ChangeDetectorRef,
-  ) { }
+    private chatService: ChatService,
+  ) { 
+    this.chatService.refreshChats$.subscribe(() => {this.allChats();});
+  }
 
   ngOnInit() {
-    this.socketService.listen('newMessage', (data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) => {
+    this.socketService.listen('newMessage', (data: { datetime_update: any; view: boolean; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) => {
       this.updateChat(data);
     });
+    
   }
 
 
@@ -84,11 +89,31 @@ export class ChatsPage implements OnInit {
 
   allChats() {
     this.isLoadingChatList = true;
+
     setTimeout(() => {
       this.apiChat.getChat({}).subscribe({
         next: (data: any) => {
-          // this.chatsList = data;
-          this.chatsList = data.map((chat: ChatMessage) => this.adjustMessageTime(chat));
+
+          let hasUnread = false;
+
+          // NO tocamos la estructura, solo ajustamos hora como ya hacías
+          this.chatsList = data.map((chat: ChatMessage) => {
+
+            // si cualquiera tiene unreadMsgCount > 0
+            if (chat.unreadMsgCount && chat.unreadMsgCount > 0) {
+              hasUnread = true;
+            }
+
+            return this.adjustMessageTime(chat);
+          });
+
+          // 🔴 solo avisamos al tab si existe al menos uno
+          if (!this.router.url.includes('/chats')) {
+            this.chatService.setHasUnread(hasUnread);
+          } else {
+            this.chatService.clearUnread();
+          }
+
           this.isLoadingChatList = false;
           this.cdr.detectChanges();
         },
@@ -99,7 +124,8 @@ export class ChatsPage implements OnInit {
     }, 100);
   }
 
-  updateChat(data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
+
+  updateChat(data: { datetime_update: any; view: boolean; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
     let chatIndex = this.chatsList.findIndex(chat => chat.id === data.chats_id || chat.id === Number(this.chatId));
 
     if (chatIndex !== -1) {

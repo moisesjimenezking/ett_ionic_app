@@ -5,9 +5,18 @@
       <ion-label style="margin-top: 10px;">Inicio</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="chats">
-      <span class="material-icons" style="font-size: 26px">
-        chat
-      </span>
+      <div class="relative">
+        <span class="material-icons" style="font-size: 26px">
+          chat
+        </span>
+
+        <!-- 🔴 Burbuja roja -->
+        <span
+          *ngIf="hasUnread$ | async"
+          class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full">
+        </span>
+      </div>
+
       <ion-label style="margin-top: 10px;">Mensajes</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="profile">

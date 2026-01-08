@@ -8,6 +8,7 @@ import { Message } from '@/types';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ChatService } from '../../service/chat.service';
 
 
 @Component({
@@ -47,11 +48,12 @@ export class MessagePage implements OnInit {
     private cdr: ChangeDetectorRef,
     private menu: MenuController,
     private socketService: SocketService,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute,
+    private chatService: ChatService 
   ) { }
 
   ngOnInit() {
-    this.socketService.listen('newMessage', (data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) => {
+    this.socketService.listen('newMessage', (data: { datetime_update: any; view: boolean; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) => {
       this.handleNewMessage(data);
     });
   }
@@ -131,6 +133,9 @@ export class MessagePage implements OnInit {
     }
 
     this.apiMessage.putViewsAll(body)
+    this.apiMessage.putViewsAll(body).subscribe(() => {
+      this.chatService.triggerRefreshChats();
+    });
   }
 
   goTo(screen: any) {
@@ -141,7 +146,7 @@ export class MessagePage implements OnInit {
     this.goBack();
   }
 
-  handleNewMessage(data: { datetime_update: any; view: number; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
+  handleNewMessage(data: { datetime_update: any; view: boolean; isSender: boolean; id: number; chats_id: number; message: string; user_id: number; datetime: string; }) {
     if (data.chats_id === this.dataChat.id || data.chats_id === Number(this.idChat)) { // ✅ Solo actualiza si el mensaje es del chat actual
       const newMsg: Message = data
       if (!Array.isArray(this.userMessages)) {
@@ -162,6 +167,7 @@ export class MessagePage implements OnInit {
 
         this.userMessages.push(newMsg); // 🔥 Agregar mensaje a la lista
         // this.cdr.detectChanges(); // 🔄 Forzar actualización de la vista
+        
         setTimeout(() => {
           this.scrollToBottom();
         }, 300);

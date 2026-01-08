@@ -10,6 +10,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FirebaseMessagingService } from './firebase-messaging.service';
 import { PushNotifications, Token } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { ChatRealtimeService } from './service/chat-realtime.service';
 
 
 @Component({
@@ -34,9 +35,11 @@ export class AppComponent implements OnInit {
     private navCtrl: NavController,
     private router: Router,
     private apiService: ApiService,
-    private fcmService: FirebaseMessagingService
+    private fcmService: FirebaseMessagingService,
+    private chatRealtime: ChatRealtimeService
   ) {
     this.initializeApp();
+    this.chatRealtime.initListeners();
   }
 
   ngOnInit() {

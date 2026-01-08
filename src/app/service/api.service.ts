@@ -179,7 +179,6 @@ export class ApiService {
   }
 
   async postToken(data: any) {
-    console.log('aqui 1')
     if (Capacitor.getPlatform() !== 'web') {
       try {
         const fcmToken = await this.fcmService.waitForToken();
@@ -687,7 +686,7 @@ export class ApiService {
 
   getUserByPhone(phone: string): Observable<any> {
 
-    const request = this.http.get(`${this.apiUrl}/all_user?phone=${encodeURIComponent(phone)}`, this.getOptions());
+    const request = this.http.get(`${this.apiUrl}/user/search_phone?phone=${encodeURIComponent(phone)}`, this.getOptions());
 
     request.subscribe({
       error: (error) => {

@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { IonRouterOutlet, Platform } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { ChatService } from '../../service/chat.service';
 
 
 @Component({
@@ -17,10 +18,13 @@ import { CommonModule } from '@angular/common';
 })
 export class BottomTabBarPage implements OnInit {
 
+  hasUnread$ = this.chatService.hasUnreadMessages$;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private routerOutlet: IonRouterOutlet,
-    private platform: Platform
+    private platform: Platform,
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
