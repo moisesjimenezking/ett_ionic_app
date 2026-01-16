@@ -2,7 +2,7 @@ import { Location, CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { App } from '@capacitor/app';
 import { StatusBar } from '@capacitor/status-bar';
-import { NavController, Platform, IonicModule } from '@ionic/angular';
+import { NavController, AlertController, Platform, IonicModule } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Router, RouterModule } from '@angular/router';
 import { ApiService } from './service/api.service';
@@ -11,6 +11,7 @@ import { FirebaseMessagingService } from './firebase-messaging.service';
 import { PushNotifications, Token } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { ChatRealtimeService } from './service/chat-realtime.service';
+
 
 
 @Component({
@@ -36,7 +37,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private fcmService: FirebaseMessagingService,
-    private chatRealtime: ChatRealtimeService
+    private chatRealtime: ChatRealtimeService,
   ) {
     this.initializeApp();
     this.chatRealtime.initListeners();

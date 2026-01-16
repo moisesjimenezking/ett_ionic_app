@@ -9,6 +9,9 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { FormsModule } from '@angular/forms';
+import { Capacitor } from '@capacitor/core';
+import { LocationService } from '@/service/location.service';
+
 
 @Component({
   selector: 'app-login',
@@ -43,7 +46,8 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private apiService: ApiService,
     private loadingController: LoadingController,
-    private zone: NgZone
+    private zone: NgZone,
+    private locationService: LocationService
   ) { }
 
   ngOnInit() {
@@ -225,20 +229,51 @@ export class LoginPage implements OnInit {
     return this.apiService.getVerificCode({ code });
   }
 
-  token() {
-    if (!this.email || !this.password) {
-      let errorMessage = 'Credenciales incorrectas';
-      this.presentAlert(errorMessage);
-      return throwError(() => new Error(errorMessage));
+  async testLocation() {
+    const loc = await this.locationService.getCurrentLocation();
+
+    // Construimos el mensaje a mostrar
+    let message = 'No se obtuvo ubicación';
+    if (loc) {
+      message = `Latitud: ${loc.latitude}
+      Longitud: ${loc.longitude}
+      Precisión: ${loc.accuracy} metros`;
     }
 
-    const body = {
+    // Mostramos la alerta
+    const alert = await this.alertController.create({
+      header: 'Ubicación obtenida',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+
+  async token() {
+    // Pedimos ubicación primero
+    let location = null;
+    if (Capacitor.getPlatform() !== 'web') {
+      location = await this.locationService.getCurrentLocation();
+    }
+
+    const body: any = {
       username: this.email,
       password: this.password
     };
 
-    return this.apiService.postToken(body)
+    if (location) {
+      body.latitude = location.latitude;
+      body.longitude = location.longitude;
+      body.accuracy = location.accuracy;
+    }
+
+    // Luego llamamos al service
+    this.apiService.postToken(body);
   }
+
+
+
 
   goTo(screen: string) {
     this.router.navigateByUrl(screen);

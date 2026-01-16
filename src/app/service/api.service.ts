@@ -10,7 +10,6 @@ import { NgZone } from '@angular/core';
 import { ChatMessage, JobModel } from '@/types';
 import { FirebaseMessagingService } from '../firebase-messaging.service';
 import { Capacitor } from '@capacitor/core';
-import { LocationService } from '../service/location.service';
 
 
 @Injectable({
@@ -45,8 +44,7 @@ export class ApiService {
     private alertController: AlertController,
     private router: Router,
     private zone: NgZone,
-    private fcmService: FirebaseMessagingService,
-    private locationService: LocationService
+    private fcmService: FirebaseMessagingService
   ) {
     localStorage.setItem('rute', this.apiUrl);
   }
@@ -193,19 +191,6 @@ export class ApiService {
       data.fcm_code = 'WEB';
     }
 
-    if (Capacitor.getPlatform() !== 'web') {
-      const location = await this.locationService.getCurrentLocation();
-      if (location) {
-        data.latitude = location.latitude;
-        data.longitude = location.longitude;
-        data.accuracy = location.accuracy;
-      }
-    } else {
-      data.latitude = null;
-      data.longitude = null;
-    }
-    console.log('Datos para login lat:', data.latitude);
-    console.log('Datos para login lon:', data.longitude);
     this.showSpinner();
     return this.http
       .post(`${this.apiUrl}/token`, data, this.getOptions())
