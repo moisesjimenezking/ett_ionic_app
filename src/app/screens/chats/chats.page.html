@@ -1,15 +1,24 @@
 <ion-header mode="ios" [translucent]="false" class="ion-no-border">
   <ion-toolbar color="false" class="bg-background">
-    <div class="flex justify-between items-center px-2 py-5" style="position: relative">
+    <div
+      class="flex justify-between items-center px-2 py-5"
+      style="position: relative"
+    >
       <span (click)="goBack()" class="material-icons text-primary-foreground">
         arrow_back_ios
       </span>
-      <ion-text class="text-lg font-bold flex-1 text-center text-ellipsis line-clamp-1 text-primary-foreground">
+      <ion-text
+        class="text-lg font-bold flex-1 text-center text-ellipsis line-clamp-1 text-primary-foreground"
+      >
         Mensajes
       </ion-text>
       <ion-chip class="p-0 m-0 bg-transparent">
-        <ion-menu-button menu="app-menu" class="menu-button-custom" color="whiteColor"
-          style="font-size: 30px"></ion-menu-button>
+        <ion-menu-button
+          menu="app-menu"
+          class="menu-button-custom"
+          color="whiteColor"
+          style="font-size: 30px"
+        ></ion-menu-button>
       </ion-chip>
     </div>
   </ion-toolbar>
@@ -18,7 +27,10 @@
 <ion-content [fullscreen]="true" class="bg-background">
   <ng-container *ngIf="chatsList.length && !isLoadingChatList;">
     <div class="px-1.5">
-      <app-chat-messages [messages]="chatsList" (onMessageSelected)="onMessageSelected($event);" />
+      <app-chat-messages
+        [messages]="chatsList"
+        (onMessageSelected)="onMessageSelected($event);"
+      />
     </div>
   </ng-container>
 
@@ -38,16 +50,22 @@
       <img src="assets/images/new-message.png" alt="Nuevo mensaje" />
     </button>
   </ion-fab>
-
 </ion-content>
 
-
-<ion-modal mode="md" #sendMessageModal [canDismiss]="isSubmitting ? false : true" trigger="open-message-modal"
-  style="--border-radius: 5px; --background: #2C2C2C;">
+<ion-modal
+  mode="md"
+  #sendMessageModal
+  [canDismiss]="isSubmitting ? false : true"
+  trigger="open-message-modal"
+  style="--border-radius: 5px; --background: #2c2c2c"
+>
   <ng-template>
     <div
-      class="my-2 bg-muted flex flex-col justify-center items-center rounded-xl px-3 py-5 h-full max-h-full overflow-y-auto">
-      <ion-text class="text-primary-foreground text-2xl font-semibold text-center mb-7">
+      class="my-2 bg-muted flex flex-col justify-center items-center rounded-xl px-3 py-5 h-full max-h-full overflow-y-auto"
+    >
+      <ion-text
+        class="text-primary-foreground text-2xl font-semibold text-center mb-7"
+      >
         Nuevo mensaje
       </ion-text>
 
@@ -60,7 +78,7 @@
           <ion-input
             mode="ios"
             [readonly]="isSubmitting"
-            placeholder="Ej: +58 412 1234567"
+            placeholder="Ej: 04121234567"
             [(ngModel)]="phoneNumber"
             (ionInput)="onPhoneInput($event)"
             inputmode="tel"
@@ -70,14 +88,14 @@
             *ngIf="userExists"
             name="checkmark-circle"
             color="success"
-            style="font-size: 24px; margin-left: 5px;"
+            style="font-size: 24px; margin-left: 5px"
           ></ion-icon>
 
           <ion-icon
             *ngIf="userExists === false"
             name="close-circle"
             color="danger"
-            style="font-size: 24px; margin-left: 5px;"
+            style="font-size: 24px; margin-left: 5px"
           ></ion-icon>
         </ion-chip>
 
@@ -100,15 +118,19 @@
 
       <!-- Botones -->
       <div class="w-full flex gap-1 items-center justify-between mt-5">
-        <ion-chip [disabled]="isSubmitting"
+        <ion-chip
+          [disabled]="isSubmitting"
           class="w-full flex items-center justify-center bg-accent text-primary-foreground rounded-full text-md font-medium h-12"
-          (click)="sendMessageModal.dismiss()">
+          (click)="sendMessageModal.dismiss()"
+        >
           <ion-text>Cancelar</ion-text>
         </ion-chip>
 
-        <ion-chip [disabled]="isSubmitting || !userExists"
+        <ion-chip
+          [disabled]="isSubmitting || !userExists"
           class="w-full flex items-center justify-center bg-primary text-primary-foreground rounded-full text-md font-medium h-12"
-          (click)="goToChat()">
+          (click)="goToChat()"
+        >
           <ion-text>
             {{ isSubmitting ? 'Verificando...' : 'Continuar' }}
           </ion-text>
